@@ -1,0 +1,17 @@
+Bounded context: TicTacToe
+
+Workflow: "Play move"
+triggered by:
+  "Move received" event
+primary input:
+  MoveInformation
+output events:
+  MoveResult
+side-effects:
+  Update state of game
+
+data MoveInformation =
+   ???
+
+data MoveResult =
+   ???
