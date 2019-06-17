@@ -1,5 +1,8 @@
 ﻿
+// ===========================================
 // Use Record types for AND
+// ===========================================
+
 type Name = {
   FirstName: string
   MiddleInitial: string
@@ -13,19 +16,25 @@ type Order = {
   OrderLines : OrderLine list // define a type for OrderLine
 }
 
+// ===========================================
 // Use Choice types for OR
+// ===========================================
+
 type PaymentMethod =
   | Cash
   | Card of CardInfo // define a type for CardInfo
   | PayPal of EmailAddress // define a type for EmailAddress
 
+// ===========================================
 // Use Function types for workflows
+// ===========================================
+
 type PlaceOrder =
   OrderForm -> OrderPlaced // define a type for OrderForm and OrderPlaced
 
 
 // =============================
-// Constructing and Destructuring records
+// Constructing and Destructuring Records
 // =============================
 
 // to create

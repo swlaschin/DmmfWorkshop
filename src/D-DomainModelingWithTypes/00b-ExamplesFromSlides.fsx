@@ -94,6 +94,11 @@ module StringTypes =
             then Some (String50 s)
             else None
 
+
+
+// STOP here and wait for more slides!
+
+
 module DomainTypes =
 
     open StringTypes
