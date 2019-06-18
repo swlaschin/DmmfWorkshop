@@ -6,6 +6,16 @@ let trim s = s.Trim()        // s is string
 
 let split ch s =  s.Split(ch)   // s is string, ch is a char
 
+(*
+type names vs instance values
+
+type name | instance
+-----------------------
+unit      | ()
+bool      | true, false
+int       | 42
+*)
+
 
 // --------------------------
 //  Q. For each of the following definitions,

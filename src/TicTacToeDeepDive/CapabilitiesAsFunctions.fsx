@@ -6,8 +6,8 @@ type CustomerId = CustomerId of int
 type CustomerProfile = {name: string }
 
 // a capability
-type GetCustomerProfile = 
-    CustomerId -> CustomerProfile 
+type GetCustomerProfile =
+    CustomerId -> CustomerProfile
 
 // the database!
 let dbGetProfile (CustomerId id) =
@@ -21,7 +21,7 @@ let dbGetProfile (CustomerId id) =
 // Basic capability
 // ================================
 
-let basicCap = dbGetProfile 
+let basicCap = dbGetProfile
 // the interface of the function
 // CustomerId -> CustomerProfile
 
@@ -32,21 +32,21 @@ basicCap (CustomerId 2)
 
 
 // ================================
-// Auditing 
+// Auditing
 // ================================
 
 /// Uses of the capability will be audited
-let withAuditing capabilityName userName cap = 
-    fun x -> 
+let withAuditing capabilityName userName cap =
+    fun x ->
         // simple audit log
         let timestamp = System.DateTime.UtcNow.ToString("u")
-        printfn "AUDIT: User %s used capability '%s' at %s" userName capabilityName timestamp 
+        printfn "AUDIT: User %s used capability '%s' at %s" userName capabilityName timestamp
         // use the capability
         cap x
 
 // -----------------------------
 // test it
-let auditedCap = 
+let auditedCap =
     basicCap |> withAuditing "dbGetProfile" "Scott"
 // The new function has the SAME interface
 //  CustomerId -> CustomerProfile
@@ -58,9 +58,9 @@ auditedCap (CustomerId 1)
 // ================================
 
 /// Allow the function to be called once only
-let onlyOnce cap = 
+let onlyOnce cap =
     let allow = ref true
-    fun x -> 
+    fun x ->
         if !allow then   //! is dereferencing not negation!
             allow := false
             cap x
@@ -71,7 +71,7 @@ let onlyOnce cap =
 // -----------------------------
 // test it
 //    NOTE - we are delegating from a previous cap
-let onceOnlyCap = onlyOnce auditedCap 
+let onceOnlyCap = onlyOnce auditedCap
 // The new function has the SAME interface
 //  CustomerId -> CustomerProfile
 
@@ -81,22 +81,22 @@ onceOnlyCap (CustomerId 1)
 // Revoking
 // ================================
 
-/// Return a pair of functions: the revokable capability, 
+/// Return a pair of functions: the revokable capability,
 /// and the revoker function
-let revokable cap = 
+let revokable cap =
     let allow = ref true
-    let capability = fun x -> 
+    let capability = fun x ->
         if !allow then  //! is dereferencing not negation!
             cap x
         else
             failwith "capability revoked"
-    let revoker() = 
+    let revoker() =
         allow := false
     capability, revoker
 
 
 // test
-let revokableCap,revoker = revokable auditedCap 
+let revokableCap,revoker = revokable auditedCap
 // The function has the SAME interface
 // revokableCap : (CustomerId -> CustomerProfile)
 

@@ -35,9 +35,9 @@ let toHtml (apiResult:TicTacToeApi.MoveResultDTO) =
       .ToString()
 
 
-TicTacToeApi.Start() |> toHtml
+TicTacToeApi.Start() |> toHtml |> printfn "%s"
 
 // again, replace with the actual guids from the result
-TicTacToeApi.Move("3f9b2d80-980f-4267-9cf7-cf5e909e3a53") |> toHtml
+TicTacToeApi.Move("a726cc13-fabe-4660-9689-26e8f6a97fdd") |> toHtml |> printfn "%s"
 
 

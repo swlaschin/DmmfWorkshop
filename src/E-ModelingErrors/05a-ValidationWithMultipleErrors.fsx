@@ -80,7 +80,7 @@ let validateRequest req =
 // -------------------------------
 
 let goodRequest = {
-  UserId=0
+  UserId=1
   Name= "Alice"
   Email="ABC@gmail.COM"
 }

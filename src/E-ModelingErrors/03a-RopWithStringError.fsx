@@ -69,8 +69,8 @@ unsendableRequest |> validateRequest
 let canonicalizeEmail input =
    { input with Email = input.Email.Trim().ToLower() }
 
-let canonicalizeEmailR =
-  Result.map canonicalizeEmail
+let canonicalizeEmailR input =
+  Result.map canonicalizeEmail input
 
 
 // test so far
@@ -93,8 +93,8 @@ let tee f result =
   f result
   result
 
-let updateDbR =
-  Result.map (tee updateDb)
+let updateDbR input =
+  Result.map (tee updateDb) input
 
 
 // test so far

@@ -40,8 +40,8 @@ type PaymentAmount =
     PaymentAmount of float
 
 type Payment = {
-    paymentMethod: PaymentMethod
-    paymentAmount: PaymentAmount
+    PaymentMethod: PaymentMethod
+    PaymentAmount: PaymentAmount
     }
 
 let printPaymentMethod (paymentMethod:PaymentMethod) =
@@ -54,12 +54,12 @@ let printPaymentMethod (paymentMethod:PaymentMethod) =
 
 let printPayment (payment:Payment) =
     // get the data out using a match -- or could define a helper "value" function
-    match payment.paymentAmount
+    match payment.PaymentAmount
         with (PaymentAmount amount) -> printf "Amount: %g. " amount
-    printPaymentMethod payment.paymentMethod
+    printPaymentMethod payment.PaymentMethod
 
 let makePayment (amount:float) (paymentMethod:PaymentMethod) :Payment =
-    {paymentMethod=paymentMethod; paymentAmount=PaymentAmount amount}
+    {PaymentMethod=paymentMethod; PaymentAmount=PaymentAmount amount}
 
 // examples
 let paymentMethod1 = Cash

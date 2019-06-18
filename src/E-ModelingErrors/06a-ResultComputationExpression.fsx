@@ -59,41 +59,46 @@ open ConstrainedTypes
 // ==============================
 
 
-type PersonalName = {
-    First: String10
-    Last: String10
-    }
-
-type Person = {
-    Name: PersonalName
-    Age: Age
-    Email: Email
-    }
-
-type PersonDto = {
-    first: string
-    last: string
-    age: int
-    email: string
-    }
-
-
-let fromDto personDto =
-    result {
-    let! first = String10.create personDto.first
-    let! last = String10.create personDto.last
-    let! age = Age.create personDto.age
-    let! email = Email.create personDto.email
-    let person = {
-        Name = {First=first; Last=last}
-        Age = age
-        Email = email
+module Domain =
+    type PersonalName = {
+        First: String10
+        Last: String10
         }
-    return person
-    }
+
+    type Person = {
+        Name: PersonalName
+        Age: Age
+        Email: Email
+        }
+
+module Dto =
+    open Domain
+
+    type PersonDto = {
+        first: string
+        last: string
+        age: int
+        email: string
+        }
+
+
+    let fromDto personDto =
+        result {
+        let! first = String10.create personDto.first
+        let! last = String10.create personDto.last
+        let! age = Age.create personDto.age
+        let! email = Email.create personDto.email
+        let person = {
+            Name = {First=first; Last=last}
+            Age = age
+            Email = email
+            }
+        return person
+        }
 
 
 // ==============================
+open Dto
 
 let goodDto = {
     first = "Alice"
@@ -109,5 +114,5 @@ let badDto = {
     email = "x@example.com"
     }
 
-goodDto |> fromDto
-badDto |> fromDto
+goodDto |> Dto.fromDto
+badDto |> Dto.fromDto

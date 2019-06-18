@@ -19,6 +19,16 @@ module ConstrainedTypes =
         /// Return the value
         let value (NonZeroInteger i) = i
 
+        /// Alternative implementation
+        let value2 nzi =
+          let (NonZeroInteger i) = nzi
+          i
+
+        /// Alternative implementation
+        let value3 nzi =
+          match nzi with
+          | NonZeroInteger i -> i
+
 open ConstrainedTypes
 
 // test
