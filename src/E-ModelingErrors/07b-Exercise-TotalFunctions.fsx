@@ -9,8 +9,8 @@ Create a function that converts a string (e.g "Sunday") into an DayOfWeek type
 TIP - you can pattern match on strings!
 
 match x with
-| "a" -> 
-| "b" -> 
+| "a" ->
+| "b" ->
 | etc
 | _ ->  // wildcard matches anything
 
@@ -20,7 +20,7 @@ match x with
 type DayOfWeek = Sun | Mon | Tue | Wed | Thu | Fri | Sat
 
 let strToDayOfWeek s =
-    match s with 
+    match s with
     | "Sunday" | "Sun" -> Some Sun
     ??
 
@@ -29,4 +29,4 @@ let strToDayOfWeek s =
 strToDayOfWeek "Sunday"  // good
 strToDayOfWeek "Sun"     // good
 
-strToDayOfWeek "April"   // bad    
+strToDayOfWeek "April"   // bad

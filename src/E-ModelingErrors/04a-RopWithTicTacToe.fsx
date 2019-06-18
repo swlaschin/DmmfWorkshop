@@ -55,11 +55,14 @@ let initialGameState = {
     Result=KeepPlaying
     }
 
+/// the "database"
 let mutable gameState = initialGameState
 
+/// Load game from database
 let loadGameState() =
   gameState
 
+/// Save game to database
 let saveGameState newGameState =
   gameState <- newGameState
 
@@ -67,25 +70,32 @@ let saveGameState newGameState =
 // internal steps
 //----------------
 
+/// Has the square been played before
 let checkValidSquare gameState newMove =
+  // helper function for use in List.exists below
   let squareIsPlayed existingMove =
     existingMove.Square = newMove.Square
+
+  // do the test by checking all the previous moves
   if gameState.Moves |> List.exists squareIsPlayed then
     Error SquareAlreadyPlayed
   else
     Ok newMove
 
+/// Is it the correct players turn?
 let checkValidPlayer gameState newMove =
   if gameState.PlayerToMove <> newMove.Player then
     Error NotYourTurn
   else
     Ok newMove
 
+/// A helper function to return the next player
 let otherPlayer player =
   match player with
   | X -> O
   | O -> X
 
+/// Update the game state after a new move
 let updateGameState gameState newMove =
   {gameState with
      Moves = newMove :: gameState.Moves
@@ -94,7 +104,10 @@ let updateGameState gameState newMove =
   }
 
 
-/// pure workflow function with no I/O
+/// The core workflow - a "pure" function with no I/O.
+/// That is, the gameState is provided as a parameter
+/// and we do NOT know about the database.
+/// This is what we should unit test.
 let pureWorkflow gameState newMove =
   newMove
   |> checkValidSquare gameState
@@ -102,13 +115,16 @@ let pureWorkflow gameState newMove =
   |> Result.map (updateGameState gameState)
 
 
-/// final workflow function with I/O
+/// The top-level workflow function with I/O
+/// It loads from the database, calls the pure domain logic,
+/// and then saves state back to the database.
 let makeMove newMove =
     // IO here
     let gameState = loadGameState()
 
     // pure
     let result = pureWorkflow gameState newMove
+
     // make MoveResult
     let moveResult =
       match result with

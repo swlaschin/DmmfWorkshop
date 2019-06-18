@@ -4,30 +4,37 @@ Coffee maker
 
 #load "Result.fsx"
 
+/// The request from the user
 type Request =
   | Espresso
   | Cappuccino
   | Latte
   | HotWater
 
+/// The state of the coffee machine
 type CoffeeMachineState = {
   HasWater : bool
   HasCoffee : bool
   HasMilk : bool
 }
 
+/// All possible errors
 type ErrorMessage =
   | NoWater
   | NoCoffee
   | NoMilk
 
-let checkWaterStatus coffeeMachineState request =
+/// If there is enough water, return OK of request.
+/// If not, return an error
+let checkWaterStatus coffeeMachineState request :Result<Request,ErrorMessage> =
   if coffeeMachineState.HasWater then
     Ok request
   else
     Error NoWater
 
-let checkCoffeeStatus coffeeMachineState request =
+/// If there is enough coffee, return OK of request.
+/// If not, return an error.
+let checkCoffeeStatus coffeeMachineState request :Result<Request,ErrorMessage> =
   match request with
   | HotWater ->
     Ok request
@@ -37,7 +44,9 @@ let checkCoffeeStatus coffeeMachineState request =
     else
       Error NoCoffee
 
-let checkMilkStatus coffeeMachineState request =
+/// If there is enough coffee, return OK of request.
+/// If not, return an error.
+let checkMilkStatus coffeeMachineState request :Result<Request,ErrorMessage> =
   match request with
   | HotWater | Espresso  ->
     Ok request
@@ -47,8 +56,10 @@ let checkMilkStatus coffeeMachineState request =
     else
       Error NoMilk
 
-
-let validateRequest coffeeMachineState request =
+/// Combine all the validations.
+/// If they are all good, return OK of request.
+/// If not, return an error.
+let validateRequest coffeeMachineState request :Result<Request,ErrorMessage> =
   request
   |> checkWaterStatus coffeeMachineState
   |> Result.bind (checkCoffeeStatus coffeeMachineState)

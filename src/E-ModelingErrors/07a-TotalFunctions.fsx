@@ -9,7 +9,7 @@ module ConstrainedTypes =
         let create i =
             if i = 0 then
                 None
-            else 
+            else
                 Some (NonZeroInteger i)
 
         let value (NonZeroInteger i) = i
@@ -36,8 +36,8 @@ twelveDividedBy_exn 4
 
 let twelveDividedBy_opt i =
     if i = 0 then
-        None 
-    else 
+        None
+    else
         Some (12 / i)
 
 
@@ -45,17 +45,17 @@ let twelveDividedBy_opt i =
 let result0 = twelveDividedBy_opt 0
 
 match result0 with
-| Some i -> 
+| Some i ->
     i |> printfn "Answer is %i"
-| None -> 
+| None ->
     printfn "Output is not available"
 
 let result1 = twelveDividedBy_opt 1
 
 match result1 with
-| Some i -> 
+| Some i ->
     i |> printfn "Answer is %i"
-| None -> 
+| None ->
     printfn "Output is not available"
 
 // ============================
@@ -67,20 +67,20 @@ let twelveDividedBy_nz nz =
 
 
 // test
-let nz0 = NonZeroInteger.create 0 
+let nz0 = NonZeroInteger.create 0
 
 match nz0 with
-| Some nz -> 
-    twelveDividedBy_nz nz 
-    |> printfn "Answer is %i"
-| None -> 
-    printfn "Input is not a NonZeroInteger"
-
-let nz1 = NonZeroInteger.create 1 
-
-match nz1 with
-| Some nz -> 
+| Some nz ->
     twelveDividedBy_nz nz
     |> printfn "Answer is %i"
-| None -> 
+| None ->
+    printfn "Input is not a NonZeroInteger"
+
+let nz1 = NonZeroInteger.create 1
+
+match nz1 with
+| Some nz ->
+    twelveDividedBy_nz nz
+    |> printfn "Answer is %i"
+| None ->
     printfn "Input is not a NonZeroInteger"
