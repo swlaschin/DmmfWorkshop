@@ -23,12 +23,3 @@ let multipliedByTwo x = ??
 
 let sayGreeting ?? ?? = ??
 
-// --------------------------
-// Q. Rewrite `let add x y = x + y` using lambdas.
-// There are two alternatives. Compare the signatures of these
-// alternative functions with the original.
-
-// example to copy
-let add2 = fun x -> x + 2
-
-let add = ??

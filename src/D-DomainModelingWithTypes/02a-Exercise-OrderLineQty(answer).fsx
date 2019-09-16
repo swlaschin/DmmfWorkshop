@@ -7,7 +7,9 @@ module ConstrainedTypes =
     type OrderLineQty = private OrderLineQty of int
 
     module OrderLineQty =
-        /// Public constructor
+        /// Public function to create a OrderLineQty.
+        /// I.e. wrap an int in a OrderLineQty (if possible!).
+        /// Used like a "factory method" "constructor" etc
         let create qty =
             if qty < 1 then
                 None
@@ -16,10 +18,18 @@ module ConstrainedTypes =
             else
                 Some (OrderLineQty qty)
 
-        let value (OrderLineQty qty) = qty
+        /// Public function to get the data out of a OrderLineQty
+        /// An "unwrapper" or "deconstructor" or "property" function
+        let value (OrderLineQty qty) =
+            qty
 
 
+// same as "using ConstrainedTypes"
 open ConstrainedTypes
+
+type OrderLine = {
+    Qty: OrderLineQty
+    }
 
 // Write a function that adds two OrderLineQtys
 let addOrderQty oq1 oq2 =
@@ -27,6 +37,7 @@ let addOrderQty oq1 oq2 =
     let v2 = OrderLineQty.value oq2
     let v3 = v1 + v2
     OrderLineQty.create v3
+
 
 // val addOrderQty :
 //   oq1:OrderLineQty -> oq2:OrderLineQty -> OrderLineQty option

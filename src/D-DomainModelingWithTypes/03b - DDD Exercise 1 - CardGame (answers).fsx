@@ -23,19 +23,9 @@ module CardGame =
     type Rank = Two | Three | Four | Five | Six | Seven | Eight
                        | Nine | Ten | Jack | Queen | King | Ace
 
-    type Card = {
-        Suit: Suit
-        Rank: Rank
-        }
-
-    // alternative using a tuple
-    // type Card = Suit * Rank
+    type Card = Suit * Rank
 
     type Hand = Card list
-
-    // you could wrap this if you like
-    // type Hand = Hand of Card list
-
     type Deck = Card list
 
     type Player = {Name : string; Hand : Hand}

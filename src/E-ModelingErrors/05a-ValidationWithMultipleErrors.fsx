@@ -19,60 +19,76 @@ type ValidationError =
 
 type ErrorMessage =
   | ValidationError of ValidationError list
+  | DbError of string
   | SmtpServerError of string
 
 
-let nameNotBlank name =
+let nameNotBlank name : Validation<string,ValidationError> =
   if name= "" then
-    Error NameMustNotBeBlank
+    Error [NameMustNotBeBlank]
   else
     Ok name
 
-let name50 name =
+let name50 name : Validation<string,ValidationError> =
   if String.length name > 50 then
-    Error (NameMustNotBeLongerThan 50)
+    Error [NameMustNotBeLongerThan 50]
   else
     Ok name
 
-let emailNotBlank email =
+let emailNotBlank email : Validation<string,ValidationError> =
   if email = "" then
-    Error EmailMustNotBeBlank
+    Error [EmailMustNotBeBlank]
   else
     Ok email
 
 /// Validate the UserId -- this always works
-let validateUserId id =
+let validateUserId id : Validation<int,ValidationError> =
     if id > 0 then
         Ok id
     else
-        Error UserIdMustBePositive
-    |> Validation.ofResult
+        Error [UserIdMustBePositive]
 
 /// Validate the Name -- this might fail
 let validateName name =
     name
     |> nameNotBlank
-    |> Result.bind name50
-    |> Validation.ofResult
+    |> Validation.bind name50
 
 /// Validate the Email -- this might fail
 let validateEmail email =
     email
     |> emailNotBlank
-    |> Validation.ofResult
 
-let (<!>) = Validation.map
-let (<*>) = Validation.apply
+let validateRequest req : Result<Request,ErrorMessage> =
 
-let validateRequest req =
+    // a "constructor" function
     let createRequest userId name email =
        {UserId=userId; Name= name; Email=email }
 
-    createRequest
-    <!> (validateUserId req.UserId)
-    <*> (validateName req.Name)
-    <*> (validateEmail req.Email)
-    |> Result.mapError ValidationError
+    // the validated components
+    let userIdOrError  = validateUserId req.UserId
+    let nameOrError = validateName req.Name
+    let emailOrError = validateEmail req.Email
+
+    // uncomment to see this this fail...
+    //createRequest userIdOrError nameOrError emailOrError
+
+    // option1 -- use the special operators
+    let ( <!> ) = Validation.map
+    let ( <*> ) = Validation.apply
+    let requestOrError =
+        createRequest <!> userIdOrError <*> nameOrError <*> emailOrError
+
+    // NOTE: option1 is equivalent to this ugly code
+    let requestOrError2 =
+        Validation.apply (Validation.apply (Validation.map createRequest userIdOrError) nameOrError) emailOrError
+
+    // option2 -- use the "lift3" function
+    // (because there are three parameters)
+    let requestOrError3 = (Validation.lift3 createRequest) userIdOrError nameOrError emailOrError
+
+    // convert back into a normal Result
+    requestOrError |> Result.mapError ValidationError
 
 
 // -------------------------------

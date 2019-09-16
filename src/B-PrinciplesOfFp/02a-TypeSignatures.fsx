@@ -1,4 +1,15 @@
-﻿
+﻿// =================================
+// Type inference
+// =================================
+
+// example from the slides
+let doSomething f x =
+   let y = f (x + 1)
+   "hello" + y
+
+// val doSomething : f:(int -> string) -> x:int -> string
+
+
 // Example 1 - type inference
 let printName aName =
     printfn "Hello %s" aName
@@ -8,7 +19,6 @@ let name = "Alice"
 printName name
 
 // val printName : string -> unit
-
 
 (*
 This means that the printName function takes a string as input
@@ -25,14 +35,16 @@ let returnHello() =    // () means no input
 
 // Example 2 - defining a function with an int parameter
 //              causes type errors
-let printName aName =
+let printName2 aName =
     printfn "Hello %i" aName
 
-// test
+// test -- uncomment below
+(*
 let name = "Alice"
-printName name
+printName2 name
+*)
 
-//    val printName : int -> unit
+//    val printName2 : int -> unit
 //    error FS0001: The type 'string' is not compatible with [an integer type]
 
 
@@ -58,8 +70,8 @@ printIntAndString 1 2
 *)
 
 // ====================================
-// Type annotations
-
+// Helping the compiler with "type annotations"
+// ====================================
 
 (*
 let toUpper x =
@@ -95,10 +107,16 @@ let helloInt_v4 (anInt:int) :string =
     sprintf "Hello %i" anInt
 
 // ====================================
-// Generics
+// Functions with generic parameters
+// ====================================
 
 let returnSameThing x = x
 
+(*
+T returnSameThing<T>(T x) {
+  return X
+  }
+*)
 (*
 val returnSameThing : x:'a -> 'a
 *)
@@ -112,3 +130,4 @@ val ignoreTheInput : x:'a -> unit
 val ignoreTwoInputs : x:'a -> y:'b -> unit
 val ignoreThreeInputs : x:'a -> y:'b -> z:'c -> unit
 *)
+

@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="00a-PlayWithTypes.fsx" />
+    <None Include="00b-ExamplesFromSlides.fsx" />
+    <None Include="01a-ModelingWithChoices.fsx" />
+    <None Include="01b-ConstrainedType.fsx" />
+    <None Include="02a-Exercise-OrderLineQty.fsx" />
+    <None Include="02a-Exercise-OrderLineQty(answer).fsx" />
+    <None Include="02b-Exercise-ConstrainedTypes.fsx" />
+    <None Include="02b-Exercise-ConstrainedTypes(answers).fsx" />
+    <None Include="03a - DDD Exercise 1 - CardGame.fsx" />
+    <None Include="03b - DDD Exercise 1 - CardGame (answers).fsx" />
+    <None Include="03c - DDD Exercise 2 - Contact.fsx" />
+    <None Include="03d - DDD Exercise 2 - Contact (answers).fsx" />
+    <None Include="03e - DDD Exercise 3 - Payments.fsx" />
+    <None Include="03f - DDD Exercise 3 - Payments (answers).fsx" />
+    <None Include="03g - DDD Exercise 4 - Refactoring flags.fsx" />
+    <None Include="03h - DDD Exercise 4 - Refactoring flags (answers).fsx" />
+    <None Include="04a2 - FSM Exercises - Template to work from.fsx" />
+    <None Include="04b1 - FSM Exercise 1 - Verified Email.fsx" />
+    <None Include="04b3 - FSM Exercise 1 - Verified Email (answers).fsx" />
+    <None Include="04c1 - FSM Exercise 2 - Shipments.fsx" />
+    <None Include="04c3 - FSM Exercise 2 - Shipments (answers).fsx" />
+    <None Include="04d1 - FSM Exercise 3 - Shopping cart.fsx" />
+    <None Include="04d3 - FSM Exercise 3 - Shopping cart (answers).fsx" />
+    <None Include="05_-DomainModel-template.fsx" />
+    <None Include="05a-DomainModel-TicTacToe.fsx" />
+    <None Include="05b-DomainModel-ATM.fsx" />
+    <None Include="05c-DomainModel-Microwave.fsx" />
+    <None Include="05d-DomainModel-CoffeeMaker.fsx" />
+    <None Include="05e-DomainModel-Amazon.fsx" />
+    <None Include="05f-DomainModel-Ebay.fsx" />
+    <None Include="05g-DomainModel-YourOwnDomain.fsx" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.5.2" />
+  </ItemGroup>
+
+</Project>

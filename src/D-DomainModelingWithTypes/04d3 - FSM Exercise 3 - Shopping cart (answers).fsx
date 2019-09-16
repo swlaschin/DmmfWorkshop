@@ -31,12 +31,10 @@ module ShoppingCartDomain =
 
     // type EmptyCartData = not needed
     type ActiveCartData = CartContents
-    type PaidCartData = {
-        Contents: CartContents
-        Payment: Payment
-        }
+    type PaidCartData = CartContents * Payment
 
     // 3) Create a type that represent the choice of all the states
+
     type ShoppingCart =
         | EmptyCartState
         | ActiveCartState of ActiveCartData
@@ -65,7 +63,7 @@ module ShoppingCartDomain =
     //     Payment -> ActiveCartData -> ShoppingCart
 
     let pay (payment:Payment) (activeCartData:ActiveCartData)  :ShoppingCart =
-        let paidData = {Contents=activeCartData; Payment=payment}
+        let paidData = activeCartData, payment
         PaidCartState paidData
 
     // "removeFromActive" creates a new state from active data after removing an item

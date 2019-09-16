@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="06a-MultipleArguments_Currying.fsx" />
+    <None Include="06a-Sequences.fsx" />
+    <None Include="06b-Exercise-ToRomanNumbers.fsx" />
+    <None Include="06c-Exercise-ToRomanNumbers(answer).fsx" />
+    <None Include="06d-Exercise-FizzBuzz.fsx" />
+    <None Include="06e-Exercise-FizzBuzz(answer).fsx" />
+    <None Include="06f-Exercise-StackCalculator.fsx" />
+    <None Include="06g-Exercise-StackCalculator(answer).fsx" />
+    <None Include="07a-Expressions.fsx" />
+    <None Include="07a-ProbDistributions.fsx" />
+    <None Include="07b-Exercise-Expressions.fsx" />
+    <None Include="07c-Exercise-Expressions(answer).fsx" />
+    <None Include="08a-Lenses.fsx" />
+    <None Include="08a-Lists.fsx" />
+    <None Include="08b-Exercise-Lists.fsx" />
+    <None Include="08c-Exercise-Lists(answer).fsx" />
+    <None Include="08d-Exercise-FromRomanNumerals.fsx" />
+    <None Include="08e-Exercise-FromRomanNumerals(answer).fsx" />
+    <None Include="09a-Recursion.fsx" />
+    <None Include="09b-Exercise-Recursion.fsx" />
+    <None Include="09c-Exercise-Recursion(answer).fsx" />
+    <None Include="106-Exercise-DependencyInjection(answer).fsx" />
+    <None Include="106-Exercise-DependencyInjection.fsx" />
+    <None Include="10a-ParameterizeAllTheThings.fsx" />
+    <None Include="10b-Exercise-ParameterizeAllTheThings.fsx" />
+    <None Include="10c-Exercise-ParameterizeAllTheThings(answer).fsx" />
+    <None Include="10d-Exercise-Stategy.fsx" />
+    <None Include="10e-Exercise-Stategy(answer).fsx" />
+    <None Include="11a-Exercise-TwentyQuestions.fsx" />
+    <None Include="11b-Exercise-TwentyQuestions(answer).fsx" />
+    <None Include="12a-Exercise-RockPaperScissors.fsx" />
+    <None Include="12b-Exercise-RockPaperScissors(answer).fsx" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.5.2" />
+  </ItemGroup>
+
+</Project>

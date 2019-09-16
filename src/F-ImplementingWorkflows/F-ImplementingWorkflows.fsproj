@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="01a-Async.fsx" />
+    <None Include="02a-AsyncRopWithTicTacToe.fsx" />
+    <None Include="02b-AsyncRopWithCoffeeMaker.fsx" />
+    <None Include="Result.fsx" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.5.2" />
+  </ItemGroup>
+
+</Project>

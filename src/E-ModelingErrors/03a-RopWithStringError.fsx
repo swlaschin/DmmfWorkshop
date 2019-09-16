@@ -2,6 +2,13 @@
 Railway oriented programming
 *)
 
+// IMPORTANT - if you get errors such as
+//   Could not load type 'ErrorMessage' from assembly 'FSI-ASSEMBLY,
+// then try:
+// 1. Reset the FSI interactive
+// 2. Load code in small chunks
+
+open System
 #load "Result.fsx"
 
 type Request = {
@@ -66,14 +73,24 @@ unsendableRequest |> validateRequest
 // ------------------------
 
 // trim spaces and lowercase
-let canonicalizeEmail input =
+let canonicalizeEmail (input:Request) =
    { input with Email = input.Email.Trim().ToLower() }
 
-let canonicalizeEmailR input =
-  Result.map canonicalizeEmail input
 
 
 // test so far
+goodRequest
+|> validateRequest
+|> Result.map canonicalizeEmail
+
+(*
+let canonicalizeEmailR =   // value restriction error
+  Result.map canonicalizeEmail
+*)
+
+let canonicalizeEmailR twoTrackInput =  // value restriction error fixed!!!
+  twoTrackInput |> Result.map canonicalizeEmail
+
 goodRequest
 |> validateRequest
 |> canonicalizeEmailR
@@ -93,8 +110,8 @@ let tee f result =
   f result
   result
 
-let updateDbR input =
-  Result.map (tee updateDb) input
+let updateDbR twoTrackInput =
+  twoTrackInput |> Result.map (tee updateDb)
 
 
 // test so far
@@ -115,6 +132,18 @@ let sendEmail (request:Request) =
         printfn "Sending email=%s" request.Email
         request // return request for processing by next step
 
+(*
+// this code will throw an exception :(
+unsendableRequest
+|> validateRequest
+|> canonicalizeEmailR
+|> Result.map sendEmail
+*)
+
+// The fix is to convert the exception-throwing code
+// into Result-returning code
+
+
 let catch exceptionThrowingFunction handler oneTrackInput =
     try
         Ok (exceptionThrowingFunction oneTrackInput)
@@ -124,11 +153,12 @@ let catch exceptionThrowingFunction handler oneTrackInput =
 
 let catchR exceptionThrowingFunction handler twoTrackInput =
     let catch' = catch exceptionThrowingFunction handler
-    twoTrackInput |> Result.bind catch'
+    twoTrackInput
+    |> Result.bind catch'
 
 let sendEmailR twoTrackInput =
-    let handler (ex:exn) = ex.Message
-    catchR sendEmail handler twoTrackInput
+    let exnConverter (ex:exn) = ex.Message
+    catchR sendEmail exnConverter twoTrackInput
 
 
 // test so far

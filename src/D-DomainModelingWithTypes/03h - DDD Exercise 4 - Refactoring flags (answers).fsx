@@ -37,19 +37,8 @@ type ConnectionHandle = ConnectionHandle of int
 type ConnectionStartedUtc = System.DateTime
 type ReasonForDisconnection = string
 
-// version 1, using a tuple for Connected case
-type Connection_After1 =
+type Connection__After =
     | Connected of ConnectionHandle * ConnectionStartedUtc
-    | Disconnected of ReasonForDisconnection
-
-// version 2, using a record for Connected case
-type ConnectedState = {
-    Handle: ConnectionHandle
-    Started: System.DateTime
-}
-
-type Connection_After2 =
-    | Connected of ConnectedState // use a special record
     | Disconnected of ReasonForDisconnection
 
 
@@ -63,21 +52,10 @@ type Order_Before =
    PaidDate: System.DateTime option
    }
 
-// version 1, using a tuple for the Paid case
 type OrderId = OrderId of int
 type PaidAmount = float
 type PaidDate = System.DateTime
-type Order_After1 =
+type Order__After =
     | Unpaid of OrderId
     | Paid of OrderId * PaidAmount * PaidDate
-
-// version 2, using a record for the Paid case
-type PaidOrderInfo = {
-    Id: OrderId
-    Amount: float
-    Date: System.DateTime
-}
-type Order_After2 =
-    | Unpaid of OrderId
-    | Paid of PaidOrderInfo  // use a special record
 

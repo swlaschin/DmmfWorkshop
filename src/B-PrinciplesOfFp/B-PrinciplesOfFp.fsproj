@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="01a-HelloWorld.fsx" />
+    <None Include="01b-Exercise-HelloWorld.fsx" />
+    <None Include="01c-Exercise-HelloWorld(answer).fsx" />
+    <None Include="02a-TypeSignatures.fsx" />
+    <None Include="02b-Exercise-TypeSignatures.fsx" />
+    <None Include="02c-Exercise-TypeSignatures(answer).fsx" />
+    <None Include="03a-FunctionsAsThings.fsx" />
+    <None Include="03b-Exercise-FunctionsAsThings.fsx" />
+    <None Include="03c-Exercise-FunctionsAsThings(answer).fsx" />
+    <None Include="04a-Composition-and-piping.fsx" />
+    <None Include="05a-Exercise-ThinkOfANumber.fsx" />
+    <None Include="05b-Exercise-ThinkOfANumber(answer).fsx" />
+    <None Include="05c-Exercise-Decorator.fsx" />
+    <None Include="05d-Exercise-Decorator(answer).fsx" />
+    <None Include="06a-Exercise-ComposableTypes.fsx" />
+    <None Include="Basic syntax you need to know.fsx" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.5.2" />
+  </ItemGroup>
+
+</Project>

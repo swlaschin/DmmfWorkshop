@@ -105,6 +105,12 @@ module Result =
         let (<*>) = apply
         f <!> x1 <*> x2 <*> x3 <*> x4
 
+    /// Lift a five parameter function to use Result parameters
+    let lift5 f x1 x2 x3 x4 x5 =
+        let (<!>) = map
+        let (<*>) = apply
+        f <!> x1 <*> x2 <*> x3 <*> x4 <*> x5
+
     /// Apply a monadic function with two parameters
     let bind2 f x1 x2 = lift2 f x1 x2 |> bind id
 
@@ -231,7 +237,11 @@ type Validation<'Success,'Failure> =
 [<RequireQualifiedAccess>]  // RequireQualifiedAccess forces the `Validation.xxx` prefix to be used
 module Validation =
 
-    let map = Result.map
+    let map f (x:Validation<_,_>) :Validation<_,_> =
+        Result.map f x
+
+    let bind f (x:Validation<_,_>) :Validation<_,_> =
+        Result.bind f x
 
     /// Apply a Validation<fn> to a Validation<x> applicatively
     let apply (fV:Validation<_,_>) (xV:Validation<_,_>) :Validation<_,_> =
@@ -240,6 +250,34 @@ module Validation =
         | Error errs1, Ok _ -> Error errs1
         | Ok _, Error errs2 -> Error errs2
         | Error errs1, Error errs2 -> Error (errs1 @ errs2)
+
+    //-----------------------------------
+    // Lifting
+
+    /// Lift a two parameter function to use Validation parameters
+    let lift2 f x1 x2 =
+        let (<!>) = map
+        let (<*>) = apply
+        f <!> x1 <*> x2
+
+    /// Lift a three parameter function to use Validation parameters
+    let lift3 f x1 x2 x3 =
+        let (<!>) = map
+        let (<*>) = apply
+        f <!> x1 <*> x2 <*> x3
+
+    /// Lift a four parameter function to use Validation parameters
+    let lift4 f x1 x2 x3 x4 =
+        let (<!>) = map
+        let (<*>) = apply
+        f <!> x1 <*> x2 <*> x3 <*> x4
+
+    /// Lift a five parameter function to use Validation parameters
+    let lift5 f x1 x2 x3 x4 x5 =
+        let (<!>) = map
+        let (<*>) = apply
+        f <!> x1 <*> x2 <*> x3 <*> x4 <*> x5
+
 
     // combine a list of Validation, applicatively
     let sequence (aListOfValidations:Validation<_,_> list) =

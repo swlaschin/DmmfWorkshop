@@ -40,45 +40,80 @@ type PaymentAmount =
     PaymentAmount of float
 
 type Payment = {
-    PaymentMethod: PaymentMethod
-    PaymentAmount: PaymentAmount
+    paymentMethod: PaymentMethod
+    paymentAmount: PaymentAmount
     }
+
+//=================================
+// helper functions
+//=================================
+
+let cardTypeToString cardType =
+  match cardType with
+  | Visa -> "visa"
+  | Mastercard -> "mc"
+
+let chequeNumberToInt checkNo =
+  match checkNo with
+  | ChequeNumber num -> num
 
 let printPaymentMethod (paymentMethod:PaymentMethod) =
     match paymentMethod with
-    | Cash ->  printfn "Paid in cash"
-    | Cheque checkNo -> printfn "Paid by cheque: %A" checkNo
-    | Card (cardType,cardNo) -> printfn "Paid with %A %A" cardType cardNo
-    | PayPal emailAddress -> printfn "Paid with PayPal %A" emailAddress
-    | Bitcoin bitcoinAddress -> printfn "Paid with BitCoin %A" bitcoinAddress
+    | Cash ->
+        printfn "Paid in cash"
 
-let printPayment (payment:Payment) =
-    // get the data out using a match -- or could define a helper "value" function
-    match payment.PaymentAmount
-        with (PaymentAmount amount) -> printf "Amount: %g. " amount
-    printPaymentMethod payment.PaymentMethod
+    // you can deconstruct using a helper function such as chequeNumberToInt
+    | Cheque checkNo ->
+        printfn "Paid by cheque: %i" (chequeNumberToInt checkNo)
 
-let makePayment (amount:float) (paymentMethod:PaymentMethod) :Payment =
-    {PaymentMethod=paymentMethod; PaymentAmount=PaymentAmount amount}
+    // you can deconstruct directly in the pattern match
+    | Card (cardType,(CardNumber cardNoStr)) ->
+        printfn "Paid with %s %s" (cardTypeToString cardType) cardNoStr
 
-// examples
+    // you can deconstruct directly in the pattern match
+    | PayPal (EmailAddress emailAddress) ->
+        printfn "Paid with PayPal %s" emailAddress
+
+    // you can deconstruct directly in the pattern match
+    | Bitcoin (BitcoinAddress bitcoinAddress) ->
+        printfn "Paid with BitCoin %s" bitcoinAddress
+
+
+//=================================
+// test the payment method logic
+//=================================
 let paymentMethod1 = Cash
 let paymentMethod2 = Cheque (ChequeNumber 42)
 let paymentMethod3 = Card (Visa, CardNumber "1234")
 let paymentMethod4 = PayPal (EmailAddress "me@example.com")
 let paymentMethod5 = Bitcoin (BitcoinAddress "1234")
 
-let payment1 = makePayment 42.0 paymentMethod1
-let payment2 = makePayment 123.0 paymentMethod2
-let payment3 = makePayment 123.0 paymentMethod3
-
-// highlight and run
+// highlight and run to check the code works
 printPaymentMethod paymentMethod1
 printPaymentMethod paymentMethod2
 printPaymentMethod paymentMethod3
 printPaymentMethod paymentMethod4
 printPaymentMethod paymentMethod5
 
+//=================================
+// working with whole payments
+//=================================
+
+let printPayment (payment:Payment) =
+    match payment.paymentAmount with
+        | PaymentAmount floatAmount -> printf "1. Amount: %g. " floatAmount
+    printf "2. Amount: %A. " payment.paymentAmount
+    printPaymentMethod payment.paymentMethod
+
+let makePayment (amount:float) (paymentMethod:PaymentMethod) :Payment =
+    {paymentMethod=paymentMethod; paymentAmount=PaymentAmount amount}
+
+let payment1 = makePayment 42.0 paymentMethod1
+let payment2 = makePayment 123.0 paymentMethod2
+let payment3 = makePayment 123.0 paymentMethod3
+
+// highlight and run to check the code works
 printPayment payment1
 printPayment payment2
 printPayment payment3
+

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="01a1 - DSL Exercise 1 - Time.fsx" />
+    <None Include="01a2 - DSL Exercise 1 - Time (answers).fsx" />
+    <None Include="01b1 - DSL Exercise 2 - Turtle Graphics.fsx" />
+    <None Include="01b2 - DSL Exercise 2 - Turtle Graphics (answers).fsx" />
+    <None Include="01c1 - DSL Exercise 3 - Recipe.fsx" />
+    <None Include="01c2 - DSL Exercise 3 - Recipe (answers).fsx" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.5.2" />
+  </ItemGroup>
+
+</Project>

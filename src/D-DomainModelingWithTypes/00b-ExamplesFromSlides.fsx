@@ -94,11 +94,6 @@ module StringTypes =
             then Some (String50 s)
             else None
 
-
-
-// STOP here and wait for more slides!
-
-
 module DomainTypes =
 
     open StringTypes
@@ -122,8 +117,6 @@ module DomainTypes =
     type Contact = {
       Name: PersonalName
       Email: EmailContactInfo }
-
-// STOP here and wait for more slides!
 
 // ================================================
 // (from slides) The new domain with address info added as well

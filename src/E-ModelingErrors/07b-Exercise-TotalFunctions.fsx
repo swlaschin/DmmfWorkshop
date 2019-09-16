@@ -11,7 +11,7 @@ TIP - you can pattern match on strings!
 match x with
 | "a" ->
 | "b" ->
-| etc
+| etcs
 | _ ->  // wildcard matches anything
 
 

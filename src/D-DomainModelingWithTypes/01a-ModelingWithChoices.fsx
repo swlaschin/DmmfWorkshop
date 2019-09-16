@@ -1,4 +1,8 @@
-﻿type Temp =
+﻿// ======================================================
+// Modeling temperature as a choice
+// ======================================================
+
+type Temp =
     | F of int
     | C of float
 
@@ -14,6 +18,10 @@ let t2 = C 38.5
 printTemperature t1
 printTemperature t2
 
+
+// ======================================================
+// Modeling an empty wallet as a choice
+// ======================================================
 
 type Currency = Currency of float
 type Wallet =
@@ -33,14 +41,24 @@ let w2 = NoMoney
 printWallet w1
 printWallet w2
 
+// ======================================================
+// Modeling optional values as a choice
+// ======================================================
+
+(*
+/// this is the same definition as the built-in type
 type Option<'a> =
     | Some of 'a
     | None
+*)
+// IMPORTANT: Reset the F# interactive session after defining!
+
 let printOption opt =
     match opt with
-    | Some dataAssociatedWithThisCase ->
-        sprintf "Some %i" dataAssociatedWithThisCase
-    | None -> "None"
+    | Some data ->
+        sprintf "Some %i" data
+    | None ->
+        "None"
 
 
 // test
@@ -51,13 +69,6 @@ let noInt = None
 printOption someInt
 printOption noInt
 
-
-
-
-
-let actual2 = printOption None
-let expected2 = "None";
-actual2 = expected2
 
 
 

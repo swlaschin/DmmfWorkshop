@@ -126,7 +126,11 @@ let fromDto personDto =
         |> Validation.ofResult
 
     let nameR = createName <!> firstR <*> lastR
-    let person = createPerson <!> nameR <*> ageR <*>emailR
+    let person = createPerson <!> nameR <*> ageR <*> emailR
+
+    // or alternatively
+    let nameR2 = Validation.lift2 createName firstR lastR
+    let personR2 = Validation.lift3 createPerson nameR ageR emailR
 
     person // return
 

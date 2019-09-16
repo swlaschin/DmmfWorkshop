@@ -1,11 +1,4 @@
-(*
-Do 2 things:
-
-1) Implement validateInput below using built-in Result.bind function
-2) Change the string errors to an ErrorType with choices
-*)
-
-type Request = {
+type Input = {
    Name : string
    Email : string
 }

@@ -21,10 +21,28 @@ Even with such a simple bit of code, there are some interesting things to note:
 let myName = "Scott"
 printfn "my name is %s" myName
 
+let add x y = x + y
+add 1 2
+
+// ======================================
+// tips on how to execute F# code interactively
+// ======================================
 
 (*
-printfn experiments
+1. Highlight and evaluate small chunks at a time rather than the whole file
+   That way, any errors are local
+2. Defined values are global in memory and can be reused.
+   If you get in trouble, it can be helpful to clear these.
+   - in VS code, kill the F# terminal
+   - in Visual Studio, do "Reset Interactive Session"
+
+
 *)
+
+
+// ======================================
+// Playing around with printfn and sprintf
+// ======================================
 
 "hello"  // string
 42       // int
@@ -45,6 +63,22 @@ printfn "%A" [1..3]   // %A anything
 printfn "%s is %i years old" "Alice" 42
 
 
+let printSquares n =
+   for i in [1..n] do
+      let sq = i*i
+      printfn "%i" sq
+
+printSquares 5
+
+// ======================================
+// sprintf is like printfn except that it returns a string
+// ======================================
+
+
+sprintf "%i" 42     // "42"
+sprintf "%f" 3.15   // "3.150000"
+
+
 
 // STOP HERE -- more slides coming!
 
@@ -53,7 +87,8 @@ printfn "%s is %i years old" "Alice" 42
 
 
 // ====================================
-// strict type checking
+// F# does not allow implicit casting
+// ====================================
 
 1 + 1.5
 1 + int 1.5
@@ -64,15 +99,16 @@ string 1 + "2"
 
 // ====================================
 // mutability
+// ====================================
 
 let x = 10
-x = 11
-// x <- 11
-
+x = 11        // this is wrong
+// x <- 11    // this is correct
 
 
 // ====================================
 // defining a function
+// ====================================
 
 let printName aName =
     printfn "Hello %s" aName
@@ -103,40 +139,32 @@ A few things to note about this:
 
 // ====================================
 // Function values vs simple values
+// ====================================
 
-//Simple Value
+// --------------------
+// Simple Values
 
 let x = 1
 // val x : int = 1                   // <=========== look at the signature
 
-//Function Value
+// --------------------
+// Function Values
 
 let add1 x = x + 1
 //val add1 : x:int -> int            // <=========== look at the signature
 
-// ====================================
-// Three different ways to define a function
 
+// --------------------
+// Modules
 
-module Function_V1 =  // this is a module, used to group code together
+/// this is a module, used to group code together
+module MyModule =
 
-    let add1 x =
-        x + 1   // no "return" keyword. Last expression is returned
+    let add2 x =
+        x + 2   // no "return" keyword. Last expression is returned
 
-module Function_V2 =
+MyModule.add2 40  // Result => 42
 
-    let add1 x =
-        let result = x + 1
-        result    // return result
-
-module Function_V3 =
-
-    let add1 =
-        fun x -> x + 1   // lambda expression uses "fun"
-
-
-Function_V1.add1 41  // Result => 42
-Function_V2.add1 41  // Result => 42
-Function_V3.add1 41  // Result => 42
-
-
+// "open" is same as "using" in C#
+open MyModule
+add2 40

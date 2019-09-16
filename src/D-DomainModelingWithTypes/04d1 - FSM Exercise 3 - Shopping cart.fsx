@@ -19,7 +19,6 @@ States are:
 *)
 
 module ShoppingCartDomain =
-    open System.Windows.Forms.AxHost
 
     // 1) Start with the domain types that are independent of state
 
@@ -29,14 +28,12 @@ module ShoppingCartDomain =
 
     // 2) Create a type to represent the data stored for each type
 
-    // type EmptyCartData = not needed
-    type ActiveCartData = CartContents
-    type PaidCartData = {
-        Contents: CartContents
-        Payment: Payment
-        }
+    type EmptyCartData = what data to store?
+    type ActiveCartData = what data to store?
+    type PaidCartData = what data to store?
 
     // 3) Create a type that represent the choice of all the states
+
     type ShoppingCart =
         | what?
         | what?
@@ -49,25 +46,21 @@ module ShoppingCartDomain =
     //     Product -> ShoppingCart
 
     let initCart (itemToAdd:Product) :ShoppingCart =
-        let activeData = [itemToAdd]
-        ??? // return what?
-
+        what goes here?
 
     // "addToActive" creates a new state from active data and a new item
     // function signature should be
     //     Product -> ActiveCartData -> ShoppingCart
 
     let addToActive (itemToAdd:Product) (activeCartData:ActiveCartData) :ShoppingCart =
-        let newActiveData = itemToAdd::activeCartData
-        ??? // return what?
+        what goes here?
 
     // "pay" creates a new state from active data and a payment amount
     // function signature should be
     //     Payment -> ActiveCartData -> ShoppingCart
 
     let pay (payment:Payment) (activeCartData:ActiveCartData)  :ShoppingCart =
-        let paidData = {Contents=activeCartData; Payment=payment}
-        ??? // return what?
+        what goes here?
 
     // "removeFromActive" creates a new state from active data after removing an item
     // function signature should be
@@ -80,10 +73,7 @@ module ShoppingCartDomain =
         cart |> List.filter (fun prod -> prod <> productToRemove)
 
     let removeFromActive (itemToRemove:Product) (activeCartData:ActiveCartData)  :ShoppingCart =
-        let newContents = removeItemFromContents itemToRemove activeCartData
-        match newContents with
-        | [] -> ???  // which state?
-        | smallerData -> ??? // which state?
+        what goes here?
 
 // ================================================
 // Now write some client code that uses this API

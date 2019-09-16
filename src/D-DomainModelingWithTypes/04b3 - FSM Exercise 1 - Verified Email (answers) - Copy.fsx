@@ -35,23 +35,23 @@ module EmailClient =
     open EmailDomain
 
     // Create a "verifyContactInfo" function that transitions from Unverified state to Verified state
-    let verifyContactInfo (hash:string) (email:EmailContactInfo)  :EmailContactInfo =
+    let verifyContactInfo (hash:string) (email:EmailContactInfo)  =
         match email with
         | Unverified emailAddress ->
-             let verifiedOrNone =
-                emailAddress |> verify hash
+             let verifiedOrNone = verify hash emailAddress
              match verifiedOrNone with
              | Some verifiedEmail ->
+                // transition to verified state
                 printfn "the email was verified"
-                Verified verifiedEmail
+                Verified verifiedEmail,"Success"
              | None ->
                 printfn "the email was not verified"
                 // return original state
-                email
+                email,"Failure"
         | Verified _ ->
             printfn "the email is already verified"
             // return original state
-            email
+            email,"Already verified"
 
     // Create a "sendVerificationMessage" function
     // Rule: "You can't send a verification message to a verified email"
@@ -85,7 +85,7 @@ let unverified = Unverified email
 unverified |> sendVerificationMessage
 
 
-let verifiedOk =
+let verifiedOk,status =
     let hash = "OK"
     unverified |> verifyContactInfo hash
 

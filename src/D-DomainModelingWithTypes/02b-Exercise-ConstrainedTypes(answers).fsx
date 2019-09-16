@@ -19,46 +19,39 @@ module ConstrainedTypes =
         /// Return the value
         let value (NonZeroInteger i) = i
 
-        /// Alternative implementation
-        let value2 nzi =
-          let (NonZeroInteger i) = nzi
-          i
-
-        /// Alternative implementation
-        let value3 nzi =
-          match nzi with
-          | NonZeroInteger i -> i
-
 open ConstrainedTypes
 
 // test
-let badNZI = NonZeroInteger.create 0
-let goodNZI = NonZeroInteger.create 1
+let nonZeroOpt0 = NonZeroInteger.create 0
+let nonZeroOpt1 = NonZeroInteger.create 1
+
 
 
 //----------------------------------------------------------
-//  Q. Create a `AllDigitsString` type that can only contain digit chars
+//  Q. Create a `ZipCode`  type that can only contain 5 digit chars
 
 module ConstrainedTypes2 =
 
-    type AllDigitsString = private AllDigitsString of string
+    type ZipCode = private ZipCode of string
 
-    module AllDigitsString =
+    module ZipCode =
         /// Public constructor
         let create (s:string) =
             let isAllDigits = s |> Seq.forall Char.IsDigit
-            if isAllDigits then
-                Some (AllDigitsString s)
+            if (s.Length = 5) && isAllDigits then
+                Some (ZipCode s)
             else
                 None
 
         /// Return the value
-        let value (AllDigitsString s) = s
+        let value (ZipCode s) = s
 
 // test
 open ConstrainedTypes2
 
-let x2 = AllDigitsString.create "123"
-let value = x2 |> Option.get  // dont do this except for testing!
+let zip1Option = ZipCode.create "12345"
+let zip1 = zip1Option |> Option.get  // dont do this except for testing!
 
-let x3 = AllDigitsString.create "abc"
+let zip2Option = ZipCode.create "abc"
+
+let zip3Option = ZipCode.create "123456"

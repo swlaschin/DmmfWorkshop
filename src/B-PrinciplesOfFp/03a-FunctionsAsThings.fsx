@@ -33,6 +33,48 @@ module FunctionsAsValues =
     let sixAgain = r 3 // result is 6
 
 // --------------------------------
+// Functions vs. Lambdas
+// --------------------------------
+
+module FunctionsAndLambdas =
+
+    // a one-parameter function defined in the usual way
+    let addOne_v1 x =
+        x + 1
+    // val addOne_v1 : x:int -> int
+
+    // a one-parameter function defined as a lambda.
+    // Note: "addOne_v2" is a "thing" with no parameters.
+    let addOne_v2 =
+        fun x -> x + 1
+    // val add_v2 : x:int -> int
+
+
+    // a two-parameter function defined in the usual way
+    let add_v1 x y =
+        x + y
+    // val add_v1 : x:int -> y:int -> int
+
+    // a two-parameter function defined as a lambda
+    // Note: "add_v2" is a "thing" with no parameters.
+    let add_v2 =
+        fun x y -> x + y
+    // val add_v2 : x:int -> y:int -> int
+
+    // a two-parameter function defined as a mixture.
+    // "x" is a parameter of "add_v2" but "y" is a parameter of the lambda.
+    let add_v3 x =
+        fun y -> x + y
+    // val add_v3 : x:int -> y:int -> int
+
+    // alternative to v3 using an inner function
+    let add_v3a x =
+        let innerFn y = x + y
+        innerFn // return
+    // val add_v3a : x:int -> (int -> int)
+
+
+// --------------------------------
 // functions as data
 // --------------------------------
 
@@ -53,6 +95,11 @@ module ListOfFunctions =
     // If 100 is the input, the output is 101
     // If 100 is the input, the output is 200
     // If 100 is the input, the output is 97
+
+
+// --------------------------------
+// functions need to have parameters!
+// --------------------------------
 
 module StrictEvaluation =
 
@@ -92,6 +139,7 @@ module FunctionsAsInput =
 // --------------------------------
 
 module FunctionsAsOutput =
+    open FunctionsAsValues
 
     (*
     let add1 x = x + 1
@@ -115,6 +163,7 @@ module FunctionsAsOutput =
 
 
 module FunctionsAsOutput_v2 =
+    open FunctionsAsValues
 
     let adderGenerator numberToAdd =
         // define a nested inner function
@@ -167,7 +216,7 @@ module PartialApplication =
         printfn "x is %i. y is %i" x y
 
     do
-        let three = (1 + 2)
+        let three = 1 + 2
         let x = three + 5
         let y = three + 10
         printfn "x is %i. y is %i" x y
@@ -181,7 +230,7 @@ module PartialApplication =
         (printfn "Hello %s") "Bob"
 
     do
-        let printName = (printfn "Hello %s")
+        let printName = printfn "Hello %s"
         printName "Alice"
         printName "Bob"
 
@@ -233,10 +282,7 @@ module PartialApplication =
 // --------------------------------
 
 module FunctionsAsParameters =
-
-    // define these again for use below
-    let add1 x = x + 1
-    let multiplyBy2 x = x * 2
+    open FunctionsAsValues
 
     let inputList = [1..5] // same as [1;2;3;4;5]
 
