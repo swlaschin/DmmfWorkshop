@@ -397,3 +397,6 @@ paket-files/
 /Slides
 /*.pdf
 /slides
+
+# Ionide
+.ionide
