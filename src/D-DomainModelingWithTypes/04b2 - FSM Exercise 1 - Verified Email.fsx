@@ -21,14 +21,16 @@ module EmailDomain =
 
     // Create a function that (maybe) creates a VerifiedEmail
     let verify (hash:string) (email:EmailAddress) :VerifiedEmail option =
-
         // Logic to implement:
         // if the hash is "OK", then return Some VerifiedEmail
         // else return None
-        if hash="OK" then
-            Some (VerifiedEmail email)
+
+        if hash = "OK" then
+            // then what
+            failwith "not implemented"
         else
-            None
+            // else what
+            failwith "not implemented"
 
 // ================================================
 // Now write some client code that uses this domain and API
@@ -40,7 +42,6 @@ module EmailClient =
     // Create a "verifyContactInfo" function that transitions
     // from Unverified state to Verified state
     let verifyContactInfo (hash:string) (email:EmailContactInfo)  :EmailContactInfo =
-
         // Logic to implement:
         // if the email is Unverified, then run "verify" from above
         // * if this succeeds, return the now Verified email
@@ -50,34 +51,29 @@ module EmailClient =
 
         match email with
         | Unverified emailAddress ->
-             let verifiedOrNone =
-                emailAddress |> verify hash
-             match verifiedOrNone with
-             | Some verifiedEmail ->
-                printfn "the email was verified"
-                Verified verifiedEmail
-             | None ->
-                printfn "the email was not verified"
-                // return original state
-                email
-        | Verified _ ->
-            printfn "the email is already verified"
-            // return original state
-            email
+            // what?
+            failwith "not implemented"
+        | Verified emailAddress ->
+            // what?
+            failwith "not implemented"
+
 
     // Create a "sendVerificationMessage" function
     // Rule: "You can't send a verification message to a verified email"
     let sendVerificationMessage (email:EmailContactInfo) =
-        // Logic to implement:
+        // Logic is:
         // if the email is Unverified, then
         //   print "Sending verification email to {email}"
         // else if the email is already verified,
         //   do nothing
+
         match email with
         | Unverified emailAddress ->
-             printfn "Sending verification email to %A" emailAddress
-        | Verified _ ->
-             printfn "The email is already verified"
+            // what?
+            failwith "not implemented"
+        | Verified emailAddress ->
+            // what?
+            failwith "not implemented"
 
     // Create a "sendPasswordResetMessage " function
     // Rule: "You can't send a password reset message to a unverified email "
@@ -89,10 +85,11 @@ module EmailClient =
         //   do nothing
         match email with
         | Unverified emailAddress ->
-             printfn "Can't send reset email to unverified %A" emailAddress
-        | Verified verifiedEmailAddress ->
-             printfn "Sending password reset email to %A" verifiedEmailAddress
-
+            // what?
+            failwith "not implemented"
+        | Verified emailAddress ->
+            // what?
+            failwith "not implemented"
 
 // ================================================
 // Now write some test code

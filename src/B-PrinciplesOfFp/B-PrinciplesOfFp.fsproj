@@ -17,8 +17,10 @@
     <None Include="04a-Composition-and-piping.fsx" />
     <None Include="05a-Exercise-ThinkOfANumber.fsx" />
     <None Include="05b-Exercise-ThinkOfANumber(answer).fsx" />
-    <None Include="05c-Exercise-Decorator.fsx" />
-    <None Include="05d-Exercise-Decorator(answer).fsx" />
+    <None Include="05c-Exercise-ToRomanNumbers.fsx" />
+    <None Include="05d-Exercise-ToRomanNumbers(answer).fsx" />
+    <None Include="05e-Exercise-Decorator.fsx" />
+    <None Include="05f-Exercise-Decorator(answer).fsx" />
     <None Include="06a-Exercise-ComposableTypes.fsx" />
     <None Include="Basic syntax you need to know.fsx" />
   </ItemGroup>

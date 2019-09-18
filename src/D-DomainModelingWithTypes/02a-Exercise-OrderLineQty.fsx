@@ -18,6 +18,12 @@ module ConstrainedTypes =
             else
                 Some (OrderLineQty qty)
 
+        let maxValue =
+            OrderLineQty 99
+
+        let minValue =
+            OrderLineQty 1
+
         /// Public function to get the data out of a OrderLineQty
         /// An "unwrapper" or "deconstructor" function
         let value olQty =
@@ -34,9 +40,25 @@ module ConstrainedTypes =
 open ConstrainedTypes
 
 // Write a function that adds two OrderLineQtys
+let addOrderQty (oq1:OrderLineQty) (oq2:OrderLineQty) =
+    let i1 = OrderLineQty.value oq1
+    let i2 = OrderLineQty.value oq2
+    let i3 = i1 + i2
+    OrderLineQty.create i3
 
-let addOrderQty oq1 oq2 =
-    ???
+let increment (oq1:OrderLineQty) =
+    let i1 = OrderLineQty.value oq1
+    let i2 = i1 + 1
+    OrderLineQty.create i2
+    |> Option.defaultValue OrderLineQty.maxValue
+
+let decrement (oq1:OrderLineQty) =
+    let i1 = OrderLineQty.value oq1
+    let i2 = i1 - 1
+    OrderLineQty.create i2
+    |> Option.defaultValue OrderLineQty.minValue
+
+
 
 // test
 let oq10 = 10 |> OrderLineQty.create |> Option.get
