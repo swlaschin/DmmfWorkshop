@@ -32,8 +32,6 @@ type PlaceOrder =
 let name = {FirstName="a"; MiddleInitial="b";LastName="c"}
 // to extract
 let first = name.FirstName
-// to destructure
-let {FirstName=f; MiddleInitial=m;LastName=l} = name
 
 // =============================
 // Constructing and Destructuring Choices
@@ -46,7 +44,7 @@ let cardInfo = ??
 let paymentMethod2 = Card cardInfo
 
 let emailAddress = ??
-let paymentMethod3 = PayPal EmailAddress
+let paymentMethod3 = PayPal emailAddress
 
 // to destructure, use pattern matching
 let printMethod paymentMethod =
@@ -64,5 +62,5 @@ paymentMethod1 |> printMethod
 
 let placeOrder : PlaceOrder =
   fun input ->
-    let output = // create OrderPlaced event value here
+    let output = // create an OrderPlaced event value here
     output

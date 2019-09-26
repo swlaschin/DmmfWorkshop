@@ -1,6 +1,6 @@
 ﻿(*
-Given the data type below,
-write a function that adds two OrderLineQtys
+Given the definition of OrderLineQty below,
+write functions that increments and decrements it.
 *)
 
 module ConstrainedTypes =
@@ -18,36 +18,69 @@ module ConstrainedTypes =
             else
                 Some (OrderLineQty qty)
 
+        let maxValue =
+            OrderLineQty 99
+
+        let minValue =
+            OrderLineQty 1
+
         /// Public function to get the data out of a OrderLineQty
-        /// An "unwrapper" or "deconstructor" or "property" function
+        /// An "unwrapper" or "deconstructor" function
+        let value olQty =
+            match olQty with
+            | OrderLineQty qty -> qty
+
+        // short version of the code above
+        (*
         let value (OrderLineQty qty) =
             qty
+        *)
 
 
 // same as "using ConstrainedTypes"
 open ConstrainedTypes
 
-type OrderLine = {
-    Qty: OrderLineQty
-    }
+// Write a function that adds one to an OrderLineQty
+let increment (olq:OrderLineQty) =
+    let i1 = OrderLineQty.value olq
+    let i2 = i1 + 1
+    OrderLineQty.create i2
 
-// Write a function that adds two OrderLineQtys
-let addOrderQty oq1 oq2 =
-    let v1 = OrderLineQty.value oq1
-    let v2 = OrderLineQty.value oq2
-    let v3 = v1 + v2
-    OrderLineQty.create v3
+// val increment :
+//   olq:OrderLineQty -> OrderLineQty option
 
+// Write a function that subtracts one from an OrderLineQty
+let decrement (olq:OrderLineQty) =
+    let i1 = OrderLineQty.value olq
+    let i2 = i1 - 1
+    OrderLineQty.create i2
 
-// val addOrderQty :
-//   oq1:OrderLineQty -> oq2:OrderLineQty -> OrderLineQty option
+// val decrement :
+//   olq:OrderLineQty -> OrderLineQty option
 
+// ==================
 // test
-let oq10 = 10 |> OrderLineQty.create |> Option.get
-// NOTE: never use Option.get in production!
+// ==================
 
-let oq60 = 60 |> OrderLineQty.create |> Option.get
+increment OrderLineQty.minValue
+increment OrderLineQty.maxValue
 
-addOrderQty oq10 oq10
-addOrderQty oq60 oq60
+decrement OrderLineQty.minValue
+decrement OrderLineQty.maxValue
+
+
+// for a default value in the None case
+// use Option.defaultValue
+
+increment OrderLineQty.minValue
+|> Option.defaultValue OrderLineQty.minValue
+
+increment OrderLineQty.maxValue
+|> Option.defaultValue OrderLineQty.maxValue
+
+decrement OrderLineQty.minValue
+|> Option.defaultValue OrderLineQty.minValue
+
+decrement OrderLineQty.maxValue
+|> Option.defaultValue OrderLineQty.maxValue
 

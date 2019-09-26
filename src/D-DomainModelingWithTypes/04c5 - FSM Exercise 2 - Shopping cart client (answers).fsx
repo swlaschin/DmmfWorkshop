@@ -41,8 +41,8 @@ module ShoppingCartApi =
     let removeFromActive itemToRemove activeCartData =
         ShoppingCartTransitions.removeFromActive itemToRemove activeCartData
 
-    let pay activeCartData =
-        ShoppingCartTransitions.pay activeCartData
+    let pay payment activeCartData =
+        ShoppingCartTransitions.pay payment activeCartData
 
 // ================================================
 // Now write some client code that uses this API

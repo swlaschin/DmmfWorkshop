@@ -1,6 +1,6 @@
 ﻿(*
-Given the data type below,
-write a function that adds two OrderLineQtys
+Given the definition of OrderLineQty below,
+write functions that increments and decrements it.
 *)
 
 module ConstrainedTypes =
@@ -39,32 +39,41 @@ module ConstrainedTypes =
 // same as "using ConstrainedTypes"
 open ConstrainedTypes
 
-// Write a function that adds two OrderLineQtys
-let addOrderQty (oq1:OrderLineQty) (oq2:OrderLineQty) =
-    let i1 = OrderLineQty.value oq1
-    let i2 = OrderLineQty.value oq2
-    let i3 = i1 + i2
-    OrderLineQty.create i3
-
-let increment (oq1:OrderLineQty) =
-    let i1 = OrderLineQty.value oq1
+// Write a function that adds one to an OrderLineQty
+let increment (olq:OrderLineQty) =
+    let i1 = OrderLineQty.value olq
     let i2 = i1 + 1
-    OrderLineQty.create i2
-    |> Option.defaultValue OrderLineQty.maxValue
+    ???
 
-let decrement (oq1:OrderLineQty) =
-    let i1 = OrderLineQty.value oq1
-    let i2 = i1 - 1
-    OrderLineQty.create i2
-    |> Option.defaultValue OrderLineQty.minValue
+// Write a function that subtracts one from an OrderLineQty
+let decrement (olq:OrderLineQty) =
+    ???
 
 
 
+// ==================
 // test
-let oq10 = 10 |> OrderLineQty.create |> Option.get
-// NOTE: never use Option.get in production!
+// ==================
 
-let oq60 = 60 |> OrderLineQty.create |> Option.get
+increment OrderLineQty.minValue
+increment OrderLineQty.maxValue
 
-addOrderQty oq10 oq10
-addOrderQty oq60 oq60
+decrement OrderLineQty.minValue
+decrement OrderLineQty.maxValue
+
+
+// for a default value in the None case
+// use Option.defaultValue
+
+increment OrderLineQty.minValue
+|> Option.defaultValue OrderLineQty.minValue
+
+increment OrderLineQty.maxValue
+|> Option.defaultValue OrderLineQty.maxValue
+
+decrement OrderLineQty.minValue
+|> Option.defaultValue OrderLineQty.minValue
+
+decrement OrderLineQty.maxValue
+|> Option.defaultValue OrderLineQty.maxValue
+
