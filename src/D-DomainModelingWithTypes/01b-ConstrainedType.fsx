@@ -35,7 +35,7 @@ module ConstrainedTypes =
 
 open ConstrainedTypes
 
-// uncomment to see the compiler error
+//TODO uncomment to see the compiler error
 // let compileError = String10 "1234567890"
 
 let valid = String10.create("1234567890")

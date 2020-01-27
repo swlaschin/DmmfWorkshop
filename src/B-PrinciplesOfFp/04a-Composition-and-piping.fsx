@@ -104,31 +104,25 @@ As the chains get longer, we often make it more readable by putting each step on
 
 
 module SideEffectFree =
-  let two () = 2
+  let two() = 2
 
   let result1 =
-    let x = two()
-    let y = two()
-    x + y
+    two() + two()
 
   let result2 =
-    let x = two()
-    let y = x
-    x + y
+    let x = two()  // we can substitute "x" for "two" and it still works
+    x + x
 
 
 
 module WithSideEffects =
-  let two () =
+  let two() =
     printfn "Calculating value of 2"
     2
 
   let result1 =
-    let x = two()
-    let y = two()
-    x + y
+    two() + two()
 
   let result2 =
-    let x = two()
-    let y = x
-    x + y
+    let x = two()   // substitute "x" for "two" does NOT have the same effect
+    x + x

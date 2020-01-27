@@ -1,4 +1,14 @@
-﻿
+﻿// Example of a simple function
+let printName aName =
+    printfn "Hello %s" aName
+
+// the type signature looks like this
+// val printName : aName:string -> unit
+
+// test it by running this interactively, one line at a time
+let name = "Alice"
+printName name
+
 
 // --------------------------
 // Q. `sprintf` is a function that is similar to `printfn` except

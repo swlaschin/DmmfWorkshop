@@ -397,3 +397,4 @@ paket-files/
 /Slides
 /*.pdf
 /slides
+/src/B-PrinciplesOfFp/.ionide/*.db

@@ -151,7 +151,7 @@ let x = 1
 // Function Values
 
 let add1 x = x + 1
-//val add1 : x:int -> int            // <=========== look at the signature
+//val add1 : x:int -> int            // <=========== look at the signature. It has an arrow in it!
 
 
 // --------------------
@@ -168,3 +168,4 @@ MyModule.add2 40  // Result => 42
 // "open" is same as "using" in C#
 open MyModule
 add2 40
+

@@ -6,13 +6,14 @@
 
   <ItemGroup>
     <None Include="00a-PlayWithTypes.fsx" />
-    <None Include="00b-ExamplesFromSlides.fsx" />
-    <None Include="01a-ModelingWithChoices.fsx" />
+    <None Include="00b-ModelingWithChoices.fsx" />
+    <None Include="01a-ExamplesFromSlides-1.fsx" />
     <None Include="01b-ConstrainedType.fsx" />
     <None Include="02a-Exercise-OrderLineQty.fsx" />
     <None Include="02a-Exercise-OrderLineQty(answer).fsx" />
     <None Include="02b-Exercise-ConstrainedTypes.fsx" />
     <None Include="02b-Exercise-ConstrainedTypes(answers).fsx" />
+    <None Include="03a-ExamplesFromSlides-2.fsx" />
     <None Include="03a - DDD Exercise 1 - CardGame.fsx" />
     <None Include="03b - DDD Exercise 1 - CardGame (answers).fsx" />
     <None Include="03c - DDD Exercise 2 - Contact.fsx" />
@@ -21,6 +22,7 @@
     <None Include="03f - DDD Exercise 3 - Payments (answers).fsx" />
     <None Include="03g - DDD Exercise 4 - Refactoring flags.fsx" />
     <None Include="03h - DDD Exercise 4 - Refactoring flags (answers).fsx" />
+    <None Include="04a-ExamplesFromSlides-3.fsx" />
     <Content Include="04a1 - FSM Exercises - State machine diagram.png" />
     <None Include="04a2 - FSM Exercises - Template to work from.fsx" />
     <Content Include="04b1 - FSM Exercise 1 - Verified Email transition diagram.png" />

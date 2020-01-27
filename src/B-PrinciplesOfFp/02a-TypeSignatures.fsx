@@ -10,6 +10,7 @@ let doSomething f x =
 // val doSomething : f:(int -> string) -> x:int -> string
 
 
+// ---------------------------
 // Example 1 - type inference
 let printName aName =
     printfn "Hello %s" aName
@@ -32,7 +33,7 @@ let returnHello() =    // () means no input
 // val returnHello : unit -> string
 
 
-
+// ---------------------------
 // Example 2 - defining a function with an int parameter
 //              causes type errors
 let printName2 aName =
@@ -50,7 +51,7 @@ printName2 name
 
 
 
-
+// ---------------------------
 // Example 3 - defining a function with two int parameters
 let printIntAndString anInt aStr =
     printfn "int=%i str=%s" anInt aStr
@@ -74,14 +75,18 @@ printIntAndString 1 2
 // ====================================
 
 (*
+//TODO -- uncomment this to see the error
 let toUpper x =
     x.ToUpper()
     // => error FS0072: Lookup on object of indeterminate type
 *)
 
+// the same definition but with a type annotation. Now the compiler is happy.
 let toUpper (x:string) =
     x.ToUpper()
 
+
+// Here's how to do type annotations
 let aFunction (param1:string) (param2:bool) :string =
     // etc
     "" // dummy
@@ -90,21 +95,26 @@ let aFunction (param1:string) (param2:bool) :string =
 let toUpper x :string = ...
 *)
 
-// no type annotations
+// You can have type annotations or not. 
+// Here's some different ways of writing the same function...
+
+// version 1: no type annotations
 let helloInt_v1 anInt =
     sprintf "Hello %i" anInt
 
-// annotation on parameter only
+// version 2: annotation on parameter only
 let helloInt_v2 (anInt:int) =
     sprintf "Hello %i" anInt
 
-// annotation on return value only
+// version 3: annotation on return value only
 let helloInt_v3 anInt :string =
     sprintf "Hello %i" anInt
 
-// annotation on parameter and return value
+// version 4: annotation on parameter and return value
 let helloInt_v4 (anInt:int) :string =
     sprintf "Hello %i" anInt
+
+// type annotations are useful when you are getting started, or if the compiler complains
 
 // ====================================
 // Functions with generic parameters
@@ -113,11 +123,14 @@ let helloInt_v4 (anInt:int) :string =
 let returnSameThing x = x
 
 (*
+// NOTE in C# this would be written as...
 T returnSameThing<T>(T x) {
   return X
   }
 *)
+
 (*
+// the type signature is generic, and so has a 'a rather than a specific type like int or string
 val returnSameThing : x:'a -> 'a
 *)
 

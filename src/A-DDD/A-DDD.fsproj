@@ -6,12 +6,12 @@
 
   <ItemGroup>
     <Content Include="00_-slides-DDD_and_DomainModeling.txt" />
+    <Content Include="Domain Modeling Guidelines.txt" />
     <Content Include="00a-DomainModel-TicTacToe.txt" />
     <Content Include="00b-DomainModel-ATM.txt" />
     <Content Include="00c-DomainModel-Microwave.txt" />
     <Content Include="00d-DomainModel-CoffeeMaker.txt" />
-    <Content Include="00e-DomainModel-Amazon.txt" />
-    <Content Include="00f-DomainModel-Ebay.txt" />
+    <Content Include="00f-DomainModel-Delivery Tracking.txt" />
     <Content Include="00g-DomainModel-YourOwnDomain.txt" />
   </ItemGroup>
 

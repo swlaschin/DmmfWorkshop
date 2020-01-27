@@ -24,7 +24,7 @@ For extra points, handle IV, IX, XC, etc.
 /// Convert the built-in .NET library method
 /// to a pipeable function
 /// (automatic currying)
-let replace oldValue newValue (inputStr:string) =
+let replace (oldValue:string) (newValue:string) (inputStr:string) =
     inputStr.Replace( oldValue=oldValue, newValue=newValue)
 
 

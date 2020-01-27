@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <None Include="01a-HelloWorld.fsx" />
+    <None Include="Basic syntax you need to know.fsx" />
     <None Include="01b-Exercise-HelloWorld.fsx" />
     <None Include="01c-Exercise-HelloWorld(answer).fsx" />
     <None Include="02a-TypeSignatures.fsx" />
@@ -22,7 +23,6 @@
     <None Include="05e-Exercise-Decorator.fsx" />
     <None Include="05f-Exercise-Decorator(answer).fsx" />
     <None Include="06a-Exercise-ComposableTypes.fsx" />
-    <None Include="Basic syntax you need to know.fsx" />
   </ItemGroup>
 
 
