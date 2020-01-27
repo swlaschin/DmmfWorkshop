@@ -5,8 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="00a-PlayWithTypes.fsx" />
     <None Include="00b-ModelingWithChoices.fsx" />
+    <None Include="00a-Exercise-PlayWithTypes.fsx" />
+    <None Include="00a-Exercise-PlayWithTypes(answer).fsx" />
     <None Include="01a-ExamplesFromSlides-1.fsx" />
     <None Include="01b-ConstrainedType.fsx" />
     <None Include="02a-Exercise-OrderLineQty.fsx" />

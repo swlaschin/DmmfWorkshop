@@ -75,7 +75,12 @@ printSquares 5
 // ======================================
 
 
-sprintf "%i" 42     // "42"
+let x = sprintf "%i" 42     // "42"
+
+// C# equivalents to printfn and sprintf
+// printfn = Console.WriteLn
+// sprintf = String.Format
+
 sprintf "%f" 3.15   // "3.150000"
 
 
@@ -145,13 +150,13 @@ A few things to note about this:
 // Simple Values
 
 let x = 1
-// val x : int = 1                   // <=========== look at the signature
+// val x : int = 1          // <======= look at the signature
 
 // --------------------
 // Function Values
 
 let add1 x = x + 1
-//val add1 : x:int -> int            // <=========== look at the signature. It has an arrow in it!
+//val add1 : x:int -> int   // <======= look at the signature. It has an arrow in it!
 
 
 // --------------------

@@ -38,6 +38,9 @@ let testN x :string = x 1   // hint: what does :string modify?
 
 let testO x = 1
 
+// val testO : x:'a -> int  // F# signature with a generic type
+// int testO<T>(T x)        // C# signature with a generic type
+
 let testP x = x 1          // hint: what kind of thing is x?
 
 let testQ x y = x
@@ -45,6 +48,7 @@ let testQ x y = x
 let testR x y z = z
 
 let testS x = x=x
+
 
 // --------------
 //  Q. For each of the following signatures, create a function that will be inferred to have that signature.

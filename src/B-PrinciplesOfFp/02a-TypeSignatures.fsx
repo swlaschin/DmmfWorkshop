@@ -87,7 +87,8 @@ let toUpper (x:string) =
 
 
 // Here's how to do type annotations
-let aFunction (param1:string) (param2:bool) :string =
+let aFunction (param1:string) (param2:bool) :string = 
+//             ^1st param      ^2nd param    ^return type
     // etc
     "" // dummy
 
@@ -114,7 +115,8 @@ let helloInt_v3 anInt :string =
 let helloInt_v4 (anInt:int) :string =
     sprintf "Hello %i" anInt
 
-// type annotations are useful when you are getting started, or if the compiler complains
+// type annotations are useful when you are getting started, 
+// or if the compiler complains
 
 // ====================================
 // Functions with generic parameters

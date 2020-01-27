@@ -54,6 +54,12 @@ add 1 2
 |> add 3
 |> printfn "1 + 2 + 3 = %i"
 
+// ==============================
+// Printing
+// ==============================
+
+// printing
+printfn "an int: %i | a string: %s | a float: %g | a bool: %b | an F# type: %A" 1 "hello" 3.14 true [1;2;3]
 
 // ==============================
 // Type annotations
@@ -68,10 +74,11 @@ let addString (x:string) (y:string) :string =
     x + y
 
 let intToString (x:int) :string =
-    x.ToString()
+    sprintf "%i" x
 
-// printing
-printfn "an int: %i | a string: %s | a float: %g | a bool: %b | an F# type: %A" 1 "hello" 3.14 true [1;2;3]
+let toLower (x:string) =
+    x.ToLower()  // annotation needed to avoid compiler error
+
 
 // ==============================
 // Pattern matching

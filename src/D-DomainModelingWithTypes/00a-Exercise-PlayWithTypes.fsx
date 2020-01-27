@@ -1,4 +1,8 @@
-﻿
+﻿(*
+Some of the types below have not yet been defined.
+Add simple definitions so that this file will compile.
+*)
+
 // Use Record types for AND
 type Name = {
   FirstName: string
@@ -24,7 +28,7 @@ type PaymentMethod =
 
 // Use Function types for workflows
 type PlaceOrder =
-  OrderForm -> OrderPlaced //TODO define a type for OrderForm and OrderPlaced
+  Order -> OrderPlaced //TODO define a type for OrderForm and OrderPlaced
 
 
 // =============================
@@ -53,8 +57,8 @@ let paymentMethod3 = PayPal emailAddress
 let printMethod paymentMethod =
   match paymentMethod with
   | Cash -> printfn "Cash"
-  | Card cardInfo -> printfn "%A" cardInfo
-  | PayPal emailAddress -> printfn "%A" emailAddress
+  | Card cardInfo -> printfn "Card with %A" cardInfo
+  | PayPal emailAddress -> printfn "PayPal with %A" emailAddress
 
 paymentMethod1 |> printMethod
 paymentMethod2 |> printMethod

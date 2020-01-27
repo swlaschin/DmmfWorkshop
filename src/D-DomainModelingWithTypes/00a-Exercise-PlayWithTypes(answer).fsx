@@ -1,4 +1,8 @@
-﻿
+﻿(*
+Some of the types below have not yet been defined.
+Add simple definitions so that this file will compile.
+*)
+
 // Use Record types for AND
 type Name = {
   FirstName: string
@@ -8,6 +12,13 @@ type Name = {
 
 // Use single case unions for wrapper types
 type OrderId = OrderId of int
+type ProductId = ProductId of int
+type OrderQty = OrderQty of int
+
+type OrderLine = {
+    ProductId : ProductId 
+    Qty: OrderQty
+    }
 
 type Order = {
   OrderId : OrderId 
@@ -16,15 +27,29 @@ type Order = {
   OrderLines : OrderLine list //TODO define a type for OrderLine
 }
 
+type CardInfo = {
+    CardNumber : string
+    ExpiryMonth : int
+    ExpiryYear : int
+    }
+
+type EmailAddress = EmailAddress of string
+
 // Use Choice types for OR
 type PaymentMethod =
   | Cash
   | Card of CardInfo //TODO define a type for CardInfo
   | PayPal of EmailAddress //TODO define a type for EmailAddress
 
+
+type OrderPlaced = {
+   Order : Order
+   Timestamp : System.DateTime
+   }
+
 // Use Function types for workflows
 type PlaceOrder =
-  OrderForm -> OrderPlaced //TODO define a type for OrderForm and OrderPlaced
+  Order -> OrderPlaced //TODO define a type for OrderForm and OrderPlaced
 
 
 // =============================
@@ -43,18 +68,24 @@ let first = name.FirstName
 // to create, use one of the cases as a function
 let paymentMethod1 = Cash
 
-let cardInfo = ??  //TODO Write some code to make this compile
+//TODO Write some code to make this compile
+let cardInfo = {
+    CardNumber = "1234"
+    ExpiryMonth = 1
+    ExpiryYear = 2024
+    }
 let paymentMethod2 = Card cardInfo
 
-let emailAddress = ??  //TODO Write some code to make this compile
+//TODO Write some code to make this compile
+let emailAddress = EmailAddress "scott@example.com"
 let paymentMethod3 = PayPal emailAddress
 
 // to destructure a choice type, use pattern matching
 let printMethod paymentMethod =
   match paymentMethod with
   | Cash -> printfn "Cash"
-  | Card cardInfo -> printfn "%A" cardInfo
-  | PayPal emailAddress -> printfn "%A" emailAddress
+  | Card cardInfo -> printfn "Card with %A" cardInfo
+  | PayPal emailAddress -> printfn "PayPal with %A" emailAddress
 
 paymentMethod1 |> printMethod
 paymentMethod2 |> printMethod
@@ -104,5 +135,9 @@ let addTwoNumbers : AddTwoNumbers =  // the implementation
 // Now try to implement the PlaceOrder function type from above
 let placeOrder : PlaceOrder =
   fun input ->
-    let output = ?? //TODO create an OrderPlaced event value here
+    //TODO create an OrderPlaced event value here
+    let output = {
+        Order = input
+        Timestamp = System.DateTime.UtcNow
+        }
     output
