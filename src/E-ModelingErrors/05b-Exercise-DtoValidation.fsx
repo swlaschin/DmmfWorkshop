@@ -88,17 +88,17 @@ type PersonDto = {
 
 /// Create a constructor to be used with partial application
 let createName first last :PersonalName =
-    ??
+    {First=first; ??}
 
 /// Create a constructor to be used with partial application
 let createPerson name age email :Person=
     ??
 
 /// convert a person into a DTO -- this always succeeds
-let toDto person =
+let toDto (person:Person) :PersonDto =
     {
-    first = String10.value ??
-    last = String10.value ??
+    first = String10.value person.Name.First
+    last = String10.value person.??
     age = Age.value ??
     email = Email.value ??
     }
@@ -107,13 +107,13 @@ let (<!>) = Validation.map
 let (<*>) = Validation.apply
 
 /// create a person from a DTO -- this might fail
-let fromDto personDto =
+let fromDto (personDto:PersonDto) :Validation<Person,_> =
     let firstR =
-        ??
+        personDto.FirstName 
         |> String10.create
         |> Validation.ofResult
     let lastR =
-        ??
+        personDto.??
         |> String10.create
         |> Validation.ofResult
     let ageR =
@@ -122,17 +122,17 @@ let fromDto personDto =
         |> Validation.ofResult
     let emailR =
         ??
-        |> Email.create
-        |> Validation.ofResult
+        |> Email.??
+        |> Validation.??
 
     let nameR = createName <!> firstR <*> lastR
-    let person = createPerson <!> nameR <*> ageR <*> emailR
+    let personR = createPerson <!> nameR <*> ageR <*> emailR
 
     // or alternatively
     let nameR2 = Validation.lift2 createName firstR lastR
     let personR2 = Validation.lift3 createPerson nameR ageR emailR
 
-    person // return
+    personR // return
 
 
 // -------------------------------

@@ -10,8 +10,7 @@
     <None Include="01b-DomainErrors-ATM.fsx" />
     <None Include="01c-DomainErrors-Microwave.fsx" />
     <None Include="01d-DomainErrors-CoffeeMaker.fsx" />
-    <None Include="01e-DomainErrors-Amazon.fsx" />
-    <None Include="01f-DomainErrors-Ebay.fsx" />
+    <None Include="01e-DomainErrors-Delivery.fsx" />
     <None Include="01g-DomainErrors-YourOwnDomain.fsx" />
     <None Include="02a-Exercise-ValidateRequest.fsx" />
     <None Include="02b-Exercise-ValidateRequest(answers).fsx" />

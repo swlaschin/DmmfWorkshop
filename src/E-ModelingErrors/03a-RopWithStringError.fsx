@@ -244,3 +244,31 @@ unsendableRequest
 
 
 
+(*
+DEMO: Working with database transactions
+
+let updateDbWithTransaction f (request:Request) =
+    // do something
+    // return nothing at all
+    printfn "Start Database transaction with userId=%i email=%s" request.UserId request.Email
+    match (f request) with
+    | Ok data -> 
+        printfn "Commit Database Transaction" 
+        Ok data 
+    | Error e -> 
+        printfn "Abort Database Transaction" 
+        Error e 
+
+let updateDbWithTransactionR f r = 
+    Result.bind (updateDbWithTransaction f) r
+
+unsendableRequest
+|> validateRequest
+|> canonicalizeEmailR
+|> updateDbWithTransactionR (fun req ->
+    Ok req
+    |> sendEmailR
+    |> loggerR
+    )
+|> returnMessageR
+*)

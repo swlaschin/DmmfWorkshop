@@ -47,8 +47,8 @@ let checkMilkStatus coffeeMachineState request =
 let validateRequest coffeeMachineState request =
   request
   |> checkWaterStatus coffeeMachineState
-  |> (checkCoffeeStatus coffeeMachineState)
-  |> (checkMilkStatus coffeeMachineState)
+  |> Result.?? (checkCoffeeStatus coffeeMachineState)
+  |> ?? (checkMilkStatus coffeeMachineState)
 
 // =============================
 // Tests

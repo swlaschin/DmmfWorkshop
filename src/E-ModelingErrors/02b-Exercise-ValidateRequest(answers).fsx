@@ -5,24 +5,34 @@ type Input = {
 
 let checkNameNotBlank input =
   if input.Name = "" then
-     Error "Name must not be blank"
-  else Ok input
+    Error "Name must not be blank"
+  else 
+    Ok input
 
 let checkName50 input =
   if input.Name.Length > 50 then
-     Error "Name must not be longer than 50 chars"
-  else Ok input
+    Error "Name must not be longer than 50 chars"
+  else 
+    Ok input
 
 let checkEmailNotBlank input =
   if input.Email = "" then
-     Error "Email must not be blank"
-  else Ok input
+    Error "Email must not be blank"
+  else 
+    Ok input
+
+let checkEmailMustHaveAtSign input =
+  if not (input.Email.Contains("@")) then
+    Error "Email must have @ sign"
+  else 
+    Ok input
 
 let validateInput input =
     input
     |> checkNameNotBlank
     |> Result.bind checkName50
     |> Result.bind checkEmailNotBlank
+    |> Result.bind checkEmailMustHaveAtSign 
 
 // add some more validations if you like
 
