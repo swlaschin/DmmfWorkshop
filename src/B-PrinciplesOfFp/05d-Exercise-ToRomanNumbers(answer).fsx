@@ -21,7 +21,7 @@ For extra points, handle IV, IX, XC, etc.
 
 *)
 
-/// Convert the built-in .NET library method
+/// Helper to convert the built-in .NET library method
 /// to a pipeable function
 /// (automatic currying)
 let replace (oldValue:string) (newValue:string) (inputStr:string) =
@@ -75,6 +75,7 @@ toRomanNumerals_v2 14
 toRomanNumerals_v2 1947
 
 
+
 (*
 What about the special forms IV,IX,XC etc?
 
@@ -90,8 +91,8 @@ let toRomanNumerals_v3 number =
     |> replace "LL" "C"
     |> replace "CCCCC" "D"
     |> replace "DD" "M"
-
     // additional special forms
+    |> replace "IIII" "IV"
     |> replace "VIIII" "IX"
     |> replace "IIII" "IV"
     |> replace "LXXXX" "XC"

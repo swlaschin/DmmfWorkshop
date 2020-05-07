@@ -21,7 +21,7 @@ For extra points, handle IV, IX, XC, etc.
 
 *)
 
-/// Convert the built-in .NET library method
+/// Helper to convert the built-in .NET library method
 /// to a pipeable function
 /// (automatic currying)
 let replace (oldValue:string) (newValue:string) (inputStr:string) =
@@ -74,3 +74,15 @@ Exercise: add these as additional transforms at the end of the pipe
 Just replace "IIII" with "IV", etc
 *)
 
+(*
+let toRomanNumerals_v3 number =
+   // add IV
+   // add IX
+*)
+
+(*
+// test it
+toRomanNumerals_v3 4
+toRomanNumerals_v3 14
+toRomanNumerals_v3 19
+*)

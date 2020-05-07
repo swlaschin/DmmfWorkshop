@@ -97,6 +97,16 @@ As the chains get longer, we often make it more readable by putting each step on
 |> double
 |> square // = 144
 
+// you can make it into a function like this
+
+let addDoubleSquare x =
+  x
+  |> add1
+  |> double
+  |> square 
+
+addDoubleSquare 5 // 144
+
 
 // ================================================
 // Side-effects stop composition

@@ -71,7 +71,7 @@ let validateRequest req : Result<Request,ErrorMessage> =
     let emailOrError = validateEmail req.Email
 
     // uncomment to see this this fail...
-    //createRequest userIdOrError nameOrError emailOrError
+    // createRequest userIdOrError nameOrError emailOrError
 
     // option1 -- use the special operators
     let ( <!> ) = Validation.map

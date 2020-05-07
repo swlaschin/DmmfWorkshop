@@ -16,13 +16,18 @@ printName name
 // Create a `sprintName` function that uses `sprintf` instead
 // of `printfn`. What is its signature?  How does it compare with "printName"
 
-let sprintName aName = ??
+// let sprintName aName = ??
 
 // --------------------------
 // Q. Using the `let` syntax, create a `multipliedByTwo` function
 // that multiplies its argument by two. What is its signature?
 
 let multipliedByTwo x = ??
+
+// Can you make a similar function with floats? What is its signature?
+let floatMultipliedByTwo x = ??
+
+
 
 // --------------------------
 // Q. Write a `sayGreeting` function that takes two

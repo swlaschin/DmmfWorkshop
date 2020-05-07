@@ -6,19 +6,19 @@ type Input = {
 let checkNameNotBlank input =
   if input.Name = "" then
     Error "Name must not be blank"
-  else 
+  else
     Ok input
 
 let checkName50 input =
   if input.Name.Length > 50 then
     Error "Name must not be longer than 50 chars"
-  else 
+  else
     Ok input
 
 let checkEmailNotBlank input =
   if input.Email = "" then
     Error "Email must not be blank"
-  else 
+  else
     Ok input
 
 let validateInput input =

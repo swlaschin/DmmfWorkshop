@@ -3,43 +3,106 @@
 // ================================================
 
 (*
-Much code has implicit states that you can recognize by fields called "IsSomething", or nullable date
+Much code has implicit states that you can recognize by
+fields called "IsSomething", or nullable date
 
-This is a sign that states transitions are present but not being modelled properly.
+This is a sign that states transitions are present
+but not being modelled properly.
 *)
 
-// Exercise 3a - redesign this type into two states: RegisteredCustomer (with an id) and GuestCustomer (without an id)
-type Customer_Before =
-    {
-    CustomerName: string
-    IsGuest: bool
-    RegistrationId: int option
-    }
+(*
+Exercise 3a
 
-type Customer_After = ??
+An ecommerce site has customers
+* if they have registered, they have a name and an ID
+* if they have not registered, they just have a name
+The original design uses a flag to tell the two cases apart
+
+Your task: redesign this type into two states:
+* RegisteredCustomer (with an id)
+* OR GuestCustomer (without an id)
+Also, replace "int" and "string" with words from the domain
+*)
+
+type undefined = exn  // placeholder type
+
+// contains the original code
+module Customer_Before =
+
+    type Customer =
+        {
+        CustomerName: string
+        // redesign to rid of this bool
+        IsGuest: bool
+        // redesign to rid of this option
+        RegistrationId: int option
+        }
+
+// contains the redesigned code
+module Customer_After =
+
+    type Customer = undefined
+
+(*
+Exercise 3b
+
+An internet connection is either connected or disconnected.
+The original design uses a flag to tell the two cases apart
+
+Your task: Redesign this type into two states: Connected and Disconnected
+Also, replace "int" and "string" with words from the domain
+
+*)
+
+// contains the original code
+module Connection_Before =
+
+    type Connection =
+       {
+       IsConnected: bool
+       ConnectionStartedUtc: System.DateTime option
+       ConnectionHandle: int
+       ReasonForDisconnection: string
+       }
+
+// contains the redesigned code
+module Connection_After =
 
 
-// Exercise 3b - redesign this type into two states: Connected and Disconnected
-type Connection_Before =
-   {
-   IsConnected: bool
-   ConnectionStartedUtc: System.DateTime option
-   ConnectionHandle: int
-   ReasonForDisconnection: string
-   }
+    type Connection = undefined
 
-type Connection__After = ??
+(*
+// Exercise 3c
 
+An Order is either Paid or Unpaid.
 
-// Exercise 3c - redesign this type into two states -- can you guess what the states
-// are from the flags -- how does the refactored version help improve the documentation?
-type Order_Before =
-   {
-   OrderId: int
-   IsPaid: bool
-   PaidAmount: float option
-   PaidDate: System.DateTime option
-   }
+Your task: redesign this type into two states.
+Can you guess what the states are from the flags?
+How does the refactored version help improve the documentation?
 
-type Order__After = ??
+*)
 
+// contains the original code
+module Order_Before =
+
+    type Order =
+       {
+       OrderId: int
+       IsPaid: bool
+       PaidAmount: float option
+       PaidDate: System.DateTime option
+       }
+
+// contains the redesigned code
+module Order_After =
+
+    type Order = undefined
+
+(*
+Questions for discussion:
+
+* When does it make sense to use a type alias rather than a separate type?
+
+* When does it make sense to define a new type rather than use a tuple?
+
+*)
