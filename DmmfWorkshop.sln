@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "B-PrinciplesOfFp", "src\B-PrinciplesOfFp\B-PrinciplesOfFp.fsproj", "{693F3478-8AA0-4B7F-A337-EFCBCB73C959}"
 EndProject
@@ -13,11 +13,9 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "E-ModelingErrors", "src\E-M
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "F-ImplementingWorkflows", "src\F-ImplementingWorkflows\F-ImplementingWorkflows.fsproj", "{D3671AB5-B4B3-4A83-9998-83E868CC03B7}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Z-SyntaxHelp", "src\SyntaxHelp\Z-SyntaxHelp.fsproj", "{2899CEA2-1DFE-476A-8FC3-4A2E20972653}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "X-ExtraModeling", "src\X-ExtraModeling\X-ExtraModeling.fsproj", "{922121CA-0456-4866-88BF-535D75D87E03}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "G-ExtraModeling", "src\ExtraModeling\G-ExtraModeling.fsproj", "{922121CA-0456-4866-88BF-535D75D87E03}"
-EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "X-ExtraFsharp", "src\ExtraFsharp\X-ExtraFsharp.fsproj", "{BCE71DC2-46F3-4209-BFC8-A40AB8897392}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "X-ExtraFsharp", "src\X-ExtraFsharp\X-ExtraFsharp.fsproj", "{BCE71DC2-46F3-4209-BFC8-A40AB8897392}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "A-DDD", "src\A-DDD\A-DDD.fsproj", "{5FD3ADF9-95CD-4C6A-9836-EEFFDAA8FC62}"
 EndProject
@@ -28,6 +26,12 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Layer2FS", "CSharpInterop\Layer2FS\Layer2FS.fsproj", "{9FC8ABDE-71EC-4A1A-9495-975AB382DBE4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Layer3CS", "CSharpInterop\Layer3CS\Layer3CS.csproj", "{C4C4A747-2B87-44D4-94DC-A9A7D246B767}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{51420EB4-382A-4423-B4A5-A5D5D4CD6993}"
+	ProjectSection(SolutionItems) = preProject
+		src\00-HelloWorld.fsx = src\00-HelloWorld.fsx
+		src\fsharp-basic-syntax.fsx = src\fsharp-basic-syntax.fsx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +59,6 @@ Global
 		{D3671AB5-B4B3-4A83-9998-83E868CC03B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3671AB5-B4B3-4A83-9998-83E868CC03B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3671AB5-B4B3-4A83-9998-83E868CC03B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2899CEA2-1DFE-476A-8FC3-4A2E20972653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2899CEA2-1DFE-476A-8FC3-4A2E20972653}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2899CEA2-1DFE-476A-8FC3-4A2E20972653}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2899CEA2-1DFE-476A-8FC3-4A2E20972653}.Release|Any CPU.Build.0 = Release|Any CPU
 		{922121CA-0456-4866-88BF-535D75D87E03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{922121CA-0456-4866-88BF-535D75D87E03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{922121CA-0456-4866-88BF-535D75D87E03}.Release|Any CPU.ActiveCfg = Release|Any CPU
