@@ -5,15 +5,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="00_-slides-DDD_and_DomainModeling.txt" />
-    <Content Include="Domain Modeling Guidelines.txt" />
-    <Content Include="00a-DomainModel-TicTacToe.txt" />
-    <Content Include="00b-DomainModel-ATM.txt" />
-    <Content Include="00c-DomainModel-Microwave.txt" />
-    <Content Include="00d-DomainModel-CoffeeMaker.txt" />
-    <Content Include="00f-DomainModel-Delivery Tracking.txt" />
-    <Content Include="00g-DomainModel-YourOwnDomain.txt" />
+    <Content Include="00-Overview.txt" />
+    <Content Include="01-GuidelinesForDomainModelingExercise.txt" />
+    <Content Include="02a-DomainModel-TicTacToe.txt" />
+    <Content Include="02b-DomainModel-ATM.txt" />
+    <Content Include="02c-DomainModel-Microwave.txt" />
+    <Content Include="02d-DomainModel-CoffeeMaker.txt" />
+    <Content Include="02f-DomainModel-DeliveryTracking.txt" />
+    <Content Include="02g-DomainModel-YourOwnDomain.txt" />
+    <Content Include="03-Converting Domain Models to Code.txt" />
+    <None Include="03a-DomainModel-TicTacToe.fsx" />
+    <None Include="03b-DomainModel-ATM.fsx" />
+    <None Include="03c-DomainModel-Microwave.fsx" />
+    <None Include="03d-DomainModel-CoffeeMaker.fsx" />
+    <None Include="03f-DomainModel-DeliveryTracking.fsx" />
+    <None Include="03g-DomainModel-YourOwnDomain.fsx" />
   </ItemGroup>
+
+  <ItemGroup />
 
 
   <ItemGroup>
