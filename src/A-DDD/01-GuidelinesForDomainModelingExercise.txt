@@ -49,7 +49,7 @@ How to model a workflow
   * What data is from the event itself
   * What data is from the current state of the system
 * What are the output events?
-  For broadcast to downsteam systems
+  For broadcast to downstream systems
 * How does the state of the system change?
 * What are the side effects?
   (Things that must be done but are internal to the domain)
