@@ -1,5 +1,8 @@
 ﻿// =================================
-// Type inference
+// Type inference examples
+//
+// Execute each chunk of code in this file and
+// and make you understand how it works.
 // =================================
 
 // example from the slides
@@ -10,7 +13,7 @@ let doSomething f x =
 // val doSomething : f:(int -> string) -> x:int -> string
 
 
-// ---------------------------
+// =================================
 // Example 1 - type inference
 let printName aName =
     printfn "Hello %s" aName
@@ -33,7 +36,7 @@ let returnHello() =    // () means no input
 // val returnHello : unit -> string
 
 
-// ---------------------------
+// =================================
 // Example 2 - defining a function with an int parameter
 //              causes type errors
 let printName2 aName =
@@ -51,7 +54,7 @@ printName2 name
 
 
 
-// ---------------------------
+// =================================
 // Example 3 - defining a function with two int parameters
 let printIntAndString anInt aStr =
     printfn "int=%i str=%s" anInt aStr
@@ -122,7 +125,14 @@ let helloInt_v4 (anInt:int) :string =
 // Functions with generic parameters
 // ====================================
 
+
 let returnSameThing x = x
+
+(*
+// the type signature is generic, and so F# infers
+// a generic 'a rather than a specific type like int or string
+val returnSameThing : x:'a -> 'a
+*)
 
 (*
 // NOTE in C# this would be written as...
@@ -131,10 +141,9 @@ T returnSameThing<T>(T x) {
   }
 *)
 
-(*
-// the type signature is generic, and so has a 'a rather than a specific type like int or string
-val returnSameThing : x:'a -> 'a
-*)
+
+// The unit type is the empty value, like void.
+// It is written as ()
 
 let ignoreTheInput x = ()
 let ignoreTwoInputs x y = ()

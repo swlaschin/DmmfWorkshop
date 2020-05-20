@@ -109,11 +109,14 @@ addDoubleSquare 5 // 144
 
 
 // ================================================
-// Side-effects stop composition
+// Composition doesn't work properly
+// when there are side-effects :(
 // ================================================
 
 
 module SideEffectFree =
+
+  // a function with no side-effects
   let two() = 2
 
   let result1 =
@@ -126,6 +129,8 @@ module SideEffectFree =
 
 
 module WithSideEffects =
+
+  // a function with side-effects
   let two() =
     printfn "Calculating value of 2"
     2

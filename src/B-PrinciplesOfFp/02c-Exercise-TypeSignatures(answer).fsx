@@ -1,7 +1,12 @@
-﻿
-// --------------------------
-//  Q. For each of the following definitions, say whether it is a simple value or a function, and if a function, what is the function signature?
-//  If in doubt, run them to find out!
+﻿// =============================================
+// Exercise: 
+//
+// For each of the following definitions,
+// say whether it is a simple value or a function,
+// and if a function, what is the function signature?
+//
+// If in doubt, run them to find out!
+// =============================================
 
 let testA = 2
 // simple value
@@ -77,9 +82,14 @@ let testS x = x=x
 // generic function
 // val testS : x:'a -> bool (with a constraint that type 'a must support equality)
 
-// --------------
-//  Q. For each of the following signatures, create a function that will be inferred to have that signature.
-//  Avoid using explicit type annotations!
+// =============================================
+// Exercise: 
+//
+// For each of the following signatures, create a function 
+// that will be *inferred* to have that signature.
+//
+// Avoid using explicit type annotations!
+// =============================================
 
 // val sigA = int -> int
 let sigA x = x + 1
@@ -103,15 +113,42 @@ let sigE x = sprintf "%s" x
 let sigF anInt aBool aFloat = sprintf "%i %b %f" anInt aBool aFloat
 
 
-// --------------
-// Q. Make the following functions compile by adding type annotations. Try to use the minimum annotations possible!
+// =============================================
+// Exercise: 
+//
+// Make the following functions compile by adding 
+// type annotations. Try to use the minimum annotations possible!
+//
+// Here's how to do type annotations
+// let aFunction (param1:string) (param2:bool) :string = 
+//                ^1st param      ^2nd param    ^return type
+//
+// =============================================
 
+// Remove spaces from front and back of a string
+// The "s" parameter is a string and it returns a string
 let trim (s:string) = s.Trim()
 
-let split ch (s:string) =  s.Split(ch)
+// Return the length of string
+// The "s" parameter is a string and it returns an int
+let len (s:string) = s.Length
 
-// --------------
-// Q. Below are four generic signatures. Try to create four functions that are inferred to have these signatures.
+// Replace a substring with new substring 
+// The s, oldStr,newStr parameters are all string
+// and it returns a string 
+let replace (oldStr:string) newStr (s:string) = s.Replace(oldStr,newStr)
+(*
+This one is tricky because .NET has two overloads
+  Replace(string,string)
+  Replace(char,char)
+So we need to say what type the parameters are too.
+*)
+
+// =============================================
+// Exercise (HARD): 
+// Below are four generic signatures.
+// Try to create four functions that are inferred to have these signatures.
+// =============================================
 
 // val sigW = 'a -> int
 let sigW x = 1

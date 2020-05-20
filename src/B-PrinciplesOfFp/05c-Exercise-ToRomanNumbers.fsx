@@ -1,6 +1,6 @@
-﻿/// =============================================
-/// Convert a number to Roman
-/// =============================================
+﻿// =============================================
+// Convert a number to Roman numerals
+// =============================================
 
 (*
 
@@ -14,21 +14,20 @@ Use the "tally" system:
 * replace "CCCCC"  with "D"
 * replace "DD" with "M"
 
-Challenge, write this using a piping model with partial application.
-Use the code below as a starting point
-
-For extra points, handle IV, IX, XC, etc.
-
 *)
+
+// =============================================
+// Exercise I:
+//
+// Implement this logic using a piping model.
+// Use the code below as a starting point
+// =============================================
 
 /// Helper to convert the built-in .NET library method
 /// to a pipeable function
-/// (automatic currying)
 let replace (oldValue:string) (newValue:string) (inputStr:string) =
-    inputStr.Replace( oldValue=oldValue, newValue=newValue)
+    inputStr.Replace(oldValue, newValue)
 
-
-// uncomment this code to start
 let toRomanNumerals number =
     let replace_IIIII_V str = replace "IIIII" "V" str
     let replace_VV_X str = replace ???
@@ -45,13 +44,18 @@ toRomanNumerals 14
 toRomanNumerals 1947
 
 
-(*
-The replace function can also be used "inline".
-To do this, pass the first two parameters explicitly, and the last parameter
-will be passed implicitly via the pipe
-
-The advantage of this approach is that you don't need to define all the helper functions
-*)
+// =============================================
+// The replace function can also be used "inline".
+// To do this, pass the first two parameters explicitly, 
+// and the last parameter will be passed implicitly via the pipe
+// 
+// The advantage of this approach is that you don't need to 
+// define all the helper functions.
+//
+// Exercise II:
+// * Rewrite the code to use "replace" directly, without helper functions
+// 
+// =============================================
 
 // Inline version
 let toRomanNumerals_v2 number =
@@ -67,12 +71,13 @@ toRomanNumerals_v2 1947
 
 
 
-(*
-What about the special forms IV,IX,XC etc?
-
-Exercise: add these as additional transforms at the end of the pipe
-Just replace "IIII" with "IV", etc
-*)
+// ======================================
+// What about the special forms IV,IX,XC etc?
+//
+// Exercise III:
+// * Add these as additional transforms at the end of the pipe
+//   Just replace "IIII" with "IV", etc
+// ======================================
 
 (*
 let toRomanNumerals_v3 number =
@@ -86,3 +91,21 @@ toRomanNumerals_v3 4
 toRomanNumerals_v3 14
 toRomanNumerals_v3 19
 *)
+
+
+// ======================================
+// What about logging?
+//
+// Exercise IV:
+// * Add a logging step at the end of the pipeline
+// ======================================
+
+let toRomanNumerals_v4 number =
+    // helper function
+    let logger output =
+        // print "The input was %i and the output was %s" 
+        // anything else?
+
+    String.replicate number "I"
+    |> replace "IIIII" "V"
+    |> ???

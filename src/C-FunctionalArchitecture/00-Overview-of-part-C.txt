@@ -1,0 +1,3 @@
+Part C of the workshop will be
+
+* Slides: "Functional Architecture"

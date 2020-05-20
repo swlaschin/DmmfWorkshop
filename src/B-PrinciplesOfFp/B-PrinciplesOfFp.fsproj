@@ -5,11 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="01a-HelloWorld.fsx" />
     <None Include="Basic syntax you need to know.fsx" />
-    <None Include="01b-Exercise-HelloWorld.fsx" />
-    <None Include="01c-Exercise-HelloWorld(answer).fsx" />
-    <None Include="02a-TypeSignatures.fsx" />
+    <Content Include="00-Overview-of-part-B.txt" />
+    <None Include="01a-HelloWorld.fsx" />
+    <None Include="01b-HelloWorld2.fsx" />
+    <None Include="01c-HelloWorld3.fsx" />
+    <None Include="01d-Exercise-HelloWorld.fsx" />
+    <None Include="01e-Exercise-HelloWorld%28answer%29.fsx" />
+    <None Include="02a-TypeInference.fsx" />
     <None Include="02b-Exercise-TypeSignatures.fsx" />
     <None Include="02c-Exercise-TypeSignatures(answer).fsx" />
     <None Include="03a-FunctionsAsThings.fsx" />

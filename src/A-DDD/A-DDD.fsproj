@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="00-Overview.txt" />
+    <Content Include="00-Overview-of-part-A.txt" />
     <Content Include="01-GuidelinesForDomainModelingExercise.txt" />
     <Content Include="02a-DomainModel-TicTacToe.txt" />
     <Content Include="02b-DomainModel-ATM.txt" />
@@ -13,7 +13,7 @@
     <Content Include="02d-DomainModel-CoffeeMaker.txt" />
     <Content Include="02f-DomainModel-DeliveryTracking.txt" />
     <Content Include="02g-DomainModel-YourOwnDomain.txt" />
-    <Content Include="03-Converting Domain Models to Code.txt" />
+    <Content Include="03-ConvertingDomainModelsToCode.txt" />
     <None Include="03a-DomainModel-TicTacToe.fsx" />
     <None Include="03b-DomainModel-ATM.fsx" />
     <None Include="03c-DomainModel-Microwave.fsx" />

@@ -7,6 +7,15 @@
 
 let add1 x = x + 1
 
+// test
+add1 4
+[1..10] |> List.map add1   // with a list
+
+
+// ===========================================
+// define the logging functions
+// ===========================================
+
 let logTheInput x =
     printf "In=%i; " x
     x
@@ -15,11 +24,13 @@ let logTheOutput x =
     printfn "Out=%i; " x
     x
 
+// ===========================================
+// define the logged version of add1
+// ===========================================
+
 let add1Logged x =
     x |> logTheInput |> add1 |> logTheOutput
 
 // test
 add1Logged 4
-
-// test
 [1..10] |> List.map add1Logged

@@ -1,5 +1,5 @@
 ﻿//===================================
-// functions as things
+// Functions as things
 //
 // Demonstrates:
 //   * functions as input

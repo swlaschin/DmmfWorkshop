@@ -1,0 +1,13 @@
+﻿Part B of the workshop will focus on the basics 
+of functional 
+
+* Slides: "B1-GettingStartedWithFsharp.pptx"
+* Slides: "B2-PrinciplesOfFp.pptx"
+
+How to do the solo coding exercises:
+* The exercise files come in pairs, with and without answers
+* Try doing the one without answers first.
+* If you get stuck, do look at the answers! This is not a test!
+
+
+

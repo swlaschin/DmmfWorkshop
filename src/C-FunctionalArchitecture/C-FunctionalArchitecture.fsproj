@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="01_-slides-FunctionalArchitecture.txt" />
+    <Content Include="00-Overview-of-part-C.txt" />
   </ItemGroup>
 
 
