@@ -15,9 +15,6 @@
     <None Include="02a-TypeInference.fsx" />
     <None Include="02b-Exercise-TypeSignatures.fsx" />
     <None Include="02c-Exercise-TypeSignatures(answer).fsx" />
-    <None Include="03a-FunctionsAsThings.fsx" />
-    <None Include="03b-Exercise-FunctionsAsThings.fsx" />
-    <None Include="03c-Exercise-FunctionsAsThings(answer).fsx" />
     <None Include="04a-Composition-and-piping.fsx" />
     <None Include="05a-Exercise-ThinkOfANumber.fsx" />
     <None Include="05b-Exercise-ThinkOfANumber(answer).fsx" />
@@ -25,7 +22,12 @@
     <None Include="05d-Exercise-ToRomanNumbers(answer).fsx" />
     <None Include="05e-Exercise-Decorator.fsx" />
     <None Include="05f-Exercise-Decorator(answer).fsx" />
-    <None Include="06a-Exercise-ComposableTypes.fsx" />
+    <None Include="06b-Exercise-FizzBuzz.fsx" />
+    <None Include="06c-Exercise-FizzBuzz%28answer%29.fsx" />
+    <None Include="07a-FunctionsAsThings.fsx" />
+    <None Include="07b-Exercise-FunctionsAsThings.fsx" />
+    <None Include="07c-Exercise-FunctionsAsThings%28answer%29.fsx" />
+    <None Include="08a-Exercise-ComposableTypes.fsx" />
   </ItemGroup>
 
 
