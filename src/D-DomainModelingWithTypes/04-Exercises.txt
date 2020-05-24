@@ -1,0 +1,21 @@
+﻿// =================================
+// Exercise 4: State machines
+// =================================
+
+Understand the template
+* 04a1-StateMachine(template to work from).fsx
+  related diagram is: 04a0-StateMachine(diagram).png
+
+Read through and understand the email example
+* 04b1-EmailStateTransition(example).fsx
+  related diagram is: 04b0-EmailStateTransition(diagram).png
+
+Now practice putting it all together!
+
+Do one or more of following exercises:
+* 04c1-Exercise-ShoppingCartApi.fsx
+  related diagram is: 04c0-Exercise-ShoppingCart(diagram).png
+* 04d1-Exercise-ShoppingCartClient.fsx
+* 04e1-Exercise-DeliveryApi.fsx
+  related diagram is: 04e0-Exercise-Delivery(diagram).png
+* 04f1-Exercise-DeliveryApiClient.fsx

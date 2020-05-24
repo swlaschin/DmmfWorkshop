@@ -1,0 +1,15 @@
+﻿// =================================
+// Exercise 2: Constrained types
+// =================================
+
+Optional:
+* review the previous exercises
+* review code in the slides: 02a-ExamplesFromSlides-1.fsx
+
+Do work through this file
+* 02b-ConstrainedTypes.fsx
+
+Do each of the following exercises:
+* 02c-Exercise-OrderLineQty.fsx
+* 02e-Exercise-ConstrainedTypes.fsx
+

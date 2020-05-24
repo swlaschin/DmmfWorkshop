@@ -1,0 +1,18 @@
+﻿// =================================
+// Exercise 3: Domain Modeling with types
+// =================================
+
+Optional:
+* review the previous exercises
+* review code in the slides: 03a-ExamplesFromSlides-2.fsx
+
+Do:
+* 03b-Exercise-Refactoring flags
+
+Now practice putting it all together!
+
+Do one or more of following exercises:
+* 03d-Exercise-CardGame.fsx
+* 03f-Exercise-Contact.fsx
+* 03h-Exercise-Payments.fsx
+* 03j-Exercise-YourOwnDomain1.fsx  // e.g. convert a domain model from the first session to code.

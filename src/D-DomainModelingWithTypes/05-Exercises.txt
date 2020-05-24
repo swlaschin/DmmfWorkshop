@@ -1,0 +1,10 @@
+﻿// =================================
+// Exercise 5: Modeling with Total functions
+// =================================
+
+
+Read through and understand the TwelveDividedBy example
+* 05a-TotalFunctions.fsx
+
+Do the exercise:
+* 05b-Exercise-TotalFunctions.fsx
