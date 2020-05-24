@@ -217,8 +217,11 @@ printOption someInt
 printOption noInt
 
 
-// The option "map" will allow a function to be applied to wrapped data
-// NOTE: This is re-implementation of the built-in function Option.map
+// Working with wrapped data by unwrapping it and then re-wrapping it is painful.
+// The "optionMap" function defined below allows a function to be applied to wrapped data
+// without unwrapping it in the top level code.
+//
+// NOTE: This is a re-implementation of the built-in function Option.map
 let optionMap f opt =
     match opt with
     | Some data ->
@@ -258,8 +261,11 @@ let printResult result =
 printResult success
 printResult error
 
-// The Result "map" will allow a function to be applied to the Ok data
-// NOTE: This is re-implementation of the built-in function Result.map
+// Working with wrapped data by unwrapping it and then re-wrapping it is painful.
+// The "resultMap" function defined below allows a function to be applied to wrapped data
+// without unwrapping it in the top level code.
+//
+// NOTE: This is a re-implementation of the built-in function Result.map
 let resultMap f result =
     match result with
     | Ok data ->

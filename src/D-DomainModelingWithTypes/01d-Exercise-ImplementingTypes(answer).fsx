@@ -1,9 +1,10 @@
 ﻿// =============================================
 // Exercise: Implementing types
-// Some of the types below have not yet been defined.
-// Add simple definitions so that this file will compile.
 //
-// important:  types must be defined BEFORE they are referenced
+// Some of the types below have not yet been defined.
+// Your task is to add simple definitions so that this file will compile.
+//
+// IMPORTANT:  types must be defined BEFORE they are referenced
 // (e.g. earlier in the file )
 //
 // =============================================
