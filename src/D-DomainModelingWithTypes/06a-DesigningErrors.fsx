@@ -10,6 +10,30 @@ type Input = {
    Email : string
 }
 
+/// Using an Option to indicate an error.
+/// Not very helpful!
+module ResultWithOption =
+
+    let validateInput input =
+       if input.Name = "" then
+          None
+       else if input.Email = "" then
+          None
+       else
+          Some input  // happy path
+
+    // function signature is
+    // val validateInput : input:Input -> Input option
+
+
+// test
+ResultWithOption.validateInput {Name="Scott"; Email="scott@example.com"}
+ResultWithOption.validateInput {Name=""; Email="scott@example.com"}
+ResultWithOption.validateInput {Name="Scott"; Email=""}
+
+
+/// Using a Result with a string to indicate an error.
+/// Helpful but stringly-typed.
 module ResultWithString =
 
     let validateInput input =
@@ -37,6 +61,8 @@ ResultWithString.validateInput {Name="Scott"; Email=""}
 //============================================
 
 
+/// Using a Result with a special choice type to indicate an error.
+/// Helpful and type checked.
 module ResultWithErrorType =
 
     type ValidationError =
