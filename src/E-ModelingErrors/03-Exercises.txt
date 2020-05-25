@@ -1,0 +1,15 @@
+﻿// =================================
+// Exercise 3: Complete pipelines
+// =================================
+
+Read through and understand the example
+* 03a-RopWithStringError.fsx
+
+Do exercise:
+* 03b-Exercise-RopWithErrorType.fsx
+
+Read through and understand the example
+* 03d-RopWithTicTacToe.fsx
+
+Do exercise:
+* 03e-Exercise-RopWithCoffeeMaker.fsx

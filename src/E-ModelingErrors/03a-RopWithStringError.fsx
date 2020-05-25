@@ -1,6 +1,10 @@
-﻿(*
-Railway oriented programming
-*)
+﻿// =================================
+// This file demonstrates "railway oriented programming"
+// where the error type is a string
+//
+// Exercise:
+//    look at, execute, and understand all the code in this file
+// =================================
 
 // IMPORTANT - if you get errors such as
 //   Could not load type 'ErrorMessage' from assembly 'FSI-ASSEMBLY,
@@ -9,13 +13,47 @@ Railway oriented programming
 // 2. Load code in small chunks
 
 open System
+
+// Load a file with library functions for Result
 #load "Result.fsx"
 
+
+// Some data to validate
 type Request = {
     UserId: int
     Name: string
     Email: string
 }
+
+//===========================================
+// A library of utility functions for railway oriented programming
+// which are not specific to this workflow and could be reused.
+//===========================================
+
+module RopUtil =
+
+    /// convert a "dead-end" function into a useful function
+    let tee f result =
+      f result
+      result
+
+    /// convert an exception throwing function
+    /// into a useful function
+    let catch exceptionThrowingFunction handler oneTrackInput =
+        try
+            Ok (exceptionThrowingFunction oneTrackInput)
+        with
+        | ex ->
+            Error (handler ex)
+
+    /// like catch but with *twoTrackInput*
+    let catchR exceptionThrowingFunction handler twoTrackInput =
+        let catch' = catch exceptionThrowingFunction handler
+        twoTrackInput |> Result.bind catch'
+
+//===========================================
+// Step 1 of the pipeline: validation
+//===========================================
 
 let nameNotBlank input =
   if input.Name = "" then
@@ -36,6 +74,7 @@ let emailNotBlank input =
     Ok input
 
 
+/// Combine all the smaller validation functions into one big one
 let validateRequest input =
   input
   |> nameNotBlank
@@ -44,8 +83,9 @@ let validateRequest input =
 
 
 // -------------------------------
-// test data
-// -------------------------------
+// test the "validateRequest" step interactively
+// before implementing the next step
+
 let goodRequest = {
   UserId=0
   Name= "Alice"
@@ -68,37 +108,44 @@ let unsendableRequest = {
 unsendableRequest |> validateRequest
 
 
-// ------------------------
-// Add another step
-// ------------------------
+//===========================================
+// Step 2 of the pipeline: lowercasing the email
+//===========================================
 
 // trim spaces and lowercase
 let canonicalizeEmail (input:Request) =
    { input with Email = input.Email.Trim().ToLower() }
 
 
+// -------------------------------
+// test the "canonicalize" step interactively
+// before implementing the next step
 
-// test so far
 goodRequest
 |> validateRequest
 |> Result.map canonicalizeEmail
 
-(*
-let canonicalizeEmailR =   // value restriction error
-  Result.map canonicalizeEmail
-*)
+//-----------------------------------------
+// Enhance this step by making a two-track version of canonicalizeEmail
+// called "canonicalizeEmailR"
+//
+// This means we can hide the Result.map and the pipeline looks nicer :)
 
-let canonicalizeEmailR twoTrackInput =  // value restriction error fixed!!!
+
+let canonicalizeEmailR twoTrackInput =
   twoTrackInput |> Result.map canonicalizeEmail
 
+
+// test "canonicalizeEmailR"
 goodRequest
 |> validateRequest
 |> canonicalizeEmailR
 
 
-// ------------------------
-// Update the database
-// ------------------------
+//===========================================
+// Step 3 of the pipeline: Update the database
+//===========================================
+
 
 let updateDb (request:Request) =
     // do something
@@ -106,24 +153,28 @@ let updateDb (request:Request) =
     printfn "Database updated with userId=%i email=%s" request.UserId request.Email
     ()
 
-let tee f result =
-  f result
-  result
+
+//-----------------------------------------
+// Enhance this step by making a two-track version of updateDb
+// called "updateDbR"
 
 let updateDbR twoTrackInput =
-  twoTrackInput |> Result.map (tee updateDb)
+  twoTrackInput
+  |> Result.map (RopUtil.tee updateDb)
 
+// -------------------------------
+// test the "updateDbR" step interactively
+// before implementing the next step
 
-// test so far
 goodRequest
 |> validateRequest
 |> canonicalizeEmailR
 |> updateDbR
 
 
-// ------------------------
-// Send an email
-// ------------------------
+//===========================================
+// Step 4 of the pipeline: Send an email
+//===========================================
 
 let sendEmail (request:Request) =
     if request.Email.EndsWith("example.com") then
@@ -142,26 +193,18 @@ unsendableRequest
 
 // The fix is to convert the exception-throwing code
 // into Result-returning code
-
-
-let catch exceptionThrowingFunction handler oneTrackInput =
-    try
-        Ok (exceptionThrowingFunction oneTrackInput)
-    with
-    | ex ->
-        Error (handler ex)
-
-let catchR exceptionThrowingFunction handler twoTrackInput =
-    let catch' = catch exceptionThrowingFunction handler
-    twoTrackInput
-    |> Result.bind catch'
-
 let sendEmailR twoTrackInput =
+    // define a handler for exceptions
     let exnConverter (ex:exn) = ex.Message
-    catchR sendEmail exnConverter twoTrackInput
+    // convert the exception-throwing "sendEmail"
+    // into something useful.
+    RopUtil.catchR sendEmail exnConverter twoTrackInput
 
 
-// test so far
+// -------------------------------
+// test the "sendEmailR" step interactively
+// before implementing the next step
+
 goodRequest
 |> validateRequest
 |> canonicalizeEmailR
@@ -174,10 +217,9 @@ unsendableRequest
 |> updateDbR
 |> sendEmailR
 
-
-// ------------------------
-// log the errors
-// ------------------------
+//===========================================
+// Step 5 of the pipeline: Log the errors
+//===========================================
 
 let loggerR twoTrackInput =
     match twoTrackInput with
@@ -187,7 +229,10 @@ let loggerR twoTrackInput =
         printfn "LOG ERROR %s" err
     twoTrackInput
 
-// test so far
+// -------------------------------
+// test the "loggerR" step interactively
+// before implementing the next step
+
 goodRequest
 |> validateRequest
 |> canonicalizeEmailR
@@ -195,10 +240,9 @@ goodRequest
 |> sendEmailR
 |> loggerR
 
-
-// ------------------------
-// return the response
-// ------------------------
+//===========================================
+// Last step of the pipeline: return the response
+//===========================================
 
 let returnMessageR result =
     match result with
@@ -207,8 +251,9 @@ let returnMessageR result =
     | Error msg ->
         sprintf "400 %s" msg
 
+// -------------------------------
+// test the "returnMessageR" step interactively
 
-// test so far
 goodRequest
 |> validateRequest
 |> canonicalizeEmailR
@@ -218,21 +263,24 @@ goodRequest
 |> returnMessageR
 
 
-// ------------------------
-// final code
-// ------------------------
+//===========================================
+// Finally, build a bigger function that runs the whole pipeline
+//===========================================
 
 let updateCustomerR input =
-  input
-  |> validateRequest
-  |> canonicalizeEmailR
-  |> updateDbR
-  |> sendEmailR
-  |> loggerR
-  |> returnMessageR
+    // See how tidy the pipeline is :)
+    input
+    |> validateRequest
+    |> canonicalizeEmailR
+    |> updateDbR
+    |> sendEmailR
+    |> loggerR
+    |> returnMessageR
 
 
-// test
+// -------------------------------
+// test the entire pipeline
+
 goodRequest
 |> updateCustomerR
 
@@ -252,14 +300,14 @@ let updateDbWithTransaction f (request:Request) =
     // return nothing at all
     printfn "Start Database transaction with userId=%i email=%s" request.UserId request.Email
     match (f request) with
-    | Ok data -> 
-        printfn "Commit Database Transaction" 
-        Ok data 
-    | Error e -> 
-        printfn "Abort Database Transaction" 
-        Error e 
+    | Ok data ->
+        printfn "Commit Database Transaction"
+        Ok data
+    | Error e ->
+        printfn "Abort Database Transaction"
+        Error e
 
-let updateDbWithTransactionR f r = 
+let updateDbWithTransactionR f r =
     Result.bind (updateDbWithTransaction f) r
 
 unsendableRequest

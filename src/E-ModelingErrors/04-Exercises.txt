@@ -1,0 +1,9 @@
+﻿// =================================
+// Exercise 4:
+// =================================
+
+Read through and understand the example
+* 04a-MapError.fsx
+
+Do:
+* 04b-Exercise-MapError.fsx

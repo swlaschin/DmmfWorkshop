@@ -8,20 +8,56 @@ Railway oriented programming -- with custom error type
 // 1. Reset the FSI interactive
 // 2. Load code in small chunks
 
-
+// Load a file with library functions for Result
 #load "Result.fsx"
 
+// Some data to validate
 type Request = {
     UserId: int
     Name: string
     Email: string
 }
 
+//===========================================
+// Define the error type here.
+// Add to it incrementally as you develop the pipeline.
+//===========================================
+
 type ErrorMessage =
   | ??   // name not blank
   | ?? of int  // name not longer than
   | ??   // email not longer than
 
+
+//===========================================
+// A library of utility functions for railway oriented programming
+// which are not specific to this workflow and could be reused.
+//===========================================
+
+module RopUtil =
+
+    /// convert a "dead-end" function into a useful function
+    let tee f result =
+      f result
+      result
+
+    /// convert an exception throwing function
+    /// into a useful function
+    let catch exceptionThrowingFunction handler oneTrackInput =
+        try
+            Ok (exceptionThrowingFunction oneTrackInput)
+        with
+        | ex ->
+            Error (handler ex)
+
+    /// like catch but with *twoTrackInput*
+    let catchR exceptionThrowingFunction handler twoTrackInput =
+        let catch' = catch exceptionThrowingFunction handler
+        twoTrackInput |> Result.bind catch'
+
+//===========================================
+// Step 1 of the pipeline: validation
+//===========================================
 
 let nameNotBlank input =
   if input.Name = "" then
@@ -41,7 +77,7 @@ let emailNotBlank input =
   else
     Ok input
 
-
+/// Combine all the smaller validation functions into one big one
 let validateRequest input =
   input
   |> nameNotBlank
@@ -49,8 +85,8 @@ let validateRequest input =
   |> Result.bind emailNotBlank
 
 // -------------------------------
-// test data
-// -------------------------------
+// test the "validateRequest" step interactively
+// before implementing the next step
 
 let goodRequest = {
   UserId=0
@@ -73,9 +109,9 @@ let unsendableRequest = {
 }
 unsendableRequest |> validateRequest
 
-// ------------------------
-// Add another step
-// ------------------------
+//===========================================
+// Step 2 of the pipeline: lowercasing the email
+//===========================================
 
 // trim spaces and lowercase
 let canonicalizeEmail input =
@@ -84,14 +120,17 @@ let canonicalizeEmail input =
 let canonicalizeEmailR twoTrackInput =  // value restriction error fixed!!!
   twoTrackInput |> Result.map canonicalizeEmail
 
-// test so far
+// -------------------------------
+// test the "canonicalize" step interactively
+// before implementing the next step
+
 goodRequest
 |> validateRequest
 |> canonicalizeEmailR
 
-// ------------------------
-// Update the database
-// ------------------------
+//===========================================
+// Step 3 of the pipeline: Update the database
+//===========================================
 
 let updateDb (request:Request) =
     // do something
@@ -99,23 +138,22 @@ let updateDb (request:Request) =
     printfn "Database updated with userId=%i email=%s" request.UserId request.Email
     ()
 
-let tee f result =
-  f result
-  result
-
 let updateDbR twoTrackInput =
-  twoTrackInput |> Result.map (tee updateDb)
+  twoTrackInput |> Result.map (RopUtil.tee updateDb)
 
-// test so far
+// -------------------------------
+// test the "updateDbR" step interactively
+// before implementing the next step
+
 goodRequest
 |> validateRequest
 |> canonicalizeEmailR
 |> updateDbR
 
 
-// ------------------------
-// Send an email
-// ------------------------
+//===========================================
+// Step 4 of the pipeline: Send an email
+//===========================================
 
 let sendEmail (request:Request) =
     if request.Email.EndsWith("example.com") then
@@ -124,25 +162,15 @@ let sendEmail (request:Request) =
         printfn "Sending email=%s" request.Email
         request // return request for processing by next step
 
-let catch exceptionThrowingFunction handler oneTrackInput =
-    try
-        Ok (exceptionThrowingFunction oneTrackInput)
-    with
-    | ex ->
-        Error (handler ex)
-
-let catchR exceptionThrowingFunction handler twoTrackInput =
-    let catch' = catch exceptionThrowingFunction handler
-    twoTrackInput
-    |> Result.bind catch'
-
-
 let sendEmailR twoTrackInput =
     // convert SMTP exceptions to our list
     let handler (ex:exn) = SmtpServerError ex.Message
-    catchR sendEmail handler twoTrackInput
+    RopUtil.catchR sendEmail handler twoTrackInput
 
-// test so far
+// -------------------------------
+// test the "sendEmailR" step interactively
+// before implementing the next step
+
 goodRequest
 |> validateRequest
 |> canonicalizeEmailR
@@ -155,9 +183,9 @@ unsendableRequest
 |> updateDbR
 |> sendEmailR
 
-// ------------------------
-// log the errors
-// ------------------------
+//===========================================
+// Step 5 of the pipeline: Log the errors
+//===========================================
 
 let loggerR twoTrackInput =
     match twoTrackInput with
@@ -167,7 +195,10 @@ let loggerR twoTrackInput =
         printfn "LOG ERROR %A" err
     twoTrackInput
 
-// test so far
+// -------------------------------
+// test the "loggerR" step interactively
+// before implementing the next step
+
 goodRequest
 |> validateRequest
 |> canonicalizeEmailR
@@ -175,9 +206,9 @@ goodRequest
 |> sendEmailR
 |> loggerR
 
-// ------------------------
-// message converter examples
-// ------------------------
+//===========================================
+// Translator from error type to string
+//===========================================
 
 // obviously the real ones would use resource files!
 
@@ -203,9 +234,9 @@ let translateError_FR err =
     | SmtpServerError msg ->
         sprintf "SmtpServerError [%s]" msg
 
-// ------------------------
-// return the response
-// ------------------------
+//===========================================
+// Last step of the pipeline: return the response
+//===========================================
 
 
 let returnMessageR translator result =
@@ -216,7 +247,8 @@ let returnMessageR translator result =
         let errStr = translator msg
         sprintf "400 %s" errStr
 
-// test so far
+// -------------------------------
+// test the "returnMessageR" step interactively
 goodRequest
 |> validateRequest
 |> canonicalizeEmailR
@@ -226,9 +258,9 @@ goodRequest
 |> returnMessageR translateError_EN
 
 
-// ------------------------
-// final code
-// ------------------------
+//===========================================
+// Finally, build a bigger function that runs the whole pipeline
+//===========================================
 
 let updateCustomerR request =
   request
@@ -240,7 +272,9 @@ let updateCustomerR request =
   |> returnMessageR translateError_FR
 
 
-// test
+// -------------------------------
+// test the entire pipeline
+
 goodRequest |> updateCustomerR
 
 badRequest1 |> updateCustomerR

@@ -1,29 +1,52 @@
-﻿(*
-1) create a constrained type for Age (age must be between 0 and 130)
-2) create a constrained type for Email where it must contain an @ sign
-3) reuse the PersonalName from the previous example
-4) create a type Person with
-    * property Name of type PersonalName
-    * property Age of type Age
-    * property Email of type Email
-4) create a type PersonDto with same properties as primitive types (string,int)
-   (This will be used for XML or JSON serialization)
-5) create a function "toDto" that converts a Person into a DTO
-6) create a function "fromDto" that converts a DTO into Person
+﻿// ================================================
+// Exercise:
+// Use Validation as so that functions with different error
+// types can be chained together
+// ================================================
+
+(*
+
+1) create a type Person with
+* property Name of type PersonalName
+* property Age of type Age
+* property Email of type Email
+2) create a constrained type for Age (age must be between 0 and 130)
+3) create a constrained type for Email where it must contain an @ sign
+
+4) create a function "toDto" that converts a Person into a DTO
+5) create a function "fromDto" that converts a DTO into Person
+
 *)
 
 open System
 
+// Load a file with library functions for Result
 #load "Result.fsx"
 
-// Here I'm using modules to group related functions together
+/// Define types and validation for this domain
+module Domain =
 
-module ConstrainedTypes =
-
+    // String10 must be not empty AND len < 10
     type String10 =  private String10 of string
 
-    module String10 =
+    // Age must be between 0..130
+    type Age = private Age of int
 
+    // Email must be not empty and contain an @ symbol
+    type Email = private Email of string
+
+    type PersonalName = {
+        First: String10
+        Last: String10
+        }
+
+    type Person = {
+        Name: PersonalName
+        Age: Age
+        Email: Email
+        }
+
+    module String10 =
         let create s =
             if String.IsNullOrEmpty(s) then
                 Error "String10 is null or empty"
@@ -34,10 +57,8 @@ module ConstrainedTypes =
 
         let value (String10 s) = s
 
-    type Age = private Age of int
 
     module Age =
-
         let create i =
             if i < 0 then
                 Error "Age too small"
@@ -48,10 +69,8 @@ module ConstrainedTypes =
 
         let value (Age s) = s
 
-    type Email = private Email of string
 
     module Email =
-
         let create s =
             if String.IsNullOrEmpty(s) then
                 Error "Email is null or empty"
@@ -63,20 +82,11 @@ module ConstrainedTypes =
         let value (Email s) = s
 
 
-open ConstrainedTypes
 
-/// This is a domain type
-type PersonalName = {
-    First: String10
-    Last: String10
-    }
+//===========================================
+// A DTO to validate
+//===========================================
 
-/// This is a domain type
-type Person = {
-    Name: PersonalName
-    Age: Age
-    Email: Email
-    }
 
 /// This is what will be serialized as JSON
 type PersonDto = {
@@ -86,15 +96,22 @@ type PersonDto = {
     email: string
     }
 
-/// Create a constructor to be used with partial application
+//===========================================
+// Validation logic
+//===========================================
+
+open Domain
+
+/// Create a constructor for PersonalName
 let createName first last :PersonalName =
     {First=first; Last=last}
 
-/// Create a constructor to be used with partial application
+/// Create a constructor for Person
 let createPerson name age email :Person =
     {Name=name; Age=age; Email=email}
 
-/// convert a person into a DTO -- this always succeeds
+/// Convert a person into a DTO for outputing as JSON.
+/// This always succeeds.
 let toDto (person:Person) :PersonDto =
     {
     first = String10.value person.Name.First
@@ -103,36 +120,32 @@ let toDto (person:Person) :PersonDto =
     email = Email.value person.Email
     }
 
-let (<!>) = Validation.map
-let (<*>) = Validation.apply
-
-/// create a person from a DTO -- this might fail
-let fromDto (personDto:PersonDto) :Validation<Person,_> =
-    let firstR =
+/// Create a person from a DTO.
+/// This might fail if the DTO is invalid
+let fromDto (personDto:PersonDto) :Validation<Person,string> =
+    let firstOrError =
         personDto.first
         |> String10.create
         |> Validation.ofResult
-    let lastR =
+    let lastOrError =
         personDto.last
         |> String10.create
         |> Validation.ofResult
-    let ageR =
+    let ageOrError =
         personDto.age
         |> Age.create
         |> Validation.ofResult
-    let emailR =
+    let emailOrError =
         personDto.email
         |> Email.create
         |> Validation.ofResult
 
-    let nameR = createName <!> firstR <*> lastR
-    let personR = createPerson <!> nameR <*> ageR <*> emailR
+    let nameOrError =
+        (Validation.lift2 createName) firstOrError lastOrError
+    let personOrError =
+        (Validation.lift3 createPerson) nameOrError ageOrError emailOrError
 
-    // or alternatively
-    let nameR2 = Validation.lift2 createName firstR lastR
-    let personR2 = Validation.lift3 createPerson nameR ageR emailR
-
-    personR // return
+    personOrError // return
 
 
 // -------------------------------

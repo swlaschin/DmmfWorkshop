@@ -5,28 +5,32 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="01_-DomainErrors-template.fsx" />
-    <None Include="01a-DomainErrors-TicTacToe.fsx" />
-    <None Include="01b-DomainErrors-ATM.fsx" />
-    <None Include="01c-DomainErrors-Microwave.fsx" />
-    <None Include="01d-DomainErrors-CoffeeMaker.fsx" />
-    <None Include="01e-DomainErrors-Delivery.fsx" />
-    <None Include="01g-DomainErrors-YourOwnDomain.fsx" />
-    <None Include="02a-Exercise-ValidateRequest.fsx" />
-    <None Include="02b-Exercise-ValidateRequest(answers).fsx" />
+    <Content Include="01-Exercises.txt" />
+    <None Include="01a-DesigningErrors.fsx" />
+    <None Include="01b-Exercise-DesigningErrors.fsx" />
+    <None Include="01c-Exercise-DesigningErrors (answers).fsx" />
+    <None Include="01d-Exercise-ChainingValidations.fsx" />
+    <None Include="01e-Exercise-ChainingValidations%28answers%29.fsx" />
+    <Content Include="02-Exercises.txt" />
+    <None Include="02a-Exercise-ChainingValidationsWithBind.fsx" />
+    <None Include="02b-Exercise-ChainingValidationsWithBind%28answers%29.fsx" />
+    <Content Include="03-Exercises.txt" />
     <None Include="03a-RopWithStringError.fsx" />
     <None Include="03b-Exercise-RopWithErrorType.fsx" />
-    <None Include="03b-Exercise-RopWithErrorType(answers).fsx" />
-    <None Include="04a-RopWithTicTacToe.fsx" />
-    <None Include="04b-Exercise-RopWithCoffeeMaker.fsx" />
-    <None Include="04b-Exercise-RopWithCoffeeMaker(answers).fsx" />
-    <None Include="05a-ValidationWithMultipleErrors.fsx" />
+    <None Include="03c-Exercise-RopWithErrorType%28answers%29.fsx" />
+    <None Include="03d-RopWithTicTacToe.fsx" />
+    <None Include="03e-Exercise-RopWithCoffeeMaker.fsx" />
+    <None Include="03f-Exercise-RopWithCoffeeMaker%28answers%29.fsx" />
+    <Content Include="04-Exercises.txt" />
+    <None Include="04a-MapError.fsx" />
+    <None Include="04b-Exercise-MapError.fsx" />
+    <None Include="04c-Exercise-MapError%28answers%29.fsx" />
+    <Content Include="05-Exercises.txt" />
+    <None Include="05a-Validation.fsx" />
     <None Include="05b-Exercise-DtoValidation.fsx" />
     <None Include="05b-Exercise-DtoValidation(answers).fsx" />
-    <None Include="06a-ResultComputationExpression.fsx" />
-    <None Include="07a-TotalFunctions.fsx" />
-    <None Include="07b-Exercise-TotalFunctions.fsx" />
-    <None Include="07c-Exercise-TotalFunctions(answers).fsx" />
+    <Content Include="06-Exercises.txt" />
+    <None Include="06a-ResultCE-Validation.fsx" />
     <None Include="NewsDomainDtoExample.fsx" />
     <None Include="Result.fsx" />
   </ItemGroup>

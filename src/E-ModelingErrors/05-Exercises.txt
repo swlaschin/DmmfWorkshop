@@ -1,0 +1,9 @@
+﻿// =================================
+// Exercise 5:
+// =================================
+
+Read through and understand the example
+* 05a-Validation.fsx
+
+Do:
+* 05b-Exercise-DtoValidation.fsx

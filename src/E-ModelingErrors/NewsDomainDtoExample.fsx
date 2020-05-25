@@ -114,10 +114,6 @@ module Dto =
     // with the same name as the DTO type
     // ===================================
 
-
-    let ( <!> ) = Validation.map
-    let ( <*> ) = Validation.apply
-
     module CategoryBInfoDto =
         let toDomain (dto:CategoryBInfoDto) :Validation<Domain.CategoryBInfo,DtoError> =
             if String.IsNullOrWhiteSpace(dto.Data) then
@@ -140,7 +136,7 @@ module Dto =
                     // field to domain or error
                     let practiceAreaOrError = CategoryBInfoDto.toDomain dataForChoiceB
                     // construct DTO
-                    let practiceArea = Domain.Category.B <!> practiceAreaOrError
+                    let practiceArea = (Validation.map Domain.Category.B) practiceAreaOrError
                     practiceArea
             | _ ->
                 Error [CategoryTagNotRecognized dto.Tag]
@@ -174,7 +170,7 @@ module Dto =
             let practiceAreaOrError = CategoryDto.toDomain dto.Category
 
             // combine them
-            ctor <!> nameOrError <*> practiceAreaOrError
+            (Validation.lift2 ctor) nameOrError practiceAreaOrError
 
     module NewsItemDto =
 
@@ -199,7 +195,7 @@ module Dto =
                 |> Result.sequence
 
             // combine them
-            ctor <!> docIdOrError <*> textOrError <*> topicsOrError
+            (Validation.lift3 ctor) docIdOrError textOrError topicsOrError
 
     module CurationPositionDto =
         let toDomain (dto:CurationPositionDto) :Validation<Domain.CurationPosition,DtoError> =
@@ -218,7 +214,7 @@ module Dto =
             let positionOrError = CurationPositionDto.toDomain dto.Position
             let isBreakingOrError = dto.IsBreaking |> Ok
             // combine them
-            ctor <!> positionOrError <*> isBreakingOrError
+            (Validation.lift2 ctor) positionOrError isBreakingOrError
 
 
     module NewsFeedItemDto =
@@ -232,7 +228,7 @@ module Dto =
             let alertableItemOrError = NewsItemDto.toDomain dto.NewsItem
             let curationInfoOrError = CurationInfoDto.toDomain dto.CurationInfo
             // combine them
-            ctor <!> alertableItemOrError <*> curationInfoOrError
+            (Validation.lift2 ctor) alertableItemOrError curationInfoOrError
 
 module Example =
     open Dto

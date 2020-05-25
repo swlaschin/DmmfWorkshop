@@ -1,0 +1,8 @@
+﻿// =================================
+// Exercise 2: Chaining with bind
+// =================================
+
+Do:
+* 02a-Exercise-ChainingValidationsWithBind.fsx
+
+
