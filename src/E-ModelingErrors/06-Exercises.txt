@@ -1,7 +1,0 @@
-﻿// =================================
-// Exercise 6:
-// =================================
-
-Read through and understand the example
-* 06a-ResultCE-Validation.fsx
-* 05b-Exercise-DtoValidation.fsx

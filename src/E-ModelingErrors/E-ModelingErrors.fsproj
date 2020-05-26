@@ -29,8 +29,6 @@
     <None Include="05a-Validation.fsx" />
     <None Include="05b-Exercise-DtoValidation.fsx" />
     <None Include="05b-Exercise-DtoValidation(answers).fsx" />
-    <Content Include="06-Exercises.txt" />
-    <None Include="06a-ResultCE-Validation.fsx" />
     <None Include="NewsDomainDtoExample.fsx" />
     <None Include="Result.fsx" />
   </ItemGroup>
