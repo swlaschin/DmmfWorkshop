@@ -19,7 +19,7 @@ module OptionMap =
 
     add42 (Some 1)  // error
 
-    let add42ToOption opt = 
+    let add42ToOption opt =
         if Option.isSome opt then
             let newVal = add42 opt.Value
             Some newVal
@@ -35,7 +35,7 @@ module OptionMap =
 /// Maps for list world
 module ListMap =
 
-    let add42ToEach list = 
+    let add42ToEach list =
         let mutable newList = []
         for item in list do
             let newItem = add42 item
@@ -50,22 +50,22 @@ module ListMap =
     add42ToEach_v2 [1;2;3]     // OK
     [1;2;3] |> List.map add42  // same thing
 
-    
+
 /// Maps for async world
 module AsyncMap =
 
     let async1 = async {
         return 1
-        } 
-
-    add42 async1 // Error
-    
-    let asyncMap f xAsync = async { 
-        let! x = xAsync
-        return f x 
         }
 
-    let async43 = async1 |> asyncMap add42  
+    add42 async1 // Error
+
+    let asyncMap f xAsync = async {
+        let! x = xAsync
+        return f x
+        }
+
+    let async43 = async1 |> asyncMap add42
     async43 |> Async.RunSynchronously
 
 

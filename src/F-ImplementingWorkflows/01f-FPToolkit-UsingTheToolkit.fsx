@@ -119,9 +119,9 @@ let downloadFile : DownloadFile =
 //===========================================
 
 let decodeCustomerDto : DecodeCustomerDto =
-    fun json -> 
+    fun json ->
         Ok {Name=""; Email=""; Birthdate=""}
-        
+
 
 //===========================================
 // CreateValidCustomer
@@ -152,11 +152,11 @@ let createValidCustomer : CreateValidCustomer =
         let customerOrError =
             (Validation.lift3 createCustomer) nameOrError emailOrError bdateOrError
 
-        customerOrError 
+        customerOrError
 
 
 //===========================================
-// StoreCustomer 
+// StoreCustomer
 //===========================================
 
 let storeCustomer : StoreCustomer =
@@ -169,7 +169,7 @@ let storeCustomer : StoreCustomer =
 //===========================================
 
 let processCustomerDto jsonOrError =
-    let createValidCustomer' = 
+    let createValidCustomer' =
         createValidCustomer >> Result.mapError WorkflowError.ValidationErrors
 
     jsonOrError

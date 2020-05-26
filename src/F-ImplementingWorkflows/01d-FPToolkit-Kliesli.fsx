@@ -21,9 +21,9 @@ module OptionKliesli =
         f1 >> (Option.bind f2)
 
     // common symbol
-    let ( >=> ) = kleisli 
+    let ( >=> ) = kleisli
 
-    let example input = 
+    let example input =
         let combined = doSomething >=> doSomethingElse >=> doAThirdThing
         combined input
 
@@ -38,14 +38,14 @@ module ResultKliesli =
         f1 >> (Result.bind f2)
 
     // common symbol
-    let ( >=> ) = kleisli 
+    let ( >=> ) = kleisli
 
-    let example input = 
+    let example input =
         let combined = doSomething >=> doSomethingElse >=> doAThirdThing
         combined input
 
 module AsyncKliesli =
-    
+
     // three Async-returning functions to be chained together
     let doSomething x = async.Return x
     let doSomethingElse x = async.Return x
@@ -58,9 +58,9 @@ module AsyncKliesli =
         f1 >> (asyncBind f2)
 
     // common symbol
-    let ( >=> ) = kleisli 
+    let ( >=> ) = kleisli
 
-    let example input = 
+    let example input =
         let combined = doSomething >=> doSomethingElse >=> doAThirdThing
         combined input
 

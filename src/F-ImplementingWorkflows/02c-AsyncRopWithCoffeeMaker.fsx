@@ -1,5 +1,5 @@
 ﻿// =================================
-// This file demonstrates the Coffee maker 
+// This file demonstrates the Coffee maker
 // with Result AND Async
 //
 // Exercise:
@@ -161,7 +161,7 @@ open Domain
 open Implementation
 
 // Everything is good
-Database.saveState { HasWater=true;HasCoffee=true; HasMilk=true } |> Async.RunSynchronously 
+Database.saveState { HasWater=true;HasCoffee=true; HasMilk=true } |> Async.RunSynchronously
 
 makeCoffee Espresso |> Async.RunSynchronously // Ok
 makeCoffee Latte    |> Async.RunSynchronously // Ok

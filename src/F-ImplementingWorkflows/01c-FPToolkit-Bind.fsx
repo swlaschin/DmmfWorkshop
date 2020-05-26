@@ -18,15 +18,15 @@ module OptionBind =
     let doSomethingElse x = Some x
     let doAThirdThing x = Some x
 
-    let example_v1 input = 
+    let example_v1 input =
         let x = doSomething input
         if x.IsSome then
-            let y = doSomethingElse (x.Value) 
+            let y = doSomethingElse (x.Value)
             if y.IsSome then
-                let z = doAThirdThing (y.Value) 
+                let z = doAThirdThing (y.Value)
                 if z.IsSome then
                     let result = z.Value
-                    Some result 
+                    Some result
                 else
                     None
             else
@@ -38,23 +38,23 @@ module OptionBind =
     // define a helper function
     // to make composition easy
 
-    let ifSomeDo f (opt:'a option) = 
+    let ifSomeDo f (opt:'a option) =
         if opt.IsSome then
-            f opt.Value 
+            f opt.Value
         else
             None
 
-    let example_v2 input = 
+    let example_v2 input =
         doSomething input
-        |> ifSomeDo doSomethingElse 
+        |> ifSomeDo doSomethingElse
         |> ifSomeDo doAThirdThing
 
     // ----------------------------------
     // Or use the built-in Option.bind function
 
-    let example_v3 input = 
+    let example_v3 input =
         doSomething input
-        |> Option.bind doSomethingElse 
+        |> Option.bind doSomethingElse
         |> Option.bind doAThirdThing
 
 
@@ -65,13 +65,13 @@ module ResultBind =
     let doSomethingElse x = Ok x
     let doAThirdThing x = Ok x
 
-    let example input = 
+    let example input =
         doSomething input
-        |> Result.bind doSomethingElse 
+        |> Result.bind doSomethingElse
         |> Result.bind doAThirdThing
 
 module AsyncBind =
-    
+
     // three Async-returning functions to be chained together
     let doSomething x = async.Return x
     let doSomethingElse x = async.Return x
@@ -80,8 +80,8 @@ module AsyncBind =
     // helper
     let asyncBind f x = async.Bind(x,f)
 
-    let example input = 
+    let example input =
         doSomething input
-        |> asyncBind doSomethingElse 
+        |> asyncBind doSomethingElse
         |> asyncBind doAThirdThing
 

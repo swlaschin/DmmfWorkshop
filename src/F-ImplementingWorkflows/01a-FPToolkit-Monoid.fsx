@@ -20,7 +20,7 @@ let reduce (monoid:Monoid<'a>) list =
     for item in list do
         result <- monoid.Combine result item
     result
-    
+
 let intAdd = {Combine = (+); Identity = 0 }
 let intMultiply = {Combine = (*); Identity = 1 }
 let stringConcat = {Combine = (+); Identity = "" }
@@ -39,7 +39,7 @@ module OrderLineMonoidExample =
         Total:float
         }
 
-    let combine line1 line2 = 
+    let combine line1 line2 =
        let newQty = line1.Qty + line2.Qty
        let newTotal = line1.Total + line2.Total
        {Qty=newQty; Total=newTotal}
@@ -48,12 +48,12 @@ module OrderLineMonoidExample =
 
     let orderLineMonoid = {Combine=combine; Identity=identity }
 
-    let orderLines = [ 
+    let orderLines = [
        {Qty=2; Total=19.98}
-       {Qty=1; Total= 1.99} 
+       {Qty=1; Total= 1.99}
        {Qty=3; Total= 3.99} ]
 
-    orderLines |> reduce orderLineMonoid 
+    orderLines |> reduce orderLineMonoid
 
 
 module MapReduceExample =
@@ -64,7 +64,7 @@ module MapReduceExample =
         Qty:int
         Total:float
         }
-    
+
     let mapper (orderLine:OrderLine) =
         let ol : OrderLineMonoidExample.OrderLine = {
             Qty=orderLine.Qty
@@ -72,14 +72,14 @@ module MapReduceExample =
             }
         ol
 
-    let orderLines = [ 
+    let orderLines = [
        {OrderId=1; ProductId=42; Qty=2; Total=19.98}
-       {OrderId=2; ProductId=46; Qty=1; Total= 1.99} 
+       {OrderId=2; ProductId=46; Qty=1; Total= 1.99}
        {OrderId=3; ProductId=49; Qty=3; Total= 3.99} ]
 
     let monoid = OrderLineMonoidExample.orderLineMonoid
-    
-    orderLines 
+
+    orderLines
     |> List.map mapper // map
     |> reduce monoid   // reduce
 

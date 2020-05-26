@@ -47,12 +47,12 @@ module ListApplicative =
 
     let add x y = x + y
 
-    // one kind of list applicative  
-    let listApply1 f list1 list2 = 
-        List.map2 f list1 list2 
+    // one kind of list applicative
+    let listApply1 f list1 list2 =
+        List.map2 f list1 list2
 
-    // another kind of list applicative  
-    let listApply2 f list1 list2 = 
+    // another kind of list applicative
+    let listApply2 f list1 list2 =
         [ for x in list1 do
           for y in list2 do
              yield f x y

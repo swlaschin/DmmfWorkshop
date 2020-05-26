@@ -117,7 +117,7 @@ module Database =
     // the "database" is just a mutable variable in memory :)
     let mutable gameState = initialGameState
 
-    /// Async Load the game state from the database 
+    /// Async Load the game state from the database
     let loadGameState() =
       async.Return gameState
 
@@ -159,7 +159,7 @@ let makeMove : Domain.MakeMove =
 let newGame() =
     // IO here
     Database.saveGameState Implementation.initialGameState
-    
+
 
 // ==================================
 // play a game
@@ -180,10 +180,10 @@ makeMove xMove2  |> Async.RunSynchronously // OK
 
 // setup a game
 let exampleGame = async {
-    do! newGame()        
-    let! result1 = makeMove xMove1  
-    let! result2 = makeMove oMove1  
-    let! result3 = makeMove xMove2  
+    do! newGame()
+    let! result1 = makeMove xMove1
+    let! result2 = makeMove oMove1
+    let! result3 = makeMove xMove2
     return result3
     }
 

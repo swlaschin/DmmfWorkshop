@@ -1,5 +1,5 @@
 ﻿// =================================
-// Exercise 2: 
+// Exercise 2:
 // =================================
 
 Read through and understand all the examples from the slides
