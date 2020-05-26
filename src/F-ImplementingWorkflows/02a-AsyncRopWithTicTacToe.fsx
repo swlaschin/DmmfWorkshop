@@ -1,152 +1,190 @@
-﻿(*
-TicTacToe using async
+﻿// =================================
+// This file demonstrates the TicTacToe game
+// with Result AND Async
+//
+// Exercise:
+//    look at, execute, and understand all the code in this file
+// =================================
 
-*)
-
+// Load a file with library functions for Result
 #load "Result.fsx"
 
 // =========================
-// API
+// The domain model
 // =========================
 
-type Player = X | O
+module Domain =
 
-type Square = {
-  Row: int
-  Col: int
-}
+    type Player = X | O
 
-type Move = {
-  Player : Player
-  Square : Square
-}
-
-type MoveError =
-  | SquareAlreadyPlayed
-  | NotYourTurn
-  | GameFinished
-
-type MoveResult =
-  | Draw
-  | Winner of Player
-  | KeepPlaying
-  | BadMove of MoveError
-
-type PlayMove = Move -> MoveResult
-
-
-// =========================
-// Internal steps
-// =========================
-
-type GameState = {
-    Moves: Move list
-    PlayerToMove : Player
-    Result : MoveResult
-}
-
-
-//----------------
-// game state database
-//----------------
-
-let initialGameState = {
-    Moves=[]
-    PlayerToMove = X
-    Result=KeepPlaying
+    type Square = {
+      Row: int
+      Col: int
     }
 
-let mutable gameState = initialGameState
+    type Move = {
+      Player : Player
+      Square : Square
+    }
 
-let loadGameState() =
-  async.Return gameState
+    type MoveError =
+      | SquareAlreadyPlayed
+      | NotYourTurn
+      | GameFinished
 
-let saveGameState newGameState =
-  gameState <- newGameState
-  async.Return ()
+    type MoveResult =
+      | Draw
+      | Winner of Player
+      | KeepPlaying
+      | BadMove of MoveError
 
+    type GameState = {
+        Moves: Move list
+        PlayerToMove : Player
+        Result : MoveResult
+    }
 
-//----------------
-// internal steps
-//----------------
-
-let checkValidSquare gameState newMove =
-  let squareIsPlayed existingMove =
-    existingMove.Square = newMove.Square
-  if gameState.Moves |> List.exists squareIsPlayed then
-    Error SquareAlreadyPlayed
-  else
-    Ok newMove
-
-let checkValidPlayer gameState newMove =
-  if gameState.PlayerToMove <> newMove.Player then
-    Error NotYourTurn
-  else
-    Ok newMove
-
-let otherPlayer player =
-  match player with
-  | X -> O
-  | O -> X
-
-let updateGameState gameState newMove =
-  {gameState with
-     Moves = newMove :: gameState.Moves
-     PlayerToMove = otherPlayer gameState.PlayerToMove
-     Result = KeepPlaying
-  }
+    /// Make a move and return the new GameState
+    type MakeMove = Move -> AsyncResult<GameState,MoveError>
 
 
-/// pure workflow function with no I/O
-let pureWorkflow gameState newMove =
-  newMove
-  |> checkValidSquare gameState
-  |> Result.bind (checkValidPlayer gameState)
-  |> Result.map (updateGameState gameState)
+// =========================
+// Pure implementation code (no I/O)
+// =========================
 
+
+/// the core logic of the game
+module Implementation =
+    open Domain
+
+    let initialGameState = {
+        Moves=[]
+        PlayerToMove = X
+        Result=KeepPlaying
+        }
+
+    /// Is the move valid?
+    let checkValidSquare gameState newMove =
+
+        // helper function
+        let squareIsPlayed existingMove =
+            existingMove.Square = newMove.Square
+
+        // check if the square is already played
+        if gameState.Moves |> List.exists squareIsPlayed then
+            Error SquareAlreadyPlayed
+        else
+            Ok newMove
+
+    /// Is the player valid?
+    let checkValidPlayer gameState newMove =
+        if gameState.PlayerToMove <> newMove.Player then
+            Error NotYourTurn
+        else
+            Ok newMove
+
+    /// What is the other player
+    let otherPlayer currentPlayer =
+        match currentPlayer with
+        | X -> O
+        | O -> X
+
+    /// Update the game state with a normal move
+    /// NOTE we are not handling the logic for the end of the game yet!
+    let updateGameState gameState newMove =
+        {gameState with
+             Moves = newMove :: gameState.Moves
+             PlayerToMove = otherPlayer gameState.PlayerToMove
+             Result = KeepPlaying
+        }
+
+    /// The pure workflow function with no I/O
+    let pureGameWorkflow gameState newMove =
+      newMove
+      |> checkValidSquare gameState
+      |> Result.bind (checkValidPlayer gameState)
+      |> Result.map (updateGameState gameState)
+
+
+// =========================
+// Impure implementation code (with I/O)
+// =========================
+
+/// The database to store the game state
+module Database =
+    open Implementation
+
+    // the "database" is just a mutable variable in memory :)
+    let mutable gameState = initialGameState
+
+    /// Async Load the game state from the database 
+    let loadGameState() =
+      async.Return gameState
+
+    /// Async Save the game state to the database
+    let saveGameState newGameState =
+      gameState <- newGameState
+      async.Return ()
 
 /// final workflow function with I/O
-let makeMove newMove =
-  async {
-    // IO here
-    let! gameState = loadGameState()
+let makeMove : Domain.MakeMove =
+    fun newMove ->
+        async {
+            // IO here
+            let! gameState = Database.loadGameState()
 
-    // pure
-    let result = pureWorkflow gameState newMove
-    // make MoveResult
-    let moveResult =
-      match result with
-      | Ok gameState ->
-          gameState.Result
-      | Error err ->
-          BadMove err
+            // pure code
+            let result = Implementation.pureGameWorkflow gameState newMove
 
-    // IO here
-    match result with
-    | Ok gameState ->
-        do! saveGameState gameState
-    | Error _  ->
-        () //ignore
+            // make a MoveResult from the output of the game logic
+            let moveResult =
+              match result with
+              | Ok gameState ->
+                  gameState.Result
+              | Error err ->
+                  Domain.BadMove err
 
-    // final output
-    return result
-  }
+            // IO here
+            match result with
+            | Ok gameState ->
+                do! Database.saveGameState gameState
+            | Error _  ->
+                () //ignore
+
+            // final output
+            return result
+        }
 
 /// initialize game
 let newGame() =
     // IO here
-    saveGameState initialGameState
-
+    Database.saveGameState Implementation.initialGameState
+    
 
 // ==================================
-// test data
+// play a game
 // ==================================
 
-let move1={Player=X; Square={Row=1;Col=1}}
-let move2={Player=O; Square={Row=1;Col=2}}
-let move3={Player=X; Square={Row=2;Col=1}}
+open Domain
 
-newGame()      |> Async.RunSynchronously
-makeMove move1 |> Async.RunSynchronously
-makeMove move2 |> Async.RunSynchronously
-makeMove move3 |> Async.RunSynchronously
+let xMove1={Player=X; Square={Row=1;Col=1}}
+let oMove1={Player=O; Square={Row=1;Col=2}}
+let xMove2={Player=X; Square={Row=2;Col=1}}
+
+newGame()        |> Async.RunSynchronously
+makeMove xMove1  |> Async.RunSynchronously // OK
+makeMove xMove2  |> Async.RunSynchronously // Error NotYourTurn
+makeMove oMove1  |> Async.RunSynchronously // OK
+makeMove oMove1  |> Async.RunSynchronously // Error SquareAlreadyPlayed
+makeMove xMove2  |> Async.RunSynchronously // OK
+
+// setup a game
+let exampleGame = async {
+    do! newGame()        
+    let! result1 = makeMove xMove1  
+    let! result2 = makeMove oMove1  
+    let! result3 = makeMove xMove2  
+    return result3
+    }
+
+exampleGame |> Async.RunSynchronously // OK
