@@ -4,6 +4,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup />
+
   <ItemGroup>
     <None Include="01a-FPToolkit-Monoid.fsx" />
     <None Include="01b-FPToolkit-Map.fsx" />
@@ -11,8 +13,11 @@
     <None Include="01d-FPToolkit-Kliesli.fsx" />
     <None Include="01e-FPToolkit-Applicative.fsx" />
     <None Include="01f-FPToolkit-UsingTheToolkit.fsx" />
-    <None Include="02a-AsyncRopWithTicTacToe.fsx" />
-    <None Include="02b-AsyncRopWithCoffeeMaker.fsx" />
+    <None Include="01g-FPToolkit-ComputationExpression.fsx" />
+    <Content Include="02-Exercises.txt" />
+    <None Include="02a-ResultCE-Validation.fsx" />
+    <None Include="02b-AsyncRopWithTicTacToe.fsx" />
+    <None Include="02c-AsyncRopWithCoffeeMaker.fsx" />
     <None Include="03a-AsyncDownload.fsx" />
     <None Include="Result.fsx" />
   </ItemGroup>

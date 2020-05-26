@@ -1,0 +1,12 @@
+﻿// =================================
+// Exercise 2: 
+// =================================
+
+Read through and understand all the examples from the slides
+* 01a-FPToolkit-Monoid.fsx
+* etc
+
+Read through and understand these files
+* 02a-ResultCE-Validation.fsx
+* 02b-AsyncRopWithTicTacToe.fsx
+* 02c-AsyncRopWithCoffeeMaker.fsx
