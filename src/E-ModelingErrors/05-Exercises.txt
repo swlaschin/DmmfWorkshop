@@ -7,3 +7,6 @@ Read through and understand the example
 
 Do:
 * 05b-Exercise-DtoValidation.fsx
+
+Read:
+* https://fsharpforfunandprofit.com/posts/serializating-your-domain-model/
