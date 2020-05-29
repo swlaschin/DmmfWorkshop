@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <Content Include="00-Overview-of-part-C.txt" />
+    <None Include="01a-GuessingGame-Imperative.fsx" />
+    <None Include="01b-GuessingGame-Functional.fsx" />
   </ItemGroup>
 
 
