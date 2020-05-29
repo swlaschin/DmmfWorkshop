@@ -11,10 +11,14 @@
 // ========================================
 
 
+// ===================================
+// Bind for Options
+// ===================================
+
 module OptionBind =
 
     // three Option-returning functions to be chained together
-    let doSomething x = Some x
+    let doSomething x = Some x  
     let doSomethingElse x = Some x
     let doAThirdThing x = Some x
 
@@ -57,18 +61,53 @@ module OptionBind =
         |> Option.bind doSomethingElse
         |> Option.bind doAThirdThing
 
+// ===================================
+// Bind for Results
+// ===================================
 
 module ResultBind =
 
     // three Result-returning functions to be chained together
-    let doSomething x = Ok x
-    let doSomethingElse x = Ok x
-    let doAThirdThing x = Ok x
+    let doSomething x = if x % 2 = 0 then Ok x else Error "not / by 2"
+    let doSomethingElse x = if x % 3 = 0 then Ok x else Error "not / by 3"
+    let doAThirdThing x = if x % 5 = 0 then Ok x else Error "not / by 5"
 
     let example input =
         doSomething input
         |> Result.bind doSomethingElse
         |> Result.bind doAThirdThing
+
+    // test the code
+    example 2
+    example 6
+    example 30
+
+// ===================================
+// Bind for Lists
+// ===================================
+
+module ListBind =
+
+    // three List-returning functions to be chained together
+    let doSomething x = [x+1; x+2]
+    let doSomethingElse x = [x+10; x+20]
+    let doAThirdThing x = [x+100; x+200]
+
+    // A helper to make things consistent.
+    // In F#, bind for lists is List.collect. In C# it is SelectMany
+    let listBind = List.collect
+
+    let example input =
+        doSomething input
+        |> listBind doSomethingElse
+        |> listBind doAThirdThing
+
+    // test the code
+    example 5
+
+// ===================================
+// Bind for Async
+// ===================================
 
 module AsyncBind =
 

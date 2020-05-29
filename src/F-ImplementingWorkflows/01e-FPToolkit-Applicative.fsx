@@ -10,6 +10,11 @@
 // Tool #5 - applicative
 // ========================================
 
+
+// ===================================
+// Applicative for Option
+// ===================================
+
 module OptionApplicative =
 
     let lift2 f opt1 opt2 =
@@ -26,6 +31,9 @@ module OptionApplicative =
 
     (lift2 add) (Some 1) (Some 2)
 
+// ===================================
+// Applicative for Result
+// ===================================
 
 module ResultApplicative =
 
@@ -42,6 +50,9 @@ module ResultApplicative =
     let result2 = (lift2 add) (Error ["bad"]) (Ok 2)
     let result3 = (lift2 add) (Error ["bad"]) (Error ["oops"])
 
+// ===================================
+// Applicative for List
+// ===================================
 
 module ListApplicative =
 

@@ -12,6 +12,10 @@ open System
 // Computation expressions
 // ========================================
 
+// ===================================
+// CE for Option
+// ===================================
+
 module OptionComputationExpression =
 
     // Define the computation expression
@@ -61,7 +65,9 @@ module OptionComputationExpression =
     addThreeThingsWithCE 1
 
 
-// ====================================
+// ===================================
+// CE for Result
+// ===================================
 
 module ResultComputationExpression =
 
@@ -110,7 +116,9 @@ module ResultComputationExpression =
 
     addThreeThingsWithCE 1
 
-// ====================================
+// ===================================
+// CE for List
+// ===================================
 
 module ListComputationExpression =
 
@@ -161,7 +169,9 @@ module ListComputationExpression =
 
     addThreeThingsWithCE 1
 
-// ====================================
+// ===================================
+// CE for Async
+// ===================================
 
 module AsyncComputationExpression =
 
