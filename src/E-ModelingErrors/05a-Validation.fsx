@@ -148,14 +148,40 @@ type RequestDto = {
 }
 *)
 
+// deserialize some good JSON to a domain object
 let goodJson  = """{"UserId":1,"Name":"Alice","Email":"ABC@gmail.COM"}"""
 let goodDomainObj =
     goodJson
     |> JsonSerializer.Deserialize
     |> validateRequest
 
+// try to deserialize some bad JSON to a domain object
 let badJson  = """{"UserId":1,"Name":"","Email":""}"""
 let badDomainObj =
     badJson
     |> JsonSerializer.Deserialize
     |> validateRequest
+
+
+// -------------------------------
+// To build a complete pipeline, we need one more step
+// to convert the Result to a JSON string
+// -------------------------------
+
+let returnResponse (validation:Validation<_,ValidationError>) =
+    match validation with
+    | Ok data ->
+        JsonSerializer.Serialize data
+    | Error errors ->
+        errors
+        |> List.map string  // convert thee error type to string for serialization
+        |> JsonSerializer.Serialize
+        |> (fun s -> "400 " + s)
+
+// try to deserialize some bad JSON to a domain object and return the validation error
+let badJsonResponse =
+    badJson
+    |> JsonSerializer.Deserialize
+    |> validateRequest
+    |> returnResponse
+

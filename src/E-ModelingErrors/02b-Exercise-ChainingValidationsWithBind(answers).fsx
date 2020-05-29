@@ -50,7 +50,6 @@ let resultBind nextFunction result =
     // otherwise leave alone
     | Error err -> Error err
 
-
 //-------------------------------------
 // Exercise -- chain these functions together using resultBind (or Result.bind)
 //-------------------------------------
@@ -63,6 +62,19 @@ let validateInput input =
     |> Result.bind checkEmailMustHaveAtSign  // Can also use built-in Result.bind
 
     // add some more validations if you like
+
+// The "bind" function has many different names in different contexts
+// E.g "flatMap"
+// For example, we could also call it "andThen" to make it read more easily
+let andThen = Result.bind
+
+// and here is the same code written using "andThen"
+let validateInput_v2 input =
+    input
+    |> checkNameNotBlank
+    |> andThen checkName50
+    |> andThen checkEmailNotBlank
+    |> andThen checkEmailMustHaveAtSign
 
 // -------------------------------
 // test that the validation works

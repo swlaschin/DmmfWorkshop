@@ -47,11 +47,12 @@ module Domain =
         }
 
     module String10 =
-        let create s =
+        // pass in a field name so that we know which field had the error
+        let create fieldName s =
             if String.IsNullOrEmpty(s) then
-                Error "String10 is null or empty"
+                Error (sprintf "%s is null or empty" fieldName)
             else if (s.Length > 10) then
-                Error "String10 is too long"
+                Error (sprintf "%s is too long" fieldName)
             else
                 Ok (String10 s)
 
@@ -125,11 +126,11 @@ let toDto (person:Person) :PersonDto =
 let fromDto (personDto:PersonDto) :Validation<Person,string> =
     let firstOrError =
         personDto.first
-        |> String10.create
+        |> String10.create "first name"
         |> Validation.ofResult
     let lastOrError =
         personDto.last
-        |> String10.create
+        |> String10.create "last name"
         |> Validation.ofResult
     let ageOrError =
         personDto.age
