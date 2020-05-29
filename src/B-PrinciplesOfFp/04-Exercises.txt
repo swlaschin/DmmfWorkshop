@@ -1,0 +1,9 @@
+﻿// =================================
+// Exercise 4: Composition and piping
+// =================================
+
+
+Read through and understand the example
+* 04a-Composition-and-piping
+
+

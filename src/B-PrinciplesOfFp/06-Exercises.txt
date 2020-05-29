@@ -1,0 +1,13 @@
+﻿// =================================
+// Exercise 2: Type Inference
+// =================================
+
+
+Do:
+* 06b-Exercise-FizzBuzz.fsx
+
+Read through and understand the example
+* 07a-FunctionsAsThings.fsx
+
+
+

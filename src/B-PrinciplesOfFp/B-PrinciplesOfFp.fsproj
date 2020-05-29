@@ -7,21 +7,26 @@
   <ItemGroup>
     <None Include="Basic syntax you need to know.fsx" />
     <Content Include="00-Overview-of-part-B.txt" />
+    <Content Include="01-Exercises.txt" />
     <None Include="01a-HelloWorld.fsx" />
     <None Include="01b-HelloWorld2.fsx" />
     <None Include="01c-HelloWorld3.fsx" />
     <None Include="01d-Exercise-HelloWorld.fsx" />
     <None Include="01e-Exercise-HelloWorld%28answer%29.fsx" />
+    <Content Include="02-Exercises.txt" />
     <None Include="02a-TypeInference.fsx" />
     <None Include="02b-Exercise-TypeSignatures.fsx" />
     <None Include="02c-Exercise-TypeSignatures(answer).fsx" />
+    <Content Include="04-Exercises.txt" />
     <None Include="04a-Composition-and-piping.fsx" />
+    <Content Include="05-Exercises.txt" />
     <None Include="05a-Exercise-ThinkOfANumber.fsx" />
     <None Include="05b-Exercise-ThinkOfANumber(answer).fsx" />
     <None Include="05c-Exercise-ToRomanNumbers.fsx" />
     <None Include="05d-Exercise-ToRomanNumbers(answer).fsx" />
     <None Include="05e-Exercise-Decorator.fsx" />
     <None Include="05f-Exercise-Decorator(answer).fsx" />
+    <Content Include="06-Exercises.txt" />
     <None Include="06b-Exercise-FizzBuzz.fsx" />
     <None Include="06c-Exercise-FizzBuzz%28answer%29.fsx" />
     <None Include="07a-FunctionsAsThings.fsx" />

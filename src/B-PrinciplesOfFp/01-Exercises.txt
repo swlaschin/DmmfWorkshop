@@ -1,0 +1,13 @@
+﻿// =================================
+// Exercise 1: Hello world
+// =================================
+
+
+Read through and understand the examples
+* 01a-HelloWorld.fsx
+* 01b-HelloWorld.fsx
+* 01c-HelloWorld.fsx
+
+Do:
+* 01d-Exercise-HelloWorld.fsx
+

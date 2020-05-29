@@ -6,13 +6,14 @@
 
 Use the "tally" system:
 
-* start with n "I"
-* replace "IIIII" with "V"
-* replace "VV" with "X"
-* replace "XXXXX"  with "L"
-* replace "LL" with "C"
-* replace "CCCCC"  with "D"
-* replace "DD" with "M"
+* Start with N copies of "I". 
+  Eg. The number 8 becomes "IIIIIIII"
+* Replace "IIIII" with "V"
+* Replace "VV" with "X"
+* Replace "XXXXX"  with "L"
+* Replace "LL" with "C"
+* Replace "CCCCC"  with "D"
+* Replace "DD" with "M"
 
 *)
 
