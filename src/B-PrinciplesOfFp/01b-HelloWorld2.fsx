@@ -12,15 +12,15 @@
 3.141    // float
 3.0M     // decimal
 true     // bool
-[1;2;3]  // list
+[1;2;3]  // list (immutable)
 ()       // unit (like void)
 
 
 // ======================================
-// Playing around with printfn 
+// Playing around with printfn
 // ======================================
 
-// C# equivalent to printfn is Console.WriteLn
+// C# equivalent to printfn is Console.WriteLine
 
 printfn "%s" "hello"  // %s string
 printfn "%i" 42       // %i int

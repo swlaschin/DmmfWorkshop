@@ -1,7 +1,7 @@
 ﻿// =================================
 // Type inference examples
 //
-// Execute each chunk of code in this file and
+// Exercise: Execute each chunk of code in this file and
 // and make you understand how it works.
 // =================================
 
@@ -90,7 +90,7 @@ let toUpper (x:string) =
 
 
 // Here's how to do type annotations
-let aFunction (param1:string) (param2:bool) :string = 
+let aFunction (param1:string) (param2:bool) :string =
 //             ^1st param      ^2nd param    ^return type
     // etc
     "" // dummy
@@ -99,7 +99,7 @@ let aFunction (param1:string) (param2:bool) :string =
 let toUpper x :string = ...
 *)
 
-// You can have type annotations or not. 
+// You can have type annotations or not.
 // Here's some different ways of writing the same function...
 
 // version 1: no type annotations
@@ -118,7 +118,7 @@ let helloInt_v3 anInt :string =
 let helloInt_v4 (anInt:int) :string =
     sprintf "Hello %i" anInt
 
-// type annotations are useful when you are getting started, 
+// type annotations are useful when you are getting started,
 // or if the compiler complains
 
 // ====================================

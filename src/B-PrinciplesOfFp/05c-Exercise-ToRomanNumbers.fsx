@@ -46,15 +46,15 @@ toRomanNumerals 1947
 
 // =============================================
 // The replace function can also be used "inline".
-// To do this, pass the first two parameters explicitly, 
+// To do this, pass the first two parameters explicitly,
 // and the last parameter will be passed implicitly via the pipe
-// 
-// The advantage of this approach is that you don't need to 
+//
+// The advantage of this approach is that you don't need to
 // define all the helper functions.
 //
 // Exercise II:
 // * Rewrite the code to use "replace" directly, without helper functions
-// 
+//
 // =============================================
 
 // Inline version
@@ -83,6 +83,8 @@ toRomanNumerals_v2 1947
 let toRomanNumerals_v3 number =
    // add IV
    // add IX
+   // TIP: additional special forms should be
+   // done highest to lowest
 *)
 
 (*
@@ -103,9 +105,12 @@ toRomanNumerals_v3 19
 let toRomanNumerals_v4 number =
     // helper function
     let logger output =
-        // print "The input was %i and the output was %s" 
+        // print "The input was %i and the output was %s"
         // anything else?
 
     String.replicate number "I"
     |> replace "IIIII" "V"
     |> ???
+    |> ???
+    // last step
+    |> logger

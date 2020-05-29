@@ -2,6 +2,9 @@
 // Composition
 // ================================================
 
+// Exercise: Execute each chunk of code in this file and
+// and make you understand how it works.
+
 (*
 In object-oriented programming, we focus on behavior and messages.
 Objects have internal state that is changed by calling methods or receiving messages.
@@ -50,22 +53,23 @@ square (double (add1 5))  // = 144
 
 
 (*
-New "pipe" is created by joining small pieces of pipe.
+New "track" is created by joining small pieces of "track".
 
 Here's some examples of composition in use:
 *)
 
 
-let add1_double =
-  add1 >> double
+// create a new bigger track
+let add1_double = add1 >> double
 
+// call this new function
 add1_double 5
 
 
+// create a new bigger track
+let add1_double_square = add1 >> double >> square
 
-let add1_double_square =
-   add1 >> double >> square
-
+// call this new function
 add1_double_square 5
 
 
@@ -103,7 +107,7 @@ let addDoubleSquare x =
   x
   |> add1
   |> double
-  |> square 
+  |> square
 
 addDoubleSquare 5 // 144
 

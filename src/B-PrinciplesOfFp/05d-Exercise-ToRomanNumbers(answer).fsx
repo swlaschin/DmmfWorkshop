@@ -51,15 +51,15 @@ toRomanNumerals 1947
 
 // =============================================
 // The replace function can also be used "inline".
-// To do this, pass the first two parameters explicitly, 
+// To do this, pass the first two parameters explicitly,
 // and the last parameter will be passed implicitly via the pipe
-// 
-// The advantage of this approach is that you don't need to 
+//
+// The advantage of this approach is that you don't need to
 // define all the helper functions.
 //
 // Exercise II:
 // * Rewrite the code to use "replace" directly, without helper functions
-// 
+//
 // =============================================
 
 
@@ -96,12 +96,14 @@ let toRomanNumerals_v3 number =
     |> replace "LL" "C"
     |> replace "CCCCC" "D"
     |> replace "DD" "M"
-    // additional special forms
-    |> replace "IIII" "IV"
-    |> replace "VIIII" "IX"
-    |> replace "IIII" "IV"
+    // TIP: additional special forms should be
+    // done highest to lowest
+    |> replace "DCCCC" "CM"
+    |> replace "CCCC" "CD"
     |> replace "LXXXX" "XC"
     |> replace "XXXX" "XL"
+    |> replace "VIIII" "IX"
+    |> replace "IIII" "IV"
 
 // test it
 toRomanNumerals_v3 4
@@ -128,13 +130,17 @@ let toRomanNumerals_v4 number =
     |> replace "LL" "C"
     |> replace "CCCCC" "D"
     |> replace "DD" "M"
-    // additional special forms
-    |> replace "IIII" "IV"
-    |> replace "VIIII" "IX"
-    |> replace "IIII" "IV"
+    // TIP: additional special forms should be
+    // done highest to lowest
+    |> replace "DCCCC" "CM"
+    |> replace "CCCC" "CD"
     |> replace "LXXXX" "XC"
     |> replace "XXXX" "XL"
+    |> replace "VIIII" "IX"
+    |> replace "IIII" "IV"
     |> logger
+
+
 
 
 // test it
