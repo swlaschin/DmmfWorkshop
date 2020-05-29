@@ -44,9 +44,15 @@ type ContactInfo = Name * Address * Email
 // Use Choices for OR
 // --------------------
 
+type Choice1Data = ...
+type Choice2Data = ...
+
 type MyChoice =
     | Choice1 of Choice1Data
     | Choice2 of Choice2Data
+
+// choices are used for "enums" as well
+type DrinkSize = Big | Small
 
 // --------------------
 // Use type aliases for primitives

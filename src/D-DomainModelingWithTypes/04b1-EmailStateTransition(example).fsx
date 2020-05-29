@@ -19,7 +19,7 @@ All the state transitions are going to work the same way.
        * the data associated with a state
        * and maybe some extra data
      These functions output:
-       * a new state 
+       * a new state
        * or maybe a state OPTION if the transition might not work
 
 3) Clients then write functions using the state union type and the "API"

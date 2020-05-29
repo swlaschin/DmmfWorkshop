@@ -11,13 +11,13 @@ open System
 // a useful helper function
 let notImplemented() = failwith "not implemented"
 
-
 //----------------------------------------------------------
 // Exercise: Create a `NonZeroInteger`  type that can only contain non-zero integers
 //----------------------------------------------------------
 
 module ConstrainedTypes =
 
+    /// Must be <> 0
     type NonZeroInteger = private NonZeroInteger of int
 
     module NonZeroInteger =
@@ -51,6 +51,7 @@ let nonZeroOpt1 = NonZeroInteger.create 1
 
 module ConstrainedTypes2 =
 
+    /// Must be 5 chars, all digits
     type ZipCode = private ZipCode of string
 
     module ZipCode =
@@ -63,6 +64,7 @@ module ConstrainedTypes2 =
                 let isAllDigits = s |> Seq.forall Char.IsDigit
                 (s.Length = 5) && isAllDigits
 
+            // construct the ZipCode
             if is5Digits s then
                 Some (ZipCode s)
             else

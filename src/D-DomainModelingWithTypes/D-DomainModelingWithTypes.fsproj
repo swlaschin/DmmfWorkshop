@@ -8,6 +8,7 @@
     <Content Include="01-Exercises.txt" />
     <None Include="01a-Exercise-TextToTypes.fsx" />
     <None Include="01b-Exercise-TextToTypes%28answer%29.fsx" />
+    <Compile Include="01c-Aliases-vs-WrapperTypes.fsx" />
     <None Include="01c-Exercise-ImplementingTypes.fsx" />
     <None Include="01d-Exercise-ImplementingTypes%28answer%29.fsx" />
     <None Include="01e-ModelingWithChoices.fsx" />
@@ -51,10 +52,6 @@
     <None Include="05a-TotalFunctions.fsx" />
     <None Include="05b-Exercise-TotalFunctions.fsx" />
     <None Include="05c-Exercise-TotalFunctions(answers).fsx" />
-    <Content Include="06-Exercises.txt" />
-    <None Include="06a-DesigningErrors.fsx" />
-    <None Include="06b-Exercise-DesigningErrors.fsx" />
-    <None Include="06c-Exercise-DesigningErrors (answers).fsx" />
   </ItemGroup>
 
 

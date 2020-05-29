@@ -36,6 +36,25 @@ module CardGame =
     type PickUp = ??
     type Shuffle = ??
 
+    (*
+    // Sidebar: How do you add extra behavior,
+    // such as calculating the scoring of a Hand?
+    //
+    // In OO you would add methods to the Card and Hand
+    // In FP we would do a "transform" to a new kind of thing
+
+    /// Aces High rule is used in Poker,
+    /// or must be agreed at the beginning
+    type AreAcesHigh = bool
+
+    // For example Ace=13 Two=2
+    type CardScore = int // constraint 1 - 13
+
+    type Score = Card * AreAcesHigh -> CardScore
+    type ScoreHand = Hand * AreAcesHigh -> CardScore
+
+    *)
+
 
 module CardGameImplementation =
     open CardGame

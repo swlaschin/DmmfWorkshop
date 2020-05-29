@@ -54,10 +54,58 @@ module ShoppingCartApi =
     type InitCart = CartItem -> ShoppingCart
 
     /// "addToActive" creates a new state from ActiveCartData and a new CartItem
-    type AddToActive = CartItem -> ActiveCartData -> ShoppingCart
+    type AddToActive = ActiveCartData * CartItem -> ShoppingCart
 
     /// "pay" creates a new state from ActiveCartData and a Payment
-    type Pay = Payment -> ActiveCartData -> ShoppingCart
+    type Pay = ActiveCartData * Payment -> ShoppingCart
 
     /// "removeFromActive" creates a new state from ActiveCartData after removing an CartItem
-    type RemoveFromActive = CartItem -> ActiveCartData -> ShoppingCart
+    type RemoveFromActive = ActiveCartData * CartItem -> ShoppingCart
+
+
+
+//-------------------------------
+// Notes on State transition design
+//-------------------------------
+
+(*
+These designs use the form:
+
+    Substate * ExtraInfo -> WholeState
+e.g
+    ActiveCartData * Payment -> ShoppingCart
+    ActiveCartData * CartItem -> ShoppingCart
+
+
+Why not use this following form instead?
+
+    WholeState * ExtraInfo -> WholeState
+
+e.g
+    ShoppingCart * Payment -> ShoppingCart
+    ShoppingCart * CartItem -> ShoppingCart
+
+The answer is that the first style never has any
+unhandled cases -- it always succeeds.
+
+In the second style, we have unhandled cases to consider:
+E.g. "what is the cart is not in the ActiveCart state and we try to pay?"
+
+In the first case, the *client* makes these decisions.
+In the second case, the *server* makes these decisions.
+
+If we do want to use the second style, we should return an error, rather
+than just handling it silently, like this:
+
+    type CartError =
+        | CantPayForPaidCart
+        | CantRemovedFromEmptyCart
+
+    type AddToActive = ShoppingCart * CartItem -> Result<ShoppingCart,CartError>
+
+
+We will talk more about error handling in the last session.
+*)
+
+
+

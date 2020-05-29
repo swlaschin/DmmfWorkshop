@@ -8,22 +8,25 @@
 
 /// I have defined the "library" code for OrderLineQty here
 module ConstrainedTypes =
+
+    /// Must be between >= 1 and <= 100
     type OrderLineQty = private OrderLineQty of int
 
     module OrderLineQty =
+
         /// Public function to create a OrderLineQty.
         /// I.e. wrap an int in a OrderLineQty (if possible!).
         /// Used like a "factory method" "constructor" etc
         let create qty =
             if qty < 1 then
                 None
-            else if qty > 99 then
+            else if qty > 100 then
                 None
             else
                 Some (OrderLineQty qty)
 
         let maxValue =
-            OrderLineQty 99
+            OrderLineQty 100
 
         let minValue =
             OrderLineQty 1
@@ -60,9 +63,10 @@ let decrement (olq:OrderLineQty) =
 
 
 
-// ==================
+// ----------------------
 // test your code
-// ==================
+// ----------------------
+
 
 // increment the smallest and largest values
 increment OrderLineQty.minValue
@@ -72,6 +76,9 @@ increment OrderLineQty.maxValue
 decrement OrderLineQty.minValue
 decrement OrderLineQty.maxValue
 
+// =========================================
+// Adding boundaries
+// =========================================
 
 // If you want to get rid of the optional value,
 // you can use Option.defaultValue to get
@@ -88,4 +95,20 @@ decrement OrderLineQty.minValue
 
 decrement OrderLineQty.maxValue
 |> Option.defaultValue OrderLineQty.maxValue
+
+// Exercise: Write a function that adds one to an OrderLineQty
+// If it goes > OrderLineQty.maxValue then return maxValue
+let increment_v2 (olq:OrderLineQty) =
+    ??
+
+// val increment_2 :
+//   olq:OrderLineQty -> OrderLineQty
+
+// Exercise: Write a function that subtracts one from an OrderLineQty
+// If it goes < OrderLineQty.minValue then return OrderLineQty.minValue
+let decrement_v2 (olq:OrderLineQty) =
+    ??
+
+// val decrement_v2 :
+//   olq:OrderLineQty -> OrderLineQty
 

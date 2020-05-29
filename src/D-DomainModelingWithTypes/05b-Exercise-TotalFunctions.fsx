@@ -62,7 +62,7 @@ module IntUtil =
 
     module ExceptionBasedDesign =
 
-        let strToInt s =
+        let strToInt (s:string) =
             match System.Int32.TryParse s with
             | true, i -> i
             | false, _ -> failwith "input is not an int"

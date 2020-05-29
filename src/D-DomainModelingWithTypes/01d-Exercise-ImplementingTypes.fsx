@@ -1,7 +1,9 @@
 ﻿// =============================================
 // Exercise: Implementing types
 //
-// Some of the types below have not yet been defined.
+// Here is a domain model with various types.
+//
+// Some of the types below have NOT yet been defined.
 // Your task is to add simple definitions so that this file will compile.
 //
 // IMPORTANT:  types must be defined BEFORE they are referenced
@@ -9,38 +11,46 @@
 //
 // =============================================
 
-// An alias for an string
-type Text = string
+// Comment these out to see all the undefined types and not-implemented code
+//type undefined = exn
+//let notImplemented() = failwith "not implemented"
 
-// Use Record types for AND
-type Name = {
+
+type Text = string      // An alias for an string
+
+type PersonalName = {   // A record type used for modeling "AND" relations
   FirstName: Text
-  MiddleInitial: Text
   LastName: Text
 }
 
-// Use single case unions for wrapper types
-type OrderId = OrderId of int
-type ProductId = ProductId of int
-type OrderQty = OrderQty of int
+type OrderId = OrderId of int   // A "wrapper" around an int.
+
+/// Must be > 0 and <= 100
+type OrderQty = OrderQty of int  // For wrapper types, document any
+                                 // constraints in the type comment
+
+/// Must be 6 characters with leading "Z"
+type LegacyProductId = LegacyProductId of string
+
+/// Must be 8 characters with leading "N"
+type NewProductId = undefined
+
+/// A choice type is used here to distinguish between
+/// two product ids that have different constraints
+type ProductId =
+    | LegacyProduct of LegacyProductId
+    | NewProduct of NewProductId    //TODO define a type for NewProductId
+
 
 type OrderLine = {
-    ProductId : ProductId  //TODO define a type for ProductId
-    Qty: OrderQty   //TODO define a type for OrderQty
+    ProductId : ProductId
+    Qty: OrderQty
 }
 
 type Order = {
   OrderId : OrderId
   OrderLines : OrderLine list
 }
-
-type CardInfo = {
-    CardNumber : string
-    ExpiryMonth : int
-    ExpiryYear : int
-    }
-
-type EmailAddress = EmailAddress of string
 
 // Use Choice types for OR
 type PaymentMethod =
@@ -49,43 +59,50 @@ type PaymentMethod =
   | PayPal of EmailAddress //TODO define a type for EmailAddress
 
 
-type OrderPlaced = {
-   Order : Order
-   Timestamp : System.DateTime
-   }
+type OrderPlaced = undefined
 
 // Use Function types for workflows
 type PlaceOrder =
-  Order -> OrderPlaced //TODO define a type for OrderForm and OrderPlaced
+  Order -> OrderPlaced //TODO define a type for OrderPlaced
 
 
 // =============================
-// Constructing and Destructuring records
+// HOWTO:
+// Constructing and destructuring records, wrappers, choices, etc.
 // =============================
+
+
+// ----------------------------------
+// 1. Constructing and Destructuring records
+// ----------------------------------
 
 // to create
-let name = {FirstName="a"; MiddleInitial="b";LastName="c"}
+let name = {FirstName="a"; LastName="c"}
 // to extract
 let first = name.FirstName
 
-// =============================
-// Constructing and Destructuring Choices
-// =============================
+// ----------------------------------
+// 2. Constructing and Destructuring Choices
+// ----------------------------------
 
-// to create, use one of the cases as a function
+// To construct the Cash case of PaymentMethod, use "Cash" as a constructor.
+// No extra data is needed
 let paymentMethod1 = Cash                // no extra data needed
 
 //TODO Write some code to make this compile
-let cardInfo = {
-    CardNumber = "1234"
-    ExpiryMonth = 1
-    ExpiryYear = 2024
-    }
+let cardInfo = notImplemented()
+
+// To construct the Card case of PaymentMethod, use "Card" as a constructor,
+// with "cardInfo" as extra information
 let paymentMethod2 = Card cardInfo
 
 //TODO Write some code to make this compile
-let emailAddress = EmailAddress "scott@example.com"
+let emailAddress = notImplemented()
+
+// To construct the PayPal case of PaymentMethod, use "PayPal" as a constructor,
+// with "emailAddress" as extra information
 let paymentMethod3 = PayPal emailAddress
+
 
 // to destructure a choice type, use pattern matching
 let printMethod paymentMethod =
@@ -101,9 +118,9 @@ paymentMethod1 |> printMethod
 paymentMethod2 |> printMethod
 paymentMethod3 |> printMethod
 
-// =============================
-// Constructing and Destructuring Single Choice Wrappers
-// =============================
+// ----------------------------------
+// 3. Constructing and Destructuring Wrappers
+// ----------------------------------
 
 // to create a wrapper, use the case as a function
 let orderId = OrderId 99
@@ -116,7 +133,7 @@ let value1 =
 
 // Approach 2: use pattern matching on the LEFT hand side
 let (OrderId value2) = orderId
-// value2 is now 99s
+// value2 is now 99
 
 // Approach 3: in functions you can use the pattern matching directly in the parameter
 let printOrderId (OrderId value) =
@@ -127,9 +144,9 @@ printOrderId orderId   // output is "OrderId = 99"
 
 
 
-// =============================
-// Constructing Function types
-// =============================
+// ----------------------------------
+// 4. Constructing Function types
+// ----------------------------------
 
 // To implement a function based on a function type
 // 1.  define a value in the normal way, but use the function type as the type annotation
@@ -138,7 +155,7 @@ printOrderId orderId   // output is "OrderId = 99"
 
 // here's an example of adding two numbers
 type AddTwoNumbers = int -> int -> int  // the definition
-let addTwoNumbers : AddTwoNumbers =  // the implementation
+let addTwoNumbers : AddTwoNumbers =     // the implementation
     fun n1 n2 ->
         n1 + n2
 
@@ -146,8 +163,5 @@ let addTwoNumbers : AddTwoNumbers =  // the implementation
 let placeOrder : PlaceOrder =
   fun input ->
     //TODO create an OrderPlaced event value here
-    let output = {
-        Order = input
-        Timestamp = System.DateTime.UtcNow
-        }
+    let output = notImplemented()
     output

@@ -69,9 +69,12 @@ module ConstrainedInputDesign =
 
 
 let showConstrainedInputResult n =
+    // try to create a valid input OUTSIDE the function
     let nzOpt = NonZeroInteger.create n
+
     match nzOpt with
     | Some nz ->
+        // If it is OK, we can call the function safely!
         ConstrainedInputDesign.twelveDividedBy nz
         |> printfn "12/%i is %i" n
     | None ->
@@ -80,3 +83,5 @@ let showConstrainedInputResult n =
 // test
 showConstrainedInputResult 4
 showConstrainedInputResult 0
+
+

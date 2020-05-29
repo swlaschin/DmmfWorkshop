@@ -4,10 +4,11 @@
 
 Do each of the following exercises:
 * 01a-Exercise-TextToTypes.fsx
-* 01c-Exercise-ImplementingTypes.fsx
+* 01d-Exercise-ImplementingTypes.fsx
 
 Do work through the code in
-* 01e-ModelingWithChoices.fsx
+* 01c-Aliases-vs-WrapperTypes.fsx
+* 01f-ModelingWithChoices.fsx
 
 Optional Homework: convert the domain models from the first session to code.
 See src/A-DDD/03-ConvertingDomainModelsToCode.txt
