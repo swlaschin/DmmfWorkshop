@@ -70,6 +70,7 @@ module Domain =
 // A DTO to validate
 //===========================================
 
+[<CLIMutableAttribute>]  // This is needed for JSON, so ignore this for now
 type RequestDto = {
     UserId: int
     Name: string
@@ -133,8 +134,16 @@ badRequestDto1 |> validateRequest
 // Combining DTOs and JSON
 // -------------------------------
 
-#r "System.Text.Json"
-open System.Text.Json
+// .NET Standard
+#r "../../lib/Newtonsoft.Json.dll"
+let serializeJson = Newtonsoft.Json.JsonConvert.SerializeObject
+let deserializeJson<'a> str = Newtonsoft.Json.JsonConvert.DeserializeObject<'a> str
+
+// .NET Core
+// #r "System.Text.Json"
+// open System.Text.Json
+// let serializeJson = JsonSerializer.Serialize
+// let deserializeJson<'a> (str:string) = JsonSerializer.Deserialize<'a>(str)
 
 
 (*
@@ -152,14 +161,14 @@ type RequestDto = {
 let goodJson  = """{"UserId":1,"Name":"Alice","Email":"ABC@gmail.COM"}"""
 let goodDomainObj =
     goodJson
-    |> JsonSerializer.Deserialize
+    |> deserializeJson
     |> validateRequest
 
 // try to deserialize some bad JSON to a domain object
 let badJson  = """{"UserId":1,"Name":"","Email":""}"""
 let badDomainObj =
     badJson
-    |> JsonSerializer.Deserialize
+    |> deserializeJson
     |> validateRequest
 
 
@@ -171,17 +180,17 @@ let badDomainObj =
 let returnResponse (validation:Validation<_,ValidationError>) =
     match validation with
     | Ok data ->
-        JsonSerializer.Serialize data
+        serializeJson data
     | Error errors ->
         errors
         |> List.map string  // convert thee error type to string for serialization
-        |> JsonSerializer.Serialize
+        |> serializeJson
         |> (fun s -> "400 " + s)
 
 // try to deserialize some bad JSON to a domain object and return the validation error
 let badJsonResponse =
     badJson
-    |> JsonSerializer.Deserialize
+    |> deserializeJson
     |> validateRequest
     |> returnResponse
 
