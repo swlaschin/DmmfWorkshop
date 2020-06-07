@@ -1,0 +1,36 @@
+Bounded context: TicTacToe
+
+Workflow: "Play move"
+triggered by:
+  "Move received" event
+input:
+  MoveInformation (from input event)
+  current GameState (loaded from database)
+output:
+  MoveResult (to show the players)
+  updated GameState (to be saved to database)
+
+data MoveInformation =
+   Player
+   AND Position
+
+data Player = "X" OR "O"
+
+data Position = Row AND Column
+
+data Row = int between 1..3
+data Column = int between 1..3
+
+data MoveResult =
+    Win (by Player)
+    OR Draw
+    OR NextTurn (with Player to move)
+
+// the game state is the state of all the cells
+data GameState = CellState list
+
+data CellState =
+    Position
+    AND optional Player (if they have moved on that position)
+
+

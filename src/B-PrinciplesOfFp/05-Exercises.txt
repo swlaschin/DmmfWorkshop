@@ -8,3 +8,10 @@ Do:
 * 05e-Exercise-Decorator.fsx      -- see slide 70 and following
 
 
+-------------------------
+
+Need help with F# syntax?
+* Look at "/src/A-DDD/Basic syntax you need to know.fsx"
+
+Having trouble with F# intellisense?
+* See the "Troubleshooting" section in "/src/00-HelloWorld.fsx"

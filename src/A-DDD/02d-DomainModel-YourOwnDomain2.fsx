@@ -1,5 +1,5 @@
-// define a domain model for a coffee maker
-module rec CoffeeMaker
+// define a domain model for a your own domain
+module rec YourOwnDomain2
 
 
 // ==============================
@@ -61,6 +61,7 @@ type Order = {
     OrderLines : OrderLine list
     DeliveryAddress : Address option // optional data
     }
+
 
 *)
 

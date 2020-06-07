@@ -6,7 +6,7 @@
 
 Use the "tally" system:
 
-* Start with N copies of "I". 
+* Start with N copies of "I".
   Eg. The number 8 becomes "IIIIIIII"
 * Replace "IIIII" with "V"
 * Replace "VV" with "X"

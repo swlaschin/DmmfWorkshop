@@ -13,7 +13,6 @@ packages
 .vs
 doc
 
-
 ### Linux ###
 *~
 
@@ -400,3 +399,5 @@ paket-files/
 /src/B-PrinciplesOfFp/.ionide/*.db
 
 .ionide
+
+~*.*

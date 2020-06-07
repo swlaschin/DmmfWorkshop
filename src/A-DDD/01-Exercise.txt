@@ -1,0 +1,16 @@
+// =================================
+// Exercise 1: Create a domain model
+// =================================
+
+Read through and understand the guidelines
+* 01-GuidelinesForDomainModelingExercise.txt
+
+Look at the TicTacToe example done as a group
+* See link on the GDocs page
+* or see this file: 01a-DomainModel-TicTacToe.txt
+
+Document your domain:
+* See link to your domain on the GDocs page
+* or use this file: 01b-DomainModel-YourOwnDomain.txt
+
+

@@ -1,0 +1,25 @@
+// =================================
+// Exercise 2: Convert your domain model into F# code
+// =================================
+
+Read through and understand the guidelines
+* 02a-ConvertingDomainModelsToCode.txt
+
+Read through and understand the TicTacToe example
+* 02b-DomainModel-TicTacToe.fsx
+  compare it with the original at 01a-DomainModel-TicTacToe.txt
+
+Convert your domain into code in this file
+* 02c-DomainModel-YourOwnDomain.fsx
+
+If you want to do another domain as well, use
+* 02d-DomainModel-YourOwnDomain2.fsx
+
+
+-------------------------
+
+Need help with F# syntax?
+* Look at "/src/A-DDD/Basic syntax you need to know.fsx"
+
+Having trouble with F# intellisense?
+* See the "Troubleshooting" section in "/src/00-HelloWorld.fsx"

@@ -31,7 +31,7 @@ Even with such a simple bit of code, there are some interesting things to note:
 *)
 
 
-// for the code below, try highlighting 
+// for the code below, try highlighting
 // each non-comment line in turn
 // and executing it
 
@@ -56,7 +56,7 @@ printName name
 A few things to note about this code:
 
 * let is used for functions too.
-  The `printName` function is defined using let, 
+  The `printName` function is defined using let,
   just like the `name` was.
   This is not a coincidence.
   In functional programming, functions are things just like strings and ints.
@@ -74,7 +74,7 @@ A few things to note about this code:
 let add x y = x + y
 // and call it with 1 and 2
 // notice that spaces are used to separate the parameters
-add 1 2   
+add 1 2
 
 
 
@@ -92,7 +92,7 @@ let x = 1
 // Function Values
 
 let add1 x = x + 1
-// val add1 : x:int -> int   // <======= look at the signature. 
+// val add1 : x:int -> int   // <======= look at the signature.
                              //          It has an arrow in it!
 
 

@@ -9,4 +9,10 @@ Read through and understand the example
 Do:
 * 02b-Exercise-TypeSignatures.fsx
 
+-------------------------
 
+Need help with F# syntax?
+* Look at "/src/A-DDD/Basic syntax you need to know.fsx"
+
+Having trouble with F# intellisense?
+* See the "Troubleshooting" section in "/src/00-HelloWorld.fsx"

@@ -28,16 +28,20 @@ Possible domains to use:
 How to interview
 ===================
 
-* Never ask a yes/no question
-* If you hear "it depends", drill deeper
+* Listen to and learn from the experts
+  * Don't impose your own ideas
+  * Avoid yes/no questions
+  * If you hear "it depends", drill deeper
 * Disagreement between experts is OK.
-  The design process is about getting everyone on the same page!
+  * The design process is about getting everyone on the same page!
+* Everyone must be in the room
+  * Otherwise they miss being part of the process.
+    It's not just about the results!
 
 ===================
 How to model a domain
 ===================
 
-* Start with the events and commands
 * Pick one workflow to focus on.
   When that is done, do another one
 
@@ -45,14 +49,16 @@ How to model a domain
 How to model a workflow
 ===================
 
-* Ask what data is needed for the workflow input?
-  * What data is from the event itself
-  * What data is from the current state of the system
-* What are the output events?
-  For broadcast to downsteam systems
+* What is needed for the workflow input?
+  * What data is from the triggering event itself
+  * What data is from the current state of the system? E.g. loaded from storage?
+  * What other data is needed?
+* What is the output of the workflow?
+  * What events are needed for broadcast to downstream systems?
+  * What data should be saved to storage?
 * How does the state of the system change?
-* What are the side effects?
-  (Things that must be done but are internal to the domain)
+  * Does data need to be loaded, changed, and resaved?
+* What are the side effects? (Things that must be done but are internal to the domain)
 
 ====================
 "Place order" Example
@@ -60,16 +66,14 @@ How to model a workflow
 
 Workflow: "Place order"
 triggered by:
-  OrderReceived
-primary input:
-  Order
-other input/dependencies:
-  ProductCatalog  // to lookup prices
-output events:
-  OrderPlaced
-side-effects:
-  An acknowledgment is sent to the customer,
-  along with the placed order
+  OrderReceived event
+input:
+  Order (from the triggering event)
+  ProductCatalog  (to lookup prices)
+output:
+  OrderPlaced event (to be sent to downstream systems)
+  The final PlacedOrder (to store in the database)
+  An OrderAcknowledgment (to be sent to the customer)
 
 ---------------------------
 Document the data with "AND"

@@ -1,13 +1,19 @@
 ﻿// =================================
-// Exercise 2: Type Inference
+// Exercise 6: FizzBuzz
 // =================================
 
-
 Do:
-* 06b-Exercise-FizzBuzz.fsx
+* 06b-Exercise-FizzBuzz.fsx  -- see slide 78 and following
 
-Read through and understand the example
+Advanced users: Read through and understand the example
 * 07a-FunctionsAsThings.fsx
 
 
 
+-------------------------
+
+Need help with F# syntax?
+* Look at "/src/A-DDD/Basic syntax you need to know.fsx"
+
+Having trouble with F# intellisense?
+* See the "Troubleshooting" section in "/src/00-HelloWorld.fsx"
