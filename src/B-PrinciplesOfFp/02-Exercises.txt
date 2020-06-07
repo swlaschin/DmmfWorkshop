@@ -2,12 +2,13 @@
 // Exercise 2: Type Inference
 // =================================
 
-
 Read through and understand the example
 * 02a-TypeInference.fsx
 
 Do:
 * 02b-Exercise-TypeSignatures.fsx
+
+If unfinished, finish 01-Exercises.txt as much as you can
 
 -------------------------
 

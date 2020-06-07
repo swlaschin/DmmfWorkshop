@@ -1,5 +1,5 @@
 ﻿// =============================================
-// Exercise: 
+// Exercise:
 //
 // For each of the following definitions,
 // say whether it is a simple value or a function,
@@ -83,9 +83,9 @@ let testS x = x=x
 // val testS : x:'a -> bool (with a constraint that type 'a must support equality)
 
 // =============================================
-// Exercise: 
+// Exercise:
 //
-// For each of the following signatures, create a function 
+// For each of the following signatures, create a function
 // that will be *inferred* to have that signature.
 //
 // Avoid using explicit type annotations!
@@ -114,13 +114,13 @@ let sigF anInt aBool aFloat = sprintf "%i %b %f" anInt aBool aFloat
 
 
 // =============================================
-// Exercise: 
+// Exercise:
 //
-// Make the following functions compile by adding 
+// Make the following functions compile by adding
 // type annotations. Try to use the minimum annotations possible!
 //
 // Here's how to do type annotations
-// let aFunction (param1:string) (param2:bool) :string = 
+// let aFunction (param1:string) (param2:bool) :string =
 //                ^1st param      ^2nd param    ^return type
 //
 // =============================================
@@ -133,9 +133,9 @@ let trim (s:string) = s.Trim()
 // The "s" parameter is a string and it returns an int
 let len (s:string) = s.Length
 
-// Replace a substring with new substring 
+// Replace a substring with new substring
 // The s, oldStr,newStr parameters are all string
-// and it returns a string 
+// and it returns a string
 let replace (oldStr:string) newStr (s:string) = s.Replace(oldStr,newStr)
 (*
 This one is tricky because .NET has two overloads
@@ -145,7 +145,7 @@ So we need to say what type the parameters are too.
 *)
 
 // =============================================
-// Exercise (HARD): 
+// Exercise (HARD):
 // Below are four generic signatures.
 // Try to create four functions that are inferred to have these signatures.
 // =============================================

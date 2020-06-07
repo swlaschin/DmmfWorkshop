@@ -37,7 +37,7 @@ module MyModule =
 // access the code in a module with the name
 MyModule.add2 40  // Result => 42
 
-// alternatively, bring the entire module 
+// alternatively, bring the entire module
 // into scope with "open"
 open MyModule  // "open" is same as "using" in C#
 add2 40

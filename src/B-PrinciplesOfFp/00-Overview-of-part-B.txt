@@ -1,8 +1,9 @@
-﻿Part B of the workshop will focus on the basics 
-of functional 
+﻿Part B of the workshop will focus on the basics
+of functional programming
 
-* Slides: "B1-GettingStartedWithFsharp.pptx"
-* Slides: "B2-PrinciplesOfFp.pptx"
+* Slides
+  * "B1-GettingStartedWithFsharp"
+  * "B2-PrinciplesOfFp"
 
 How to do the solo coding exercises:
 * The exercise files come in pairs, with and without answers

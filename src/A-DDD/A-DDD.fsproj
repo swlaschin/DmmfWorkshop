@@ -6,24 +6,15 @@
 
   <ItemGroup>
     <Content Include="00-Overview-of-part-A.txt" />
+    <Content Include="01-Exercise.txt" />
     <Content Include="01-GuidelinesForDomainModelingExercise.txt" />
-    <Content Include="02a-DomainModel-TicTacToe.txt" />
-    <Content Include="02b-DomainModel-ATM.txt" />
-    <Content Include="02c-DomainModel-Microwave.txt" />
-    <Content Include="02d-DomainModel-CoffeeMaker.txt" />
-    <Content Include="02f-DomainModel-DeliveryTracking.txt" />
-    <Content Include="02g-DomainModel-YourOwnDomain.txt" />
-    <Content Include="03-ConvertingDomainModelsToCode.txt" />
-    <Content Include="03-Exercise.txt" />
-    <None Include="03a-DomainModel-TicTacToe.fsx" />
-    <None Include="03b-DomainModel-ATM.fsx" />
-    <None Include="03c-DomainModel-Microwave.fsx" />
-    <None Include="03d-DomainModel-CoffeeMaker.fsx" />
-    <None Include="03f-DomainModel-DeliveryTracking.fsx" />
-    <None Include="03g-DomainModel-YourOwnDomain.fsx" />
+    <Content Include="01a-DomainModel-TicTacToe.txt" />
+    <Content Include="01b-DomainModel-YourOwnDomain.txt" />
+    <Content Include="02-Exercise.txt" />
+    <None Include="02a-DomainModel-TicTacToe.fsx" />
+    <None Include="02b-DomainModel-YourOwnDomain.fsx" />
+    <None Include="02c-DomainModel-YourOwnDomain2.fsx" />
   </ItemGroup>
-
-  <ItemGroup />
 
 
   <ItemGroup>

@@ -1,1 +1,0 @@
-Slides: Functional programming principles

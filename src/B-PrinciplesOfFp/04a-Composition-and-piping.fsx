@@ -111,6 +111,24 @@ let addDoubleSquare x =
 
 addDoubleSquare 5 // 144
 
+// ================================================
+// Composition vs Piping
+// ================================================
+
+(*
+Composition combines two functions to make a new function.char
+It doesn't need any extra data.
+*)
+let add1_double_composed = add1 >> double
+
+(*
+Piping NEEDS an initial value to send down the pipe
+*)
+
+let fiveAdd1Doubled = 5 |> add1 |> double
+let sixAdd1Doubled = 6 |> add1 |> double
+let xAdd1Doubled x = x |> add1 |> double
+
 
 // ================================================
 // Composition doesn't work properly

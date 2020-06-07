@@ -1,18 +1,18 @@
 ﻿// =============================================
-// Define a function that multiplies its argument by two. 
+// Define a function that multiplies its argument by two.
 // What is its signature?
 
 let multipliedByTwo x = ??
 
-// Can you make a similar function with floats? 
+// Can you make a similar function with floats?
 // What is its signature?
 let floatMultipliedByTwo x = ??
 
 
 // =============================================
 // Q. Create a `sayHello` function that uses `sprintf` instead
-// of `printfn`. 
-// If you pass in "Alice" as the name, 
+// of `printfn`.
+// If you pass in "Alice" as the name,
 // the result should be "Hello Alice".
 
 let sayHello aName = ??

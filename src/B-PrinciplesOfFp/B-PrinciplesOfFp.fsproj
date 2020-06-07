@@ -30,7 +30,13 @@
     <None Include="06b-Exercise-FizzBuzz.fsx" />
     <None Include="06c-Exercise-FizzBuzz%28answer%29.fsx" />
     <None Include="07a-FunctionsAsThings.fsx" />
-    <None Include="08a-Exercise-ComposableTypes.fsx" />
+    <Content Include="08-Exercises.txt" />
+    <None Include="08a-Exercise-TextToTypes.fsx" />
+    <None Include="08b-Exercise-TextToTypes(answer).fsx" />
+    <None Include="08c-Aliases-vs-WrapperTypes.fsx" />
+    <None Include="08d-Exercise-ImplementingTypes.fsx" />
+    <None Include="08e-Exercise-ImplementingTypes(answer).fsx" />
+    <None Include="08f-ModelingWithChoices.fsx" />
   </ItemGroup>
 
 

@@ -4,8 +4,8 @@
 
 Do:
 * 05a-Exercise-ThinkOfANumber.fsx -- see slide 62 and following
-* 05c-Exercise-ToRomanNumbers.fsx -- see slide 65 and following
-* 05e-Exercise-Decorator.fsx      -- see slide 70 and following
+* 05c-Exercise-ToRomanNumbers.fsx -- see slide 66 and following
+* 05e-Exercise-Decorator.fsx      -- see slide 71 and following
 
 
 -------------------------

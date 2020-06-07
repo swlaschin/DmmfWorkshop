@@ -1,9 +1,9 @@
-Part A of the workshop will be
+Part A of the workshop will be about domain modeling
 
-* Slides: "DDD and Domain modeling"
-* Slides: "Domain modeling in practice"
+* Slides: 
+  * "A1-DDD and Domain Modeling"
+  * "A2-Domain Modeling In Practice"
+
 * Breakout groups:
     Each team will pick a domain and then collaborate on
     building a shared mental model and documenting the domain.
-* Solo exercise:
-    Convert the domain into F# code

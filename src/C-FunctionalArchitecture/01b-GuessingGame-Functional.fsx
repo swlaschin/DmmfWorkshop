@@ -15,26 +15,26 @@ Implementation details:
 
 1. Ask "Think of a number between 1 and 100"
 2. Set the bounds for a new game to 1..100
-3. Given the bounds, make a guess 
+3. Given the bounds, make a guess
    (or if you know the answer go to step 7)
 4. Show the guess with the text "Is your number bigger than %i? [y,n,q]"
 5. Accept input
-6a. If the input is "y" or "n" then 
+6a. If the input is "y" or "n" then
        update the bounds and go to step 3
-6b. If the input is "q" then 
+6b. If the input is "q" then
        show "Game over. Thanks for playing" and quit
-6c. If the input is something else then 
-       show "Please enter [y,n,q]" and go to step 5 
+6c. If the input is something else then
+       show "Please enter [y,n,q]" and go to step 5
 ----
 7. (jump from 3) If you know the answer, show "Your number is %i"
 8. Show "Do you want to play again or quit? [y,q]"
 9. Accept input
-10a. If the input is "y"  then 
+10a. If the input is "y"  then
    go to step 1
-10b. If the input is "q" then 
+10b. If the input is "q" then
    show "Game over. Thanks for playing" and quit
-10c. If the input is something else then 
-   show "Please enter [y,q]" and go to step 9 
+10c. If the input is something else then
+   show "Please enter [y,q]" and go to step 9
 
 *)
 
@@ -59,14 +59,15 @@ type Bounds = {
 
 type Guess = int
 
+type GuessState = FirstGuess | AnotherGuess
+
 // The overall state
 type GameState =
-    | FirstGuess of Guess * Bounds
-    | AnotherGuess of Guess * Bounds
+    | Guess of Guess * Bounds * GuessState
     | KnownNumber of Guess
     | GameOver
 
-// Step 3. Given the bounds, make a guess 
+// Step 3. Given the bounds, make a guess
 //         (or if you know the answer go to step 7)
 let makeAnotherGuess bounds =
     if bounds.lowerBound = bounds.upperBound then
@@ -75,13 +76,13 @@ let makeAnotherGuess bounds =
     else
         // make a another guess
         let guess = (bounds.lowerBound + bounds.upperBound) / 2
-        AnotherGuess (guess, bounds)
+        Guess (guess, bounds, AnotherGuess)
 
 // start of new game
 let initialGameState =
     let bounds = {lowerBound=1; upperBound=100}
     let guess = (bounds.lowerBound + bounds.upperBound) / 2
-    FirstGuess (guess, bounds)
+    Guess (guess, bounds, FirstGuess)
 
 // ==============================
 // Update
@@ -97,12 +98,10 @@ type Msg =
 
 let update msg gameState =
     match gameState,msg with
-    | FirstGuess (currentGuess,bounds), Higher
-    | AnotherGuess (currentGuess,bounds), Higher  ->
+    | Guess (currentGuess,bounds, _), Higher ->
         // update bounds and guess again
         makeAnotherGuess {bounds with lowerBound = currentGuess + 1}
-    | FirstGuess (currentGuess,bounds), NotHigher
-    | AnotherGuess (currentGuess,bounds), NotHigher  ->
+    | Guess (currentGuess,bounds,_), NotHigher  ->
         // update bounds and guess again
         makeAnotherGuess {bounds with upperBound = currentGuess}
     | _, PlayAgain ->
@@ -145,20 +144,19 @@ let isYourNumberBiggerThan guess =
 // Convert the game state into a list of commands
 let view gameState  =
     match gameState with
-    | FirstGuess (guess,bounds) ->
-        let elem1 =
-            let message = sprintf "Think of a number between %i and %i " bounds.lowerBound bounds.upperBound
-            Show message
+    | Guess (guess,bounds, guessState) ->
         let uiElements = isYourNumberBiggerThan guess
-        elem1 :: uiElements
-    | AnotherGuess (guess,bounds) ->
-        let uiElements = isYourNumberBiggerThan guess
-        uiElements
+        match guessState with
+        | FirstGuess ->
+            let firstGuessElem =
+                let message = sprintf "Think of a number between %i and %i " bounds.lowerBound bounds.upperBound
+                Show message
+            firstGuessElem :: uiElements
+        | AnotherGuess ->
+            uiElements
     | KnownNumber guess ->
-        let elem1 =
-            Show (sprintf "Your number is %i" guess)
-        let elem2 =
-            Show (sprintf "Do you want to play again or quit? [y,q]")
+        let elem1 = Show (sprintf "Your number is %i" guess)
+        let elem2 = Show (sprintf "Do you want to play again or quit? [y,q]")
         let elem3 =
             let commands = [
                 {keypress="y"; msg=PlayAgain}
@@ -167,8 +165,7 @@ let view gameState  =
             Input commands
         [elem1; elem2; elem3]
     | GameOver ->
-        let elem =
-            Show "Game over. Thanks for playing"
+        let elem = Show "Game over. Thanks for playing"
         [elem]
 
 // ==============================
@@ -223,17 +220,17 @@ let io = {
     GetInputString = fun () -> System.Console.ReadLine()
 }
 
-// start the game
-gameLoop io initialGameState
+let mainLoop() = gameLoop io initialGameState
 
 // to start the game, type this in the F# terminal
 (*
-gameLoop io initialGameState;;
+mainLoop();;
 *)
 
-// or to run from the command line
+// or to run from the command line, uncomment the "mainLoop" section above
+// and then do
 (*
-dotnet fsi 01a-GuessingGame-Functional.fsx
+dotnet fsi 01b-GuessingGame-Functional.fsx
 *)
 
 // if you need to kill the game!
