@@ -30,19 +30,33 @@ module OptionHelpers =
 module OptionBindExamples =
 
     // three Option-returning functions to be chained together
-    let doSomething x = Some x
-    let doSomethingElse x = Some x
-    let doAThirdThing x = Some x
+    let doSomething x = 
+        if x % 2 = 0 then
+            Some x
+        else
+            None
+
+    let doSomethingElse x = 
+        if x % 3 = 0 then
+            Some x
+        else
+            None
+
+    let doAThirdThing x = 
+        if x % 5 = 0 then
+            Some x
+        else
+            None
 
     // --------------------
     // the really ugly way
     let example_v1 input =
         let x = doSomething input
-        if x.IsSome then
+        if Option.isSome x then
             let y = doSomethingElse (x.Value)
-            if y.IsSome then
+            if Option.isSome y then
                 let z = doAThirdThing (y.Value)
-                if z.IsSome then
+                if Option.isSome z then
                     let result = z.Value
                     Some result
                 else
@@ -66,6 +80,10 @@ module OptionBindExamples =
         |> Option.bind doSomethingElse
         |> Option.bind doAThirdThing
 
+    // test the code
+    example_v3 2
+    example_v3 6
+    example_v3 30
 
 // ===================================
 // 2: Bind for Results

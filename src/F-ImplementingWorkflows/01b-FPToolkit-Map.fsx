@@ -61,6 +61,12 @@ Some 1 |> OptionMap.map add42
 // the built-in way, using Option.map
 Some 1 |> Option.map add42
 
+// --------------------
+// play with your own examples
+let lowercase (s:string) = s.ToLower()
+Some "ABC" |> Option.map lowercase 
+Some "ABC" |> Option.map String.length
+
 // ===================================
 // 2A: Map for Results
 // ===================================
@@ -110,6 +116,13 @@ Ok 1 |> ResultMap.map add42 |> sprintf "%A"
 // the built-in way, using Result.map
 Ok 1 |> Result.map add42 |> sprintf "%A"
 
+// --------------------
+// play with your own examples
+let lowercase (s:string) = s.ToLower()
+Ok "ABC" |> Result.map lowercase |> sprintf "%A" 
+Ok "ABC" |> Result.map String.length |> sprintf "%A"
+
+
 //==============================
 // 3: Some examples of using map for Lists
 //==============================
@@ -137,6 +150,11 @@ add42ToEach_v2 [1;2;3]     // OK
 [1;2;3] |> List.map add42  // same thing
 
 
+// --------------------
+// play with your own examples
+let lowercase (s:string) = s.ToLower()
+["ABC";"DEF"] |> List.map lowercase |> sprintf "%A" 
+["ABC";"D"] |> List.map String.length |> sprintf "%A"
 
 // ===================================
 // 4A: Map for Async
