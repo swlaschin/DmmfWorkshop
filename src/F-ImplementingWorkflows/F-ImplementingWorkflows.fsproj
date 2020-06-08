@@ -4,9 +4,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup />
-
   <ItemGroup>
+    <Content Include="01-Exercises.txt" />
     <None Include="01a-FPToolkit-Monoid.fsx" />
     <None Include="01b-FPToolkit-Map.fsx" />
     <None Include="01c-FPToolkit-Bind.fsx" />

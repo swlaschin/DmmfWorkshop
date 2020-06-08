@@ -84,7 +84,7 @@ module CoffeeMaker =
         | Espresso
         | Cappuccino
         | HotWater
-        | HotMil
+        | HotMilk
 
     /// Tell the user that their coffee is ready
     type SuccessNotification = {

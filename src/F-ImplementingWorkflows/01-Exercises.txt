@@ -1,0 +1,12 @@
+﻿// =================================
+// Exercise 1:
+// =================================
+
+Read through and understand all the examples from the slides
+* 01b-FPToolkit-Map.fsx
+* 01c-FPToolkit-Bind.fsx
+* 01e-FPToolkit-Applicative.fsx
+* 01f-FPToolkit-UsingTheToolkit.fsx
+
+You can skip the other ones
+

@@ -78,7 +78,10 @@ module IntUtil =
     module ExtendedOutputDesign =
         // Exercise: Convert this function to be total
         //           by extending the output.
-        // Should it have a different name?
+        // Reuse the "match System.Int32.TryParse" code
+        // but return something different
+        //
+        // Question: Should it have a different name?
         let tryStrToInt (s:string) =
             match System.Int32.TryParse s with
             | true, i -> Some i

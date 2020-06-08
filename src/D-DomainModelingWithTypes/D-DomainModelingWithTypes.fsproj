@@ -6,12 +6,6 @@
 
   <ItemGroup>
     <Content Include="01-Exercises.txt" />
-    <None Include="01a-Exercise-TextToTypes.fsx" />
-    <None Include="01b-Exercise-TextToTypes%28answer%29.fsx" />
-    <Compile Include="01c-Aliases-vs-WrapperTypes.fsx" />
-    <None Include="01d-Exercise-ImplementingTypes.fsx" />
-    <None Include="01e-Exercise-ImplementingTypes%28answer%29.fsx" />
-    <None Include="01f-ModelingWithChoices.fsx" />
     <Content Include="02-Exercises.txt" />
     <None Include="02a-ExamplesFromSlides-1.fsx" />
     <None Include="02b-ConstrainedTypes.fsx" />

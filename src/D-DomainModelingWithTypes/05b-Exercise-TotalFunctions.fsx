@@ -63,6 +63,7 @@ module IntUtil =
     module ExceptionBasedDesign =
 
         let strToInt (s:string) =
+            // this is how to parse an int
             match System.Int32.TryParse s with
             | true, i -> i
             | false, _ -> failwith "input is not an int"
@@ -70,7 +71,10 @@ module IntUtil =
     module ExtendedOutputDesign =
         // Exercise: Convert this function to be total
         //           by extending the output.
-        // Should it have a different name?
+        // Reuse the "match System.Int32.TryParse" code
+        // but return something different
+        //
+        // Question: Should it have a different name?
         let strToInt s = notImplemented()
 
 // test the function

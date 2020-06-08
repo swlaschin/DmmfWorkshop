@@ -5,8 +5,11 @@
 Read through and understand the example
 * 05a-Validation.fsx
 
-Do:
+Do the exercises here:
 * 05b-Exercise-DtoValidation.fsx
 
-Read:
+For a real-world, complex example, see:
+* 05c-NewsDomainDtoExample.fsx
+
+Further reading:
 * https://fsharpforfunandprofit.com/posts/serializating-your-domain-model/

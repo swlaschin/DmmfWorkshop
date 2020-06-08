@@ -14,9 +14,7 @@ open System
 module Domain =
 
     type UserId = private UserId of int
-
     type Name = private Name of string
-
     type EmailAddress = private EmailAddress of string
 
     type Request = {
@@ -84,7 +82,9 @@ type RequestDto = {
 
 open Domain
 
-let validateRequest (dto:RequestDto) :Validation<Domain.Request,ValidationError> =
+/// Convert a dto into a Domain.Request,
+/// and do validation at the same time
+let dtoToRequest (dto:RequestDto) :Validation<Domain.Request,ValidationError> =
 
     // a "constructor" function
     let createRequest userId name email =
@@ -93,12 +93,12 @@ let validateRequest (dto:RequestDto) :Validation<Domain.Request,ValidationError>
     // the validated components
     let userIdOrError =
         dto.UserId
-        |> Domain.UserId.create
-        |> Validation.ofResult // converts to list of errors
+        |> Domain.UserId.create  // a Result with a single error
+        |> Validation.ofResult   // converts to list of errors
     let nameOrError =
         dto.Name
-        |> Domain.Name.create
-        |> Validation.ofResult
+        |> Domain.Name.create    // a Result with a single error
+        |> Validation.ofResult   // converts to list of errors
     let emailOrError =
         dto.Email
         |> Domain.EmailAddress.create
@@ -120,14 +120,16 @@ let goodRequestDto : RequestDto = {
     Name = "Alice"
     Email = "ABC@gmail.COM"
     }
-goodRequestDto |> validateRequest
 
-let badRequestDto1 : RequestDto  = {
+let badRequestDto : RequestDto  = {
   UserId = 0
   Name = ""
   Email = ""
 }
-badRequestDto1 |> validateRequest
+
+// TEST: try the good and bad DTOs
+goodRequestDto |> dtoToRequest
+badRequestDto |> dtoToRequest
 
 
 // -------------------------------
@@ -147,7 +149,7 @@ let deserializeJson<'a> str = Newtonsoft.Json.JsonConvert.DeserializeObject<'a> 
 
 
 (*
-// For JSON to work, go back and CLIMutableAttribute to the DTO
+// For JSON to work, CLIMutableAttribute is needed on the DTO
 
 [<CLIMutableAttribute>]
 type RequestDto = {
@@ -157,19 +159,21 @@ type RequestDto = {
 }
 *)
 
-// deserialize some good JSON to a domain object
-let goodJson  = """{"UserId":1,"Name":"Alice","Email":"ABC@gmail.COM"}"""
-let goodDomainObj =
-    goodJson
+/// Combine JSON and validation in one step
+let jsonToRequest json =
+    json
     |> deserializeJson
-    |> validateRequest
+    |> dtoToRequest
 
-// try to deserialize some bad JSON to a domain object
+// some good JSON
+let goodJson  = """{"UserId":1,"Name":"Alice","Email":"ABC@gmail.COM"}"""
+
+// some invalid JSON
 let badJson  = """{"UserId":1,"Name":"","Email":""}"""
-let badDomainObj =
-    badJson
-    |> deserializeJson
-    |> validateRequest
+
+// TEST: try the good and bad JSON
+let goodDomainObj = goodJson |> jsonToRequest
+let badDomainObj = badJson |> jsonToRequest
 
 
 // -------------------------------
@@ -177,20 +181,41 @@ let badDomainObj =
 // to convert the Result to a JSON string
 // -------------------------------
 
-let returnResponse (validation:Validation<_,ValidationError>) =
+let returnHttpResponse (validation:Validation<_,ValidationError>) =
+    // helper functions -- a real library would have these built in
+    let httpOk s = "200 " + s
+    let httpBadRequest s = "400 " + s
+
     match validation with
+    // if the validation was OK, return OK
     | Ok data ->
         serializeJson data
+        |>  httpOk
+
+    // if the validation had errors, return BadRequest
     | Error errors ->
         errors
         |> List.map string  // convert thee error type to string for serialization
         |> serializeJson
-        |> (fun s -> "400 " + s)
+        |> httpBadRequest
 
-// try to deserialize some bad JSON to a domain object and return the validation error
-let badJsonResponse =
-    badJson
-    |> deserializeJson
-    |> validateRequest
-    |> returnResponse
+/// Define a dummy workflow that returns a record
+let myWorkflow (request:Domain.Request) =
+    printfn "Workflow being processed"
+    {| WorkflowId = 42 |}
 
+// try to deserialize some bad JSON to a domain object
+// and return the validation error
+let webWorkflow json =
+    json
+    // 1. convert the json into a domain object
+    |> jsonToRequest
+    // 2. we now have a valid domain object to pass
+    // in to our workflow
+    |> Result.map myWorkflow
+    // return the HTTP response
+    |> returnHttpResponse
+
+// TEST: try the good and bad JSON
+goodJson |> webWorkflow
+badJson |> webWorkflow

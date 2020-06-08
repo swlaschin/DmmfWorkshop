@@ -7,7 +7,7 @@
 
 
 // ========================================
-// Tool #5 - applicative
+// FP Toolkit: Applicative
 // ========================================
 
 
@@ -15,7 +15,7 @@
 // Applicative for Option
 // ===================================
 
-module OptionApplicative =
+module Option =
 
     let lift2 f opt1 opt2 =
         match (opt1,opt2) with
@@ -27,15 +27,23 @@ module OptionApplicative =
         | Some x, Some y, Some z -> Some (f x y z)
         | _ -> None
 
-    let add x y = x + y
+module OptionApplicativeExamples =
 
-    (lift2 add) (Some 1) (Some 2)
+    let add x y = x + y
+    let threeParams x y z = x + y + z
+
+    (Option.lift2 add) (Some 1) (Some 2)
+    (Option.lift2 add) (Some 1) None
+    (Option.lift2 add) None (Some 1)
+
+    (Option.lift3 threeParams) (Some 1) (Some 2) (Some 3)
+    (Option.lift3 threeParams) (Some 1) None (Some 3)
 
 // ===================================
 // Applicative for Result
 // ===================================
 
-module ResultApplicative =
+module Result =
 
     let lift2 f r1 r2 =
         match (r1,r2) with
@@ -44,30 +52,50 @@ module ResultApplicative =
         | Ok _, Error e2 -> Error e2
         | Error e1, Error e2 -> Error (e1 @ e2)
 
-    let add x y = x + y
+    let lift3 f r1 r2 r3 =
+        match r1,r2,r3 with
+        | Ok x, Ok y, Ok z -> Ok (f x y z)
+        | Error e1, Ok _, Ok _ -> Error e1
+        | Ok _, Error e2, Ok _ -> Error e2
+        | Ok _, Ok _, Error e3 -> Error e3
+        | Error e1, Error e2, Ok _ -> Error (e1 @ e2)
+        | Ok _, Error e2, Error e3 -> Error (e2 @ e3)
+        | Error e1, Ok _, Error e3 -> Error (e1 @ e3)
+        | Error e1, Error e2, Error e3 -> Error (e1 @ e2 @ e3)
 
-    let result1 : Result<_,string list> = (lift2 add) (Ok 1) (Ok 2)
-    let result2 = (lift2 add) (Error ["bad"]) (Ok 2)
-    let result3 = (lift2 add) (Error ["bad"]) (Error ["oops"])
+
+
+module ResultApplicativeExamples =
+
+    let add x y = x + y
+    let threeParams x y z = x + y + z
+
+    (Result.lift2 add) (Ok 1) (Ok 2) |> printfn "%A"
+    (Result.lift2 add) (Error ["bad"]) (Ok 2) |> printfn "%A"
+    (Result.lift2 add) (Error ["bad"]) (Error ["oops"]) |> printfn "%A"
+
+    (Result.lift3 threeParams) (Ok 1) (Ok 2) (Ok 4) |> printfn "%A"
 
 // ===================================
 // Applicative for List
 // ===================================
 
-module ListApplicative =
-
-    let add x y = x + y
+module List =
 
     // one kind of list applicative
-    let listApply1 f list1 list2 =
+    let lift2 f list1 list2 =
         List.map2 f list1 list2
 
     // another kind of list applicative
-    let listApply2 f list1 list2 =
+    let crossProduct f list1 list2 =
         [ for x in list1 do
           for y in list2 do
              yield f x y
         ]
 
-    let result1 = (listApply1 add) [1;2;3] [10;100;1000]
-    let result2 = (listApply2 add) [1;2;3] [10;100;1000]
+module ListApplicativeExample =
+
+    let add x y = x + y
+
+    (List.lift2 add) [1;2;3] [10;100;1000]
+    (List.crossProduct add) [1;2;3] [10;100;1000]

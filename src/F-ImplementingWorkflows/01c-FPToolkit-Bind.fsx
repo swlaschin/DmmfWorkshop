@@ -7,21 +7,35 @@
 
 
 // ========================================
-// Tool #4 - bind
+// FP Toolkit: bind
 // ========================================
 
 
 // ===================================
-// Bind for Options
+// 1: Bind for Options
 // ===================================
 
-module OptionBind =
+module OptionHelpers =
+
+    // ----------------------------------
+    // define a helper function
+    // to make composition easy
+    let ifSomeDo f (opt:'a option) =
+        if opt.IsSome then
+            f opt.Value
+        else
+            None
+
+/// Some examples of using bind for Options
+module OptionBindExamples =
 
     // three Option-returning functions to be chained together
-    let doSomething x = Some x  
+    let doSomething x = Some x
     let doSomethingElse x = Some x
     let doAThirdThing x = Some x
 
+    // --------------------
+    // the really ugly way
     let example_v1 input =
         let x = doSomething input
         if x.IsSome then
@@ -39,38 +53,45 @@ module OptionBind =
             None
 
     // ----------------------------------
-    // define a helper function
-    // to make composition easy
-
-    let ifSomeDo f (opt:'a option) =
-        if opt.IsSome then
-            f opt.Value
-        else
-            None
-
+    // Using the helper function
     let example_v2 input =
         doSomething input
-        |> ifSomeDo doSomethingElse
-        |> ifSomeDo doAThirdThing
+        |> OptionHelpers.ifSomeDo doSomethingElse
+        |> OptionHelpers.ifSomeDo doAThirdThing
 
     // ----------------------------------
     // Or use the built-in Option.bind function
-
     let example_v3 input =
         doSomething input
         |> Option.bind doSomethingElse
         |> Option.bind doAThirdThing
 
+
 // ===================================
-// Bind for Results
+// 2: Bind for Results
 // ===================================
 
-module ResultBind =
+module ResultBindExamples =
 
-    // three Result-returning functions to be chained together
-    let doSomething x = if x % 2 = 0 then Ok x else Error "not / by 2"
-    let doSomethingElse x = if x % 3 = 0 then Ok x else Error "not / by 3"
-    let doAThirdThing x = if x % 5 = 0 then Ok x else Error "not / by 5"
+    // three Result-returning functions
+    // to be chained together
+    let doSomething x =
+        if x % 2 = 0 then
+            Ok x
+        else
+            Error "not / by 2"
+
+    let doSomethingElse x =
+        if x % 3 = 0 then
+            Ok x
+        else
+            Error "not / by 3"
+
+    let doAThirdThing x =
+        if x % 5 = 0 then
+            Ok x
+        else
+            Error "not / by 5"
 
     let example input =
         doSomething input
@@ -83,10 +104,10 @@ module ResultBind =
     example 30
 
 // ===================================
-// Bind for Lists
+// 3: Bind for Lists
 // ===================================
 
-module ListBind =
+module ListBindExamples =
 
     // three List-returning functions to be chained together
     let doSomething x = [x+1; x+2]
@@ -106,10 +127,10 @@ module ListBind =
     example 5
 
 // ===================================
-// Bind for Async
+// 4: Bind for Async
 // ===================================
 
-module AsyncBind =
+module AsyncBindExamples =
 
     // three Async-returning functions to be chained together
     let doSomething x = async.Return x

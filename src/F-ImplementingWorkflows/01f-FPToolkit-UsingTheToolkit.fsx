@@ -109,6 +109,7 @@ type StoreCustomer = Customer -> Async<Result<unit,WorkflowError>>
 // Download
 //===========================================
 
+// a dummy implementation of DownloadFile
 let downloadFile : DownloadFile =
     fun url -> async {
         return (Ok "")
@@ -118,6 +119,7 @@ let downloadFile : DownloadFile =
 // Decode JSON to DTO
 //===========================================
 
+// a dummy implementation of DecodeCustomerDto
 let decodeCustomerDto : DecodeCustomerDto =
     fun json ->
         Ok {Name=""; Email=""; Birthdate=""}
@@ -127,6 +129,7 @@ let decodeCustomerDto : DecodeCustomerDto =
 // CreateValidCustomer
 //===========================================
 
+// a correct implementation of CreateValidCustomer
 let createValidCustomer : CreateValidCustomer =
     fun dto ->
 
@@ -159,6 +162,7 @@ let createValidCustomer : CreateValidCustomer =
 // StoreCustomer
 //===========================================
 
+// a dummy implementation of StoreCustomer
 let storeCustomer : StoreCustomer =
     fun customer -> async {
         return Ok ()

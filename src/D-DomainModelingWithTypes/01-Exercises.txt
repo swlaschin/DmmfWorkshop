@@ -1,14 +1,9 @@
 ﻿// =================================
-// Exercise 1: Getting comfortable with F# types
+// Exercise 1: Review of F# types
 // =================================
 
-Do each of the following exercises:
-* 01a-Exercise-TextToTypes.fsx
-* 01d-Exercise-ImplementingTypes.fsx
+Continue the type exercises from last time:
+* src/B-PrinciplesOfFp/08-Exercises.txt
 
-Do work through the code in
-* 01c-Aliases-vs-WrapperTypes.fsx
-* 01f-ModelingWithChoices.fsx
-
-Optional Homework: convert the domain models from the first session to code.
-See src/A-DDD/03-ConvertingDomainModelsToCode.txt
+Finish converting the domain models from the first session to code:
+* See src/A-DDD/02-Exercise.txt
