@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <!--
+    Warning FS0025: Incomplete pattern matches on this expression.
+    -->
+    <WarningsAsErrors>FS0025</WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

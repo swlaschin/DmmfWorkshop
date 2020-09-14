@@ -44,6 +44,7 @@ module Calendar =
         //           by extending the output.
         let strToDayOfWeek s = notImplemented()
 
+
 // test the function
 Calendar.ExceptionBasedDesign.strToDayOfWeek "Sunday"  // good
 Calendar.ExceptionBasedDesign.strToDayOfWeek "Sun"     // good

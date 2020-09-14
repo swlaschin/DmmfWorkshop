@@ -53,26 +53,29 @@ module ExamplesFromSlides =
     open System.Text.RegularExpressions
 
     let createEmailAddress (s:string) =
-        if Regex.IsMatch(s,@"^\S+@\S+\.\S+$")
-            then Some (EmailAddress s)
-            else None
+        if s.Contains("@") then
+            Some (EmailAddress s)
+        else
+            None
     // val createEmailAddress : s:string -> EmailAddress option
 
     type String50 = String50 of string
 
     let createString50 (s:string) =
-        if s.Length <= 50
-            then Some (String50 s)
-            else None
+        if s.Length <= 50 then
+            Some (String50 s)
+        else
+            None
     // val createString50 : s:string -> String50 option
 
 
     type OrderLineQty = OrderLineQty of int
 
     let createOrderLineQty qty =
-        if qty >0 && qty <= 99
-            then Some (OrderLineQty qty)
-            else None
+        if qty >0 && qty <= 99 then
+            Some (OrderLineQty qty)
+        else
+            None
     // val createOrderLineQty : qty:int -> OrderLineQty option
 
 

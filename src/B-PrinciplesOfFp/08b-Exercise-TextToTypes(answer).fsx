@@ -125,15 +125,28 @@ type Blog2 = BlogName * BlogPost list
 (*
 ------------------------------------------
 data TShirtColor = Black OR Red OR Blue
-data TShirt =
-  Large (with TShirtColor)
-  OR Small (with TShirtColor)
+data TShirtSize = Large OR Small
+data TShirt = TShirtSize AND TShirtColor
+
+data HoodieColorSmall = Black OR White
+data HoodieColorLarge = Red OR Blue
+data Hoodie =
+  Large (with HoodieColorLarge)
+  OR Small (with HoodieColorSmall)
 *)
 
 type TShirtColor = Black | Red | Blue
-type TShirt =
-  | Large of TShirtColor
-  | Small of TShirtColor
+type TShirtSize = Large | Small
+type TShirt = {
+  Size: TShirtSize
+  Color: TShirtColor
+}
+
+type HoodieColorSmall = Black | White
+type HoodieColorLarge = Red | Blue
+type Hoodie =
+  | Large of HoodieColorLarge
+  | Small of HoodieColorSmall
 
 
 (*

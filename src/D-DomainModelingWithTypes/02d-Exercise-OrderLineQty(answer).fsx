@@ -9,6 +9,10 @@
 /// I have defined the "library" code for OrderLineQty here
 module ConstrainedTypes =
 
+    // I'm using a module to create a "namespace".
+    // Since this is a submodule inside a bigger file
+    // I need to use "=" and indent everything inside the module.
+
     /// Must be between >= 1 and <= 100
     type OrderLineQty = private OrderLineQty of int
 
@@ -46,7 +50,9 @@ module ConstrainedTypes =
 // Exercise starts here
 // ---------------------------------------
 
-// bring the ConstrainedTypes module into scope
+// We're now back in the main file,
+// so we need to bring the ConstrainedTypes module
+// into scope
 open ConstrainedTypes
 
 // Exercise: Write a function that adds one to an OrderLineQty
@@ -55,6 +61,8 @@ let increment (olq:OrderLineQty) =
     let i2 = i1 + 1
     OrderLineQty.create i2
 
+// This is what the type signature looks like.
+// Note that it MUST return an option!
 // val increment :
 //   olq:OrderLineQty -> OrderLineQty option
 
@@ -64,6 +72,8 @@ let decrement (olq:OrderLineQty) =
     let i2 = i1 - 1
     OrderLineQty.create i2
 
+// This is what the type signature looks like.
+// Note that it MUST return an option!
 // val decrement :
 //   olq:OrderLineQty -> OrderLineQty option
 
@@ -109,7 +119,9 @@ let increment_v2 (olq:OrderLineQty) =
     OrderLineQty.create i2
     |> Option.defaultValue OrderLineQty.maxValue
 
-// val increment_2 :
+// This is what the type signature looks like.
+// Note that it does NOT return an option now!
+// val increment_v2 :
 //   olq:OrderLineQty -> OrderLineQty
 
 // Exercise: Write a function that subtracts one from an OrderLineQty
@@ -120,5 +132,7 @@ let decrement_v2 (olq:OrderLineQty) =
     OrderLineQty.create i2
     |> Option.defaultValue OrderLineQty.minValue
 
+// This is what the type signature looks like.
+// Note that it does NOT return an option now!
 // val decrement_v2 :
 //   olq:OrderLineQty -> OrderLineQty

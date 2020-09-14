@@ -68,13 +68,13 @@ You will probably need to define an intermediate data structure
 to pass data around.
 
 // define a record type
-type MyData = {something:string; somethingElse:int};
+type MyData = {something:string; somethingElse:int}
 
 // to create a value
-let myData = {something="hello"; somethingElse=42};
+let myData = {something="hello"; somethingElse=42}
 
 // to copy/update a value
-let myData2 = {myData with somethingElse=42};
+let myData2 = {myData with somethingElse=42}
 
 // to access a field in the record
 let something = myData.something

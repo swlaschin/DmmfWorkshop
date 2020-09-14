@@ -46,7 +46,7 @@ module ConstrainedTypes =
         let create str =
             if String.IsNullOrEmpty(str) then
                 None
-            else if str.Contains("@") |> not then
+            else if not (str.Contains("@")) then
                 None
             else
                 Some (EmailAddress str)
@@ -74,7 +74,13 @@ let invalidEmail = EmailAddress.create("example.com")
 module WorkflowExample =
 
     // define a dummy workflow
-    let mainWorkflow (str10:String10) = "200 OK"
+    let mainWorkflow (str10:String10) =
+        // values are immutable and not null
+        // so no defensive programming is needed.
+
+        // is the str10 null? NOT NEEDED
+        // is the str10.Length <= 10? NOT NEEDED
+        "200 OK"
 
     // try to create a value
     let str10option = String10.create "1234567890"

@@ -68,13 +68,13 @@ You will probably need to define an intermediate data structure
 to pass data around.
 
 // define a record type
-type MyData = {something:string; somethingElse:int};
+type MyData = {something:string; somethingElse:int}
 
 // to create a value
-let myData = {something="hello"; somethingElse=42};
+let myData = {something="hello"; somethingElse=42}
 
 // to copy/update a value
-let myData2 = {myData with somethingElse=42};
+let myData2 = {myData with somethingElse=42}
 
 // to access a field in the record
 let something = myData.something
@@ -83,7 +83,7 @@ let something = myData.something
 
 
 // Data structure to pass between the tests for 3,5,7 etc
-type FizzBuzzData = {carbonated: string; number: int}
+type FizzBuzzData = {carbonated:string; number:int}
 
 /// Test whether a data.number is divisible by 15
 /// If true, return the "FizzBuzz" in data.carbonated.
@@ -94,7 +94,7 @@ let handle15case data =
         // is it divisible?
         if data.number |> isDivisibleBy 15 then
             // create a new value which is carbonated
-            {carbonated="FizzBuzz"; number = data.number}
+            {carbonated="FizzBuzz"; number=data.number}
             // alternatively you can copy with update
             // {data with carbonated=label}
         else
@@ -111,7 +111,7 @@ let handle divisor label data =
         // is it divisible?
         if data.number |> isDivisibleBy divisor then
             // create a new value which is carbonated
-            {carbonated=label; number = data.number}
+            {carbonated=label; number=data.number}
             // alternatively you can copy with update
             // {data with carbonated=label}
         else

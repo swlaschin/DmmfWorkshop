@@ -15,6 +15,10 @@ let notImplemented() = failwith "not implemented"
 // Exercise: Create a `NonZeroInteger`  type that can only contain non-zero integers
 //----------------------------------------------------------
 
+// This could be stored in an external file and loaded
+// as a script using something like this:
+// #load "ConstrainedTypes.fsx"
+
 module ConstrainedTypes =
 
     /// Must be <> 0
@@ -85,3 +89,4 @@ let zip1 = zip1Option |> Option.get  // dont do this except for testing!
 let zip2Option = ZipCode.create "abc"
 
 let zip3Option = ZipCode.create "123456"
+

@@ -37,7 +37,7 @@ ResultWithOption.validateInput {Name="Scott"; Email=""}
 
 //--------------------------------------------------
 // Using a Result with a string to indicate an error.
-// Helpful but stringly-typed.
+// Helpful but "stringly-typed" (not statically typed!)
 //--------------------------------------------------
 
 module ResultWithString =
@@ -63,7 +63,7 @@ ResultWithString.validateInput {Name="Scott"; Email=""}
 //--------------------------------------------------
 // Using a Result with a special choice type
 // to indicate an error.
-// Helpful and type checked.
+// Helpful and properly type checked (unlike strings).
 //--------------------------------------------------
 
 module ResultWithErrorType =

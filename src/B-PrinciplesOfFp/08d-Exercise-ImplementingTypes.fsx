@@ -78,6 +78,14 @@ type PlaceOrder =
 // 1. Constructing and Destructuring records
 // ----------------------------------
 
+(*
+// Reminder of the definition of the record
+type PersonalName = {   // A record type used for modeling "AND" relations
+  FirstName: Text
+  LastName: Text
+}
+*)
+
 // to create
 let name = {FirstName="a"; LastName="c"}
 // to extract
@@ -86,6 +94,14 @@ let first = name.FirstName
 // ----------------------------------
 // 2. Constructing and Destructuring Choices
 // ----------------------------------
+
+(*
+// Reminder of the definition of the choice type
+type PaymentMethod =
+  | Cash
+  | Card of CardInfo //TODO define a type for CardInfo
+  | PayPal of EmailAddress //TODO define a type for EmailAddress
+*)
 
 // To construct the Cash case of PaymentMethod, use "Cash" as a constructor.
 // No extra data is needed
@@ -124,6 +140,11 @@ paymentMethod3 |> printMethod
 // 3. Constructing and Destructuring Wrappers
 // ----------------------------------
 
+(*
+// reminder of the definition
+type OrderId = OrderId of int   // A "wrapper" around an int.
+*)
+
 // to create a wrapper, use the case as a function
 let orderId = OrderId 99
 
@@ -145,7 +166,6 @@ let printOrderId (OrderId value) =
 printOrderId orderId   // output is "OrderId = 99"
 
 
-
 // ----------------------------------
 // 4. Constructing Function types
 // ----------------------------------
@@ -161,7 +181,15 @@ let addTwoNumbers : AddTwoNumbers =     // the implementation
     fun n1 n2 ->
         n1 + n2
 
+// --------------------------
 // Now try to implement the PlaceOrder function type from above
+
+(*
+// Reminder of the definition
+type PlaceOrder =
+  Order -> OrderPlaced //TODO define a type for OrderPlaced
+*)
+
 let placeOrder : PlaceOrder =
   fun input ->
     //TODO create an OrderPlaced event value here

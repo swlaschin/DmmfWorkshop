@@ -203,7 +203,7 @@ module FunctionsAsInput =
     // it will work with ANY int -> int function
     evalWith5ThenAdd2 add1 // result => 8
     evalWith5ThenAdd2 multiplyBy2 // result => 12
-    evalWith5ThenAdd2 (fun i -> i + 42) // result => 12
+    evalWith5ThenAdd2 (fun i -> i + 42) // result => 49
 
 // --------------------------------
 // Part 5: Functions can be the output of a function

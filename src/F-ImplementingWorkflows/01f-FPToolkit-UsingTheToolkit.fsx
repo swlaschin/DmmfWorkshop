@@ -103,7 +103,7 @@ type DecodeCustomerDto = Json -> Result<CustomerDto,WorkflowError>
 type CreateValidCustomer = CustomerDto -> Result<Customer,ValidationError list>
 
 // Store the customer in a database
-type StoreCustomer = Customer -> Async<Result<unit,WorkflowError>>
+type StoreCustomerInDb = Customer -> Async<Result<unit,WorkflowError>>
 
 //===========================================
 // Download
@@ -163,7 +163,7 @@ let createValidCustomer : CreateValidCustomer =
 //===========================================
 
 // a dummy implementation of StoreCustomer
-let storeCustomer : StoreCustomer =
+let storeCustomerInDb : StoreCustomerInDb =
     fun customer -> async {
         return Ok ()
         }
@@ -184,5 +184,5 @@ let downloadAndStoreCustomer url =
     url
     |> downloadFile
     |> Async.map processCustomerDto
-    |> AsyncResult.bind storeCustomer
+    |> AsyncResult.bind storeCustomerInDb
 

@@ -3,7 +3,7 @@ Demonstrates DTO validation for a complex domain
 like a news feed
 *)
 
-#load "result.fsx"
+#load "Result.fsx"
 
 /// A domain for showing news in a newsfeed
 module rec NewsFeedDomain =
@@ -32,10 +32,10 @@ module rec NewsFeedDomain =
         Category : Category
         }
 
-    /// A Category is Transient or Archival 
+    /// A Category is Transient or Archival
     type Category =
         // not worth archiving
-        | Transient  
+        | Transient
         // worth archiving
         | Archival of ArchiveInfo
 
@@ -62,7 +62,7 @@ module rec NewsFeedDomain =
 
     /// As part of curating a news item,
     /// it can be given a position in the news feed
-    /// Constrained to be > 0 
+    /// Constrained to be > 0
     type CurationPosition = CurationPosition of int
 
 // ===================================
@@ -91,7 +91,7 @@ module NewsFeedDtos =
 
     type CategoryDto = {
         Tag: string  // "Transient" or "Archive"
-        // If "Archive", the associated data 
+        // If "Archive", the associated data
         ArchiveInfo: obj // nullable
         }
 
@@ -154,7 +154,7 @@ module NewsFeedDtos =
                     let archiveInfoDto = dto.ArchiveInfo :?> ArchiveInfoDto
                     archiveInfoDto
                     // dto -> ArchiveInfo (or error)
-                    |> ArchiveInfoDto.toDomain  
+                    |> ArchiveInfoDto.toDomain
                     // map to Category (or error)
                     |> Validation.map NewsFeedDomain.Category.Archival
             | _ ->
@@ -192,12 +192,12 @@ module NewsFeedDtos =
                 }
 
             // create the fields as "value or error"
-            let nameOrError = 
+            let nameOrError =
                 dto.Name
-                |> TopicNameDto.toDomain 
-            let categoryOrError = 
+                |> TopicNameDto.toDomain
+            let categoryOrError =
                 dto.Category
-                |> CategoryDto.toDomain 
+                |> CategoryDto.toDomain
 
             // combine them
             (Validation.lift2 ctor) nameOrError categoryOrError
@@ -214,13 +214,13 @@ module NewsFeedDtos =
                 }
 
             // create the fields as "value or error"
-            let docIdOrError = 
+            let docIdOrError =
                 dto.DocumentId
-                |> DocumentIdDto.toDomain 
-            let reporterIdOrError = 
+                |> DocumentIdDto.toDomain
+            let reporterIdOrError =
                 dto.ReporterId
-                |> ReporterIdDto.toDomain 
-            let textOrError = 
+                |> ReporterIdDto.toDomain
+            let textOrError =
                 Ok dto.Text
             let topicsOrError =
                 dto.Topics
@@ -248,10 +248,10 @@ module NewsFeedDtos =
                 Position = p
                 IsBreaking = b
                 }
-            let positionOrError = 
+            let positionOrError =
                 dto.Position
-                |> CurationPositionDto.toDomain 
-            let isBreakingOrError = 
+                |> CurationPositionDto.toDomain
+            let isBreakingOrError =
                 dto.IsBreaking |> Ok
             // combine them
             (Validation.lift2 ctor) positionOrError isBreakingOrError
@@ -265,12 +265,12 @@ module NewsFeedDtos =
                 CurationInfo = c
                 }
             // create the fields as "value or error"
-            let alertableItemOrError = 
+            let alertableItemOrError =
                 dto.NewsItem
-                |> NewsItemDto.toDomain 
-            let curationInfoOrError = 
+                |> NewsItemDto.toDomain
+            let curationInfoOrError =
                 dto.CurationInfo
-                |> CurationInfoDto.toDomain 
+                |> CurationInfoDto.toDomain
             // combine them
             (Validation.lift2 ctor) alertableItemOrError curationInfoOrError
 
@@ -302,35 +302,35 @@ module NewsFeedExample =
             }
         }
 
-    let badNewsItem1 = 
-        let badCurationInfo = 
+    let badNewsItem1 =
+        let badCurationInfo =
             { goodNewsItem.CurationInfo with Position = -1 }
         { goodNewsItem with CurationInfo = badCurationInfo }
 
-    let badNewsItem2 = 
-        let badTopics = 
+    let badNewsItem2 =
+        let badTopics =
             [|
             {Name="TopicA"; Category={Tag="BadTag"; ArchiveInfo= null}}
             {Name="TopicB"; Category={Tag="Archival"; ArchiveInfo= null}}
             |]
         { goodNewsItem with NewsItem = {goodNewsItem.NewsItem with Topics = badTopics}}
 
-    let badNewsItem3 = 
-        let badTopics = 
+    let badNewsItem3 =
+        let badTopics =
             [|
             {Name="TopicB"; Category={Tag="Archival"; ArchiveInfo= null}}
             |]
         { goodNewsItem with NewsItem = {goodNewsItem.NewsItem with Topics = badTopics}}
 
 /// TEST
-NewsFeedExample.goodNewsItem 
-|> NewsFeedDtos.NewsFeedItemDto.toDomain 
+NewsFeedExample.goodNewsItem
+|> NewsFeedDtos.NewsFeedItemDto.toDomain
 
 NewsFeedExample.badNewsItem1
-|> NewsFeedDtos.NewsFeedItemDto.toDomain 
+|> NewsFeedDtos.NewsFeedItemDto.toDomain
 
 NewsFeedExample.badNewsItem2
-|> NewsFeedDtos.NewsFeedItemDto.toDomain 
+|> NewsFeedDtos.NewsFeedItemDto.toDomain
 
 NewsFeedExample.badNewsItem3
-|> NewsFeedDtos.NewsFeedItemDto.toDomain 
+|> NewsFeedDtos.NewsFeedItemDto.toDomain

@@ -89,7 +89,7 @@ let validateRequest input =
 let goodRequest = {
   UserId=0
   Name= "Alice"
-  Email="ABC@gmail.COM"
+  Email="   ABC@gmail.COM   "   // note: this has spaces and some uppercase
 }
 goodRequest |> validateRequest
 

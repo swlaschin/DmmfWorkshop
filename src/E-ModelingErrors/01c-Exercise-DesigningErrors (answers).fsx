@@ -34,7 +34,7 @@ module TicTacToe =
     // Document the possible errors that can happen
     // when making a move
     type MoveError =
-      | PlayedSameSquare of Square
+      | PlayedNonEmptySquare of Square
       | PlayedTwiceInARow of Player
       | PlayedWhenGameIsOver of Player
 
@@ -64,7 +64,7 @@ module AtmCashMachine =
     type WithdrawalError =
         | CardNotAcceptedHere
         | PinNotValid
-        | CantWithdrawThatMuchMoney
+        | CantWithdrawThatMuchMoney of AmountToWithdraw
         | MachineOutOfOrder
 
     // In the main workflow , use a Result as the output
@@ -96,11 +96,14 @@ module CoffeeMaker =
     // Document the possible errors that can happen
     // when making coffee
 
+    type ErrorCode = int
+
     /// Tell the user that their coffee was not made
     type CoffeeMakingError =
         | NoCoffeeAvailable
         | NoMilkAvailable
         | NoWaterAvailable
+        | InternalError of ErrorCode
 
     // In the main workflow , use a Result as the output
     type MakeCoffee =

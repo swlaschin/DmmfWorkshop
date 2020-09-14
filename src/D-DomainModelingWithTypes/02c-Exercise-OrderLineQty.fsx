@@ -101,14 +101,8 @@ decrement OrderLineQty.maxValue
 let increment_v2 (olq:OrderLineQty) =
     ??
 
-// val increment_2 :
-//   olq:OrderLineQty -> OrderLineQty
-
 // Exercise: Write a function that subtracts one from an OrderLineQty
 // If it goes < OrderLineQty.minValue then return OrderLineQty.minValue
 let decrement_v2 (olq:OrderLineQty) =
     ??
-
-// val decrement_v2 :
-//   olq:OrderLineQty -> OrderLineQty
 

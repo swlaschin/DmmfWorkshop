@@ -11,13 +11,13 @@ module StringTypes =
     type String1 = String1 of string
     type String50 = String50 of string
 
-    let createString1 (s:string) =
-        if s <> null && (s.Length <= 1)
-            then Some (String50 s)
+    let createString1 s =
+        if not (System.String.IsNullOrEmpty s) && (s.Length <= 1)
+            then Some (String1 s)
             else None
 
-    let createString50 (s:string) =
-        if s <> null && s.Length <= 50
+    let createString50 s =
+        if not (System.String.IsNullOrEmpty s) && s.Length <= 50
             then Some (String50 s)
             else None
 
@@ -32,7 +32,8 @@ module DomainTypes =
        VerifiedEmail of EmailAddress
 
     type VerificationHash = string
-    type VerificationService = (EmailAddress *  VerificationHash) -> VerifiedEmail option
+    type VerificationService =
+        (EmailAddress *  VerificationHash) -> VerifiedEmail option
 
     type EmailContactInfo =
       | Unverified of EmailAddress

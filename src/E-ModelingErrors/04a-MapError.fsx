@@ -16,6 +16,7 @@ type Cherry = SweetCherry | TartCherry
 
 type AppleError =
     | AppleIsBrown
+
 type BananaError =
     | BananaIsBrown
 
@@ -74,6 +75,8 @@ let functionB' banana =
     banana
     |> functionB
     |> Result.mapError BananaErrorCase
+    // same as
+    // functionB >> Result.mapError BananaErrorCase
 
 // ----------------------------------
 // 3. now they can be chained

@@ -89,7 +89,8 @@ module ListKleisliExamples =
 
     let example input =
         // create a new function by composing
-        let composedWithKliesli = doSomething >=> doSomethingElse >=> doAThirdThing
+        let composedWithKliesli =
+            doSomething >=> doSomethingElse >=> doAThirdThing
         // call the new function
         composedWithKliesli input
 

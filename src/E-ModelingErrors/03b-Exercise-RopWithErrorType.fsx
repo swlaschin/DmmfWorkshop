@@ -26,7 +26,7 @@ type Request = {
 type ErrorMessage =
   | ??   // name not blank
   | ?? of int  // name not longer than
-  | ??   // email not longer than
+  | ??   // email not blank
 
 
 //===========================================
@@ -91,7 +91,7 @@ let validateRequest input =
 let goodRequest = {
   UserId=0
   Name= "Alice"
-  Email="ABC@gmail.COM"
+  Email="   ABC@gmail.COM   "  // note: this has spaces and some uppercase
 }
 goodRequest |> validateRequest
 

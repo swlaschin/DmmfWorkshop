@@ -15,13 +15,21 @@ type Monoid<'a> = {
     Identity: 'a
     }
 
+// C# style
+(*
+interface IMonoid<T> {
+    T Combine<T>(T,T);
+    T Identity<T>();
+    }
+*)
+
 // library functions for Monoids
 module Monoid =
     let reduce (monoid:Monoid<'a>) list =
         let mutable result = monoid.Identity
         for item in list do
             result <- monoid.Combine result item
-        result
+        result  // return result
 
 
 // examples of monoid implementation

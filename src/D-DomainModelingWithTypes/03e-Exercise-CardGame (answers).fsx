@@ -41,7 +41,7 @@ module CardGame =
 
     type ShuffledDeck = ShuffledDeck of Card list
     type Deal = ShuffledDeck -> Card option * ShuffledDeck
-    type PickUp = Card * Hand -> Hand  
+    type PickUp = Card * Hand -> Hand
                   // Is it worth creating a special type for "Card * Hand" ?
     type Shuffle  = Deck -> ShuffledDeck
 

@@ -27,7 +27,7 @@ module AliasExample =
     let age : Age = i     // OK -- they are both ints
     let age2 = age + 1    // OK -- they are both ints
 
-    // a Height
+    // a ProductId
     let productId : ProductId = 42
     let productId2 : ProductId = age  // OK -- they are both ints
 

@@ -64,7 +64,7 @@ Some 1 |> Option.map add42
 // --------------------
 // play with your own examples
 let lowercase (s:string) = s.ToLower()
-Some "ABC" |> Option.map lowercase 
+Some "ABC" |> Option.map lowercase
 Some "ABC" |> Option.map String.length
 
 // ===================================
@@ -119,7 +119,7 @@ Ok 1 |> Result.map add42 |> sprintf "%A"
 // --------------------
 // play with your own examples
 let lowercase (s:string) = s.ToLower()
-Ok "ABC" |> Result.map lowercase |> sprintf "%A" 
+Ok "ABC" |> Result.map lowercase |> sprintf "%A"
 Ok "ABC" |> Result.map String.length |> sprintf "%A"
 
 
@@ -153,7 +153,7 @@ add42ToEach_v2 [1;2;3]     // OK
 // --------------------
 // play with your own examples
 let lowercase (s:string) = s.ToLower()
-["ABC";"DEF"] |> List.map lowercase |> sprintf "%A" 
+["ABC";"DEF"] |> List.map lowercase |> sprintf "%A"
 ["ABC";"D"] |> List.map String.length |> sprintf "%A"
 
 // ===================================

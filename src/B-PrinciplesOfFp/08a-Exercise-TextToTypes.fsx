@@ -109,14 +109,20 @@ type Blog = ??
 (*
 ------------------------------------------
 data TShirtColor = Black OR Red OR Blue
-data TShirt =
-  Large (with TShirtColor)
-  OR Small (with TShirtColor)
+data TShirtSize = Large OR Small
+data TShirt = TShirtSize AND TShirtColor
+
+data HoodieColorSmall = Black OR White
+data HoodieColorLarge = Red OR Blue
+data Hoodie =
+  Large (with HoodieColorLarge)
+  OR Small (with HoodieColorSmall)
 *)
 
 type TShirtColor = ??
 type TShirt = ??
 
+type Hoodie = ??
 
 
 (*
