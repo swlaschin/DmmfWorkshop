@@ -74,9 +74,8 @@ module Domain =
 module Implementation =
     open Domain
 
-    /// Define a workflow 
+    /// Define a workflow -- this is completely pure. No I/O
     let myWorkflow (request:Domain.Request) :Result<Response,WorkflowError> =
-        printfn "Workflow being processed"
         let emailStr = EmailAddress.value request.Email
         if emailStr.Contains("example.com") then
             let errorMsg = sprintf "Can't send email to %s" emailStr
@@ -242,8 +241,12 @@ let returnHttpResponse (result:Result<_,WorkflowError>) =
         |> makeHttpServerError
 
 /// Define a workflow that returns a response
+/// This wraps the pure function with logging, I/O, etc
 let myWorkflow request =
-    Implementation.myWorkflow request
+    printfn "Workflow starting"
+    let result = Implementation.myWorkflow request
+    printfn "Workflow finished"
+    result 
 
 // try to deserialize some bad JSON to a domain object
 // and return the validation error
