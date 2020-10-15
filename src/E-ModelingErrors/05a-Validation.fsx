@@ -23,6 +23,10 @@ module Domain =
         Email: EmailAddress
     }
 
+    type Response = {
+        ResponseId: int
+    }
+
     /// Errors just for Validation
     type ValidationError =
       | UserIdMustBePositive
@@ -47,22 +51,41 @@ module Domain =
                 Error UserIdMustBePositive
 
     module Name =
-        let create s =
-            if String.IsNullOrEmpty(s) then
+        let create str =
+            if String.IsNullOrEmpty(str) then
                 Error NameMustNotBeBlank
-            elif s.Length > 20 then
+            elif str.Length > 20 then
                 Error (NameMustNotBeLongerThan 20)
             else
-                Ok (Name s)
+                Ok (Name str)
 
     module EmailAddress =
-        let create s =
-            if String.IsNullOrEmpty(s) then
+        let create str =
+            if String.IsNullOrEmpty(str) then
                 Error EmailMustNotBeBlank
-            elif not (s.Contains("@")) then
+            elif not (str.Contains("@")) then
                 Error EmailMustHaveAtSign
             else
-                Ok (EmailAddress s)
+                Ok (EmailAddress str)
+
+        let value (EmailAddress str) = 
+            str
+
+module Implementation =
+    open Domain
+
+    /// Define a workflow 
+    let myWorkflow (request:Domain.Request) :Result<Response,WorkflowError> =
+        printfn "Workflow being processed"
+        let emailStr = EmailAddress.value request.Email
+        if emailStr.Contains("example.com") then
+            let errorMsg = sprintf "Can't send email to %s" emailStr
+            Error (SmtpServerError errorMsg)
+        else
+            let result = {ResponseId=42}
+            Ok result
+        
+
 
 //===========================================
 // A DTO to validate
@@ -122,14 +145,21 @@ let goodRequestDto : RequestDto = {
     }
 
 let badRequestDto : RequestDto  = {
-  UserId = 0
-  Name = ""
-  Email = ""
-}
+    UserId = 0
+    Name = ""
+    Email = ""
+    }
+
+let invalidEmailDto : RequestDto  = {
+    UserId = 2
+    Name = "Bob"
+    Email = "bob@example.com"
+    }
 
 // TEST: try the good and bad DTOs
 goodRequestDto |> dtoToRequest
 badRequestDto |> dtoToRequest
+invalidEmailDto |> dtoToRequest
 
 
 // -------------------------------
@@ -171,9 +201,12 @@ let goodJson  = """{"UserId":1,"Name":"Alice","Email":"ABC@gmail.COM"}"""
 // some invalid JSON
 let badJson  = """{"UserId":1,"Name":"","Email":""}"""
 
+let invalidEmailJson  = """{"UserId":2,"Name":"Bob","Email":"bob@example.com"}"""
+
 // TEST: try the good and bad JSON
 let goodDomainObj = goodJson |> jsonToRequest
 let badDomainObj = badJson |> jsonToRequest
+
 
 
 // -------------------------------
@@ -181,28 +214,36 @@ let badDomainObj = badJson |> jsonToRequest
 // to convert the Result to a JSON string
 // -------------------------------
 
-let returnHttpResponse (validation:Validation<_,ValidationError>) =
+let returnHttpResponse (result:Result<_,WorkflowError>) =
     // helper functions -- a real library would have these built in
-    let httpOk s = "200 " + s
-    let httpBadRequest s = "400 " + s
+    let makeHttpOk s = "200 " + s
+    let makeHttpBadRequest s = "400 " + s
+    let makeHttpServerError s = "500 " + s
 
-    match validation with
+    match result with
     // if the validation was OK, return OK
     | Ok data ->
         serializeJson data
-        |>  httpOk
+        |>  makeHttpOk
 
     // if the validation had errors, return BadRequest
-    | Error errors ->
+    | Error (WorkflowError.ValidationErrors errors) ->
         errors
         |> List.map string  // convert thee error type to string for serialization
         |> serializeJson
-        |> httpBadRequest
+        |> makeHttpBadRequest
 
-/// Define a dummy workflow that returns a record
-let myWorkflow (request:Domain.Request) =
-    printfn "Workflow being processed"
-    {| WorkflowId = 42 |}
+    | Error (WorkflowError.SmtpServerError error) ->
+        error
+        |> makeHttpServerError
+
+    | Error (WorkflowError.DbError error) ->
+        error
+        |> makeHttpServerError
+
+/// Define a workflow that returns a response
+let myWorkflow request =
+    Implementation.myWorkflow request
 
 // try to deserialize some bad JSON to a domain object
 // and return the validation error
@@ -210,12 +251,18 @@ let webWorkflow json =
     json
     // 1. convert the json into a domain object
     |> jsonToRequest
-    // 2. we now have a valid domain object to pass
+
+    // 2. wrap any validation errors into a WorkflowError.ValidationErrors case
+    |> Result.mapError WorkflowError.ValidationErrors
+    
+    // 3. we now have a valid domain object to pass
     // in to our workflow
-    |> Result.map myWorkflow
-    // return the HTTP response
+    |> Result.bind myWorkflow
+
+    // 4. return a HTTP response based on the result
     |> returnHttpResponse
 
 // TEST: try the good and bad JSON
 goodJson |> webWorkflow
 badJson |> webWorkflow
+invalidEmailJson |> webWorkflow
