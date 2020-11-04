@@ -88,47 +88,50 @@ type FizzBuzzData = {carbonated:string; number:int}
 /// Test whether a data.number is divisible by 15
 /// If true, return the "FizzBuzz" in data.carbonated.
 /// BUT only do this if data.carbonated is empty
-let handle15case data =
-    // is it unprocessed?
-    if data.carbonated = "" then
-        // is it divisible?
-        if data.number |> isDivisibleBy 15 then
-            // create a new value which is carbonated
-            {carbonated="FizzBuzz"; number=data.number}
-            // alternatively you can copy with update
-            // {data with carbonated=label}
-        else
-            data // leave alone
+let handle15case fizzBuzzData =
+    // is it already processed?
+    if fizzBuzzData.carbonated <> "" then
+        fizzBuzzData // leave alone
+    // is it divisible?
+    else if not (fizzBuzzData.number |> isDivisibleBy 15) then
+        fizzBuzzData // leave alone
+    // ok, handle this case
     else
-        data // leave alone
+        // create a new value which is carbonated
+        {carbonated="FizzBuzz"; number=fizzBuzzData.number}
+        // alternatively you can copy with update
+        // {fizzBuzzData with carbonated=label}
 
+/// A much more generic version of handle15case
+/// --------------------------------------------
 /// Test whether a data.number is divisible by divisor
 /// If true, return the label in data.carbonated.
 /// BUT only do this if data.carbonated is empty
-let handle divisor label data =
-    // is it unprocessed?
-    if data.carbonated = "" then
-        // is it divisible?
-        if data.number |> isDivisibleBy divisor then
-            // create a new value which is carbonated
-            {carbonated=label; number=data.number}
-            // alternatively you can copy with update
-            // {data with carbonated=label}
-        else
-            data // leave alone
+let handle divisor label fizzBuzzData =
+    // is it already processed?
+    if fizzBuzzData.carbonated <> "" then
+        fizzBuzzData // leave alone
+    // is it divisible?
+    else if not (fizzBuzzData.number |> isDivisibleBy divisor) then
+        fizzBuzzData // leave alone
+    // ok, handle this case
     else
-        data // leave alone
+        // create a new value which is carbonated
+        {carbonated=label; number=fizzBuzzData.number}
+        // alternatively you can copy with update
+        // {fizzBuzzData with carbonated=label}
+
 
 // If still unprocessed at the end,
 // convert data.number into a string,
 // else return data.carbonated
-let finalStep data =
-    if data.carbonated = "" then
-        string data.number
+let finalStep fizzBuzzData =
+    if fizzBuzzData.carbonated = "" then
+        string fizzBuzzData.number
     else
-        data.carbonated
+        fizzBuzzData.carbonated
 
-// fizzBuzz takes an int and returns a string
+// Finally, the main fizzBuzz function!
 let fizzBuzz (n:int) :string =
     let initialData = {carbonated=""; number=n}
 
@@ -137,10 +140,11 @@ let fizzBuzz (n:int) :string =
     |> handle 3 "Fizz"
     |> handle 5 "Buzz"
     |> finalStep
+    
 
-
-// test
+// test it interactively
 [1..30] |> List.map fizzBuzz
+
 
 
 

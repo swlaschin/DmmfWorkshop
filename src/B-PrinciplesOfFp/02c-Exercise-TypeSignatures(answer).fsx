@@ -54,13 +54,16 @@ let testK x =
 // function
 // val testK : x:float -> float
 
-let testL (f:int -> string) x = f x
+let testL (f:int -> string) x =
+    f x
 // val testL : f:(int -> string) -> x:int -> string
 
-let testM f (x:int) :string = f x
+let testM f (x:int) :string =
+    f x
 // val testM : f:(int -> string) -> x:int -> string
 
-let testN x:string = x 1   // hint: what does :string modify?
+let testN x:string =
+    x 1   // hint: what does :string modify?
 // val testN : x:(int -> string) -> string
 
 let testO x = 1

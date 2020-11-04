@@ -93,6 +93,8 @@ let toRomanNumerals_v3 number =
 toRomanNumerals_v3 4
 toRomanNumerals_v3 14
 toRomanNumerals_v3 19
+toRomanNumerals_v3 1947
+toRomanNumerals_v3 1999
 *)
 
 

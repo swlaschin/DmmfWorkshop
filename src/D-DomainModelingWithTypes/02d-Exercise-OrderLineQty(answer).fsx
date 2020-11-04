@@ -99,7 +99,7 @@ decrement OrderLineQty.maxValue
 // a default value in the None case
 
 increment OrderLineQty.minValue
-|> Option.defaultValue OrderLineQty.minValue
+|> Option.defaultValue OrderLineQty.maxValue
 
 increment OrderLineQty.maxValue
 |> Option.defaultValue OrderLineQty.maxValue
@@ -108,7 +108,7 @@ decrement OrderLineQty.minValue
 |> Option.defaultValue OrderLineQty.minValue
 
 decrement OrderLineQty.maxValue
-|> Option.defaultValue OrderLineQty.maxValue
+|> Option.defaultValue OrderLineQty.minValue
 
 
 // Exercise: Write a function that adds one to an OrderLineQty

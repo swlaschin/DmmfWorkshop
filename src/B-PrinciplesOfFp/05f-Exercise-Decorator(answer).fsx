@@ -21,7 +21,9 @@ let add1 x = x + 1
 
 // test
 add1 4
-[1..10] |> List.map add1   // with a list
+List.map add1 [1..10]      // do "add1" for each element of a list
+[1..10] |> List.map add1   // same thing!
+
 
 
 // ===========================================
@@ -29,12 +31,11 @@ add1 4
 // ===========================================
 
 let logTheInput x =
-    printf "In=%i; " x
+    printf "Hello In=%A; " x
     x
 
 let logTheOutput x =
-    printfn "Out=%i; " x
-    x
+    printfn "Out=%i; " x; x
 
 // ===========================================
 // define the logged version of add1
@@ -43,6 +44,11 @@ let logTheOutput x =
 let add1Logged x =
     x |> logTheInput |> add1 |> logTheOutput
 
+let add1Logged x =
+    x |> logTheInput |> add1 |> logTheOutput
+
+
 // test
 add1Logged 4
+List.map add1Logged [1..10]      // do "add1Logged" for each element of a list
 [1..10] |> List.map add1Logged

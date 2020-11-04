@@ -32,10 +32,11 @@ let testK x =
     printfn "x is %f" x
     x  // return x
 
-let testL (f:int -> string) x = f x
+let testL (f:int -> string) x =
+    f x
 
-
-let testM f (x:int) :string = f x
+let testM f (x:int) :string = 
+    f x
 
 let testN x :string = x 1   // hint: what does :string modify?
 
@@ -63,10 +64,16 @@ let testS x = x=x
 // =============================================
 
 // val sigA = int -> int
-// answer:
-// let sigA x = x + 1
+// example of a possible answer:
+(*
+let sigA x = x + 1
+*)
 
 // val sigB = int -> unit
+// example of a possible answer:
+(*
+let sigB x = printfn "%i" x
+*)
 
 // val sigC = int -> string
 

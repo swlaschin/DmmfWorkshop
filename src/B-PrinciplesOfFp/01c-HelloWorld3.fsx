@@ -21,7 +21,54 @@ let x = 10
 x = 11        // this is wrong
 // x <- 11    // this is correct
 
+// ====================================
+// F# gotchas
+// ====================================
 
+// Equality	is "=" not "=="
+// 1==2   // C# syntax
+// 1=2    // F# syntax
+
+// Inequality is "<>" not "!="
+// 1 != 2     // C# syntax
+// 1 <> 2     // F# syntax
+
+// Negation	is "not" not "!"
+// !(1==2)    // C# syntax
+// not (1=2)  // F# syntax
+
+// First assignment is "let"
+// var x = 1;    // C# syntax
+// let x = 1     // F# syntax
+
+// Mutation is "<-"
+// x = 2;    // C# syntax
+// x <- 2    // F# syntax
+
+// Function parameter separator is space not comma
+// int f(int x,int y) {...}   // C# syntax to define a function
+// let f x y = ...            // F# syntax to define a function
+
+// f(x,y);   // C# syntax to call a function
+// f x y     // F# syntax to call a function
+
+// List separator is semicolon not comma
+// [ 1; 2; 3 ]              // F# syntax for a new list
+// { name="Scott"; age=27}  // F# syntax for a new record
+
+// Tuples use a comma!
+// let x = (2,3)
+
+// Colon is normal somthin g types	Colon
+
+// Curly braces	are NOT used for blocks
+let x =
+   let y = 1
+   y + 1
+
+// Curly braces	ARE used for records
+// { name: string; age:int} // F# syntax for a record definition
+// { name="Scott"; age=27}  // F# syntax for a record constructor
 
 
 // ====================================
@@ -33,6 +80,9 @@ module MyModule =
 
     let add2 x =
         x + 2   // no "return" keyword. Last expression is returned
+
+    let add3 x =
+        x + 3   // no "return" keyword. Last expression is returned
 
 // access the code in a module with the name
 MyModule.add2 40  // Result => 42

@@ -67,47 +67,221 @@ type Order = {
 //============================================
 // Your code starts here
 
-
-// The "PlayMove" workflow
+// 1. The "PlayMove" workflow
 // The input is a pair: information from outside + game state loaded from storage
 //     This could be refactored to a single record with two fields.
 // The output is a pair: information to return to outside + game state to save to storage
 type PlayMove = MoveInformation * GameState -> MoveResult * GameState
 
-// MoveInformation is Position AND Player
+
+// 2. MoveInformation is modeled as Player AND Position
+
+// MoveInformation could be implemented as a tuple
+(*
+type MoveInformation = Player * Position
+*)
+
+// Or, MoveInformation could be implemented as a record
 type MoveInformation = {
-    Position : Position
     Player : Player
+    Position : Position
     }
 
-// Player is X OR O
+// 3. Player is modeled as X OR O
+(*
 type Player =
     | X
     | O
+*)
+type Player = X | O  // shorter version of above, like an enum
 
-// Position is Row AND Column
+// 4. Position is modeled as Row AND Column
+
+// Position could be implemented as a tuple
+(*
+type Position = Row * Column
+*)
+// Or, Position could be implemented as a record
 type Position = {
     Row: Row
     Column : Column
     }
 
-// Row and Column are simple type with constraints
+// 5. Row and Column are simple type with constraints
 type Row = int // between 1..3
 type Column = int // between 1..3
 
-// MoveResult is Win OR Draw OR NextTurn
+// 6. MoveResult is Win OR Draw OR NextTurn
 type MoveResult =
     | Win of Player
     | Draw
     | NextTurn of Player
 
-
-// GameState is a list of the CellStates
+// 7. The game state is the state of all the cells
 type GameState = CellState list
 
-// CellState is a Position AND optionally, if a player has played there
-type CellState = {
-    Position : Position
-    Played : Player option
+type CellState =
+    Position * Player option
+
+// ====================================
+// Using Tuples vs. using Records
+// ====================================
+
+// option 1 - BAD
+type Name1 = string * string * string
+
+// option 2 - Better
+type Name2 = { First: string; Last: string }
+
+// option 3 - Depends on whether they have special domain logic
+type Name3 = FirstName * LastName * EmailAddress
+type FirstName = string // not really a proper domain concept?
+type LastName = string
+type EmailAddress = string // a proper domain concept with extra validation
+
+
+
+
+// ====================================
+// How to return a choice
+// ====================================
+module ChoiceExample =
+    type ErrorMessage =
+        | CantGiveCash
+        | ComeBackLater
+
+    type MyFunctionResult =
+        | Success of string
+        | Failure of ErrorMessage
+
+    type MyFunction = string -> MyFunctionResult
+
+
+
+// ====================================
+// How to model "void"
+// ====================================
+
+// C# style for no input
+(*
+int DoSomething() { return 42; }
+*)
+
+// F# style for no input
+(*
+type DoSomething = unit -> int
+let doSomething() = 42
+*)
+
+// C# style for no output
+(*
+void DoSomething(int x) { }
+*)
+
+// F# style for no output
+(*
+type DoSomething = int -> unit
+let doSomething x = ()  // "Nothing" or "None"
+*)
+
+// ====================================
+// How to model a simple state machine
+// ====================================
+
+module StateMachine =
+    // change state of door
+    type DoorState = OpenDoor | ClosedDoor
+    type OpenTheDoor = DoorState -> DoorState
+    type CloseTheDoor = DoorState -> DoorState
+
+
+    //type HeatFood = ColdFood -> HotFood
+
+
+// ====================================
+// How to model interfaces
+// ====================================
+
+// C# for an interface with one method
+(*
+interface IOpenDoor {
+   DoorState Open(DoorState doorState);
+   }
+*)
+// or
+(*
+Func<DoorState,DoorState>
+*)
+
+// F# for an interface
+(*
+type OpenDoor = DoorState -> DoorState
+*)
+
+
+
+type OperationSelected =
+    | WithdrawRequested of WithdrawRequestInfo
+    | DepositRequested
+    | CheckBalanceRequested
+// a new standalone type
+type WithdrawRequestInfo = string
+
+type Something = {
+    field : OperationSelected
     }
+type Something2 = {
+    field : DepositRequested   // not OK
+    }
+type Something3 = {
+    field : WithdrawRequestInfo     // OK
+    }
+
+
+
+
+type HeatFood = Food -> bool
+
+type MicrowavableFood = {
+    FoodName : FoodName
+    FoodType : FoodType
+    Heated : HeatedState
+    FoodPosition : FoodPosition
+}
+type HeatFood =
+    PressButton * Button * MicrowavableFood -> MicrowavableFood // Changed state of MicrowavableFood ?????
+
+
+type MicrowaveState = {
+    Running : bool
+    PowerLevel : PowerLevel
+    HowLong : int
+}
+
+type StartMicrowave =
+    TimerAmount * PowerLevel * MicrowaveState -> MicrowaveState
+
+let startMicrowave timerAmount powerLevel microwaveState =
+    if microwaveState.Running then
+        // no change, return the current state
+        microwaveState
+    else
+        // create a new "running" state
+        {Running=true; PowerLevel=powerLevel; HowLong=timerAmount }
+
+
+
+
+type PressStartButton =
+    PressButton * Button * ColdMicrowavableFood -> HeatedMicrowavableFood // Changed state of MicrowavableFood ?????
+
+type HeatedMicrowavableFood
+type ColdMicrowavableFood
+
+type Food =
+    | Heated of MicrowavableFood
+    | Cold of MicrowavableFood
+
+
+type HeatFood = HeatedState -> HeatedState
 

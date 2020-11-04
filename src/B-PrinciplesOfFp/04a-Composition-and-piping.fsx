@@ -47,9 +47,9 @@ in a familiar way, putting the parameter after the function, like this:
 // Composition examples
 // ================================================
 
-add1 5                    // = 6
-double (add1 5)           // = 12
-square (double (add1 5))  // = 144
+add1(5)                   // = 6
+double(add1(5))           // = 12
+square(double(add1 (5)))  // = 144
 
 
 (*
@@ -104,10 +104,10 @@ As the chains get longer, we often make it more readable by putting each step on
 // you can make it into a function like this
 
 let addDoubleSquare x =
-  x
-  |> add1
-  |> double
-  |> square
+    x
+    |> add1
+    |> double
+    |> square // = 144
 
 addDoubleSquare 5 // 144
 

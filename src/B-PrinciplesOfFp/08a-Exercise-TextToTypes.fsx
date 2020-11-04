@@ -91,7 +91,9 @@ data OrderLine =
     AND OrderQuantity
 *)
 
-
+type OrderId = ??
+type Product = ??
+type OrderQuantity = ??
 type OrderLine = ??
 
 (*
@@ -103,6 +105,8 @@ data Blog =
 data BlogName = all printable chars, maxlen = 100
 *)
 
+type BlogName = ??
+type BlogPost = ??
 type Blog = ??
 
 

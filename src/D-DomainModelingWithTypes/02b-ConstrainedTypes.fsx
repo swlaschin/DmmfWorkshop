@@ -58,7 +58,7 @@ module ConstrainedTypes =
 open ConstrainedTypes
 
 //TODO uncomment to see the compiler error
-//let compileError = String10 "1234567890"
+// let compileError = String10 "1234567890"
 
 // create using the exposed constructor
 let validString10 = String10.create("1234567890")
@@ -71,32 +71,61 @@ let invalidEmail = EmailAddress.create("example.com")
 // --------------------------------------------
 // using constrained types in a workflow
 // --------------------------------------------
-module WorkflowExample =
+module MyWorkflows =
 
     // define a dummy workflow
-    let mainWorkflow (str10:String10) =
+    let mainWorkflow (str10:String10) : bool =
         // values are immutable and not null
         // so no defensive programming is needed.
 
         // is the str10 null? NOT NEEDED
         // is the str10.Length <= 10? NOT NEEDED
-        "200 OK"
-
-    // try to create a value
-    let str10option = String10.create "1234567890"
-
-    // If you try to call the workflow without checking if it is valid
-    // you will get a compile-time error
-    mainWorkflow str10option
-
-    // Instead, you need to check first
-    match str10option with
-    | Some str10 ->
-        mainWorkflow str10 // do the main application
-    | None ->
-        "400 BadRequest"   // return a validation error
+        true
 
 
+// --------------------------------------------
+// Using a workflow with constrained types
+// --------------------------------------------
+
+module Example1 =
+
+    // the main public API that wraps the workflow
+    let api input =
+
+        // create a value from the input (eg JSON)
+        let str10option = String10.create input 
+
+        // If you try to call the workflow without checking if it is valid
+        // you will get a compile-time error
+        MyWorkflows.mainWorkflow str10option
+
+// test
+Example1.api "1234567890"
+
+
+// Instead, you need to check first
+module Example2 =
+
+    // the main public API that wraps the workflow
+    let api input =
+
+        // create a value from the input (eg JSON)
+        let str10option = String10.create input 
+
+        match str10option with
+        | Some str10 ->
+            // the input is valid, so call the workflow
+            let result = MyWorkflows.mainWorkflow str10 
+            match result with
+            | true -> "200 OK"
+            | false -> "500 ServerError"
+        | None ->
+            // the input is not valid, so return an error
+            "400 BadRequest"   
+
+
+// test
+Example2.api "1234567890"
 
 
 // --------------------------------------------

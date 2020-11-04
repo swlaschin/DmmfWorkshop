@@ -21,7 +21,12 @@ let add1 x = x + 1
 
 // test
 add1 4
-[1..10] |> List.map add1   // with a list
+List.map add1 [1..10]      // do "add1" for each element of a list
+[1..10] |> List.map add1   // same thing!
+
+
+
+
 
 
 // ===========================================
@@ -43,4 +48,5 @@ let add1Logged x =
 
 // test
 add1Logged 4
+List.map add1Logged [1..10]      // do "add1Logged" for each element of a list
 [1..10] |> List.map add1Logged
