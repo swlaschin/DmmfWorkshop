@@ -40,12 +40,26 @@ let updateDatabase input =
   else
     Ok input
 
+
 // ==============================
 // Exercise: chain these functions together
 // ==============================
 
+(*
+// this will not compile!
+
+let workflow input =
+    input
+    |> checkNameNotBlank
+    |> Result.bind checkEmailNotBlank
+    |> Result.bind updateDatabase
+
+// "The type 'ValidationError' does not match the type 'DatabaseError'"
+
+*)
+
 // ----------------------------------
-// define a common type with both errors
+// so we need to define a common type with both errors
 
 type WorkflowError = ??
 
@@ -55,10 +69,20 @@ type WorkflowError = ??
 
 let workflow input =
 
+    let validate input =
+        input
+        |> checkNameNotBlank
+        |> Result.bind checkEmailNotBlank
+        // add mapError here
+
+    let saveToDb input =
+        input
+        |> updateDatabase
+        // add mapError here
+
     input
-    |> checkNameNotBlank // fix this!
-    |> Result.bind checkEmailNotBlank
-    |> Result.bind updateDatabase
+    |> validate
+    |> Result.bind saveToDb
 
 
 // ----------------------------------

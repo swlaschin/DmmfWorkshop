@@ -121,7 +121,7 @@ let createPerson name age email :Person =
 /// Convert a person into a DTO for outputing as JSON.
 /// This always succeeds.
 let toDto (person:Person) :PersonDto =
-    // Exercise ) create a function "toDto" that converts a Person into a DTO
+    // Exercise: create a function "toDto" that converts a Person into a DTO
     {
     first = String10.value person.Name.First
     ??

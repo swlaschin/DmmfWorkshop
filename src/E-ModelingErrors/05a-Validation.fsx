@@ -68,7 +68,7 @@ module Domain =
             else
                 Ok (EmailAddress str)
 
-        let value (EmailAddress str) = 
+        let value (EmailAddress str) =
             str
 
 module Implementation =
@@ -83,7 +83,7 @@ module Implementation =
         else
             let result = {ResponseId=42}
             Ok result
-        
+
 
 
 //===========================================
@@ -198,7 +198,7 @@ let jsonToRequest json =
 let goodJson  = """{"UserId":1,"Name":"Alice","Email":"ABC@gmail.COM"}"""
 
 // some invalid JSON
-let badJson  = """{"UserId":1,"Name":"","Email":""}"""
+let badJson  = """{"UserId":0,"Name":"","Email":""}"""
 
 let invalidEmailJson  = """{"UserId":2,"Name":"Bob","Email":"bob@example.com"}"""
 
@@ -244,9 +244,11 @@ let returnHttpResponse (result:Result<_,WorkflowError>) =
 /// This wraps the pure function with logging, I/O, etc
 let myWorkflow request =
     printfn "Workflow starting"
+    // load data from database here
     let result = Implementation.myWorkflow request
+    // save data to database here
     printfn "Workflow finished"
-    result 
+    result
 
 // try to deserialize some bad JSON to a domain object
 // and return the validation error
@@ -256,8 +258,8 @@ let webWorkflow json =
     |> jsonToRequest
 
     // 2. wrap any validation errors into a WorkflowError.ValidationErrors case
-    |> Result.mapError WorkflowError.ValidationErrors
-    
+    |> Result.mapError (fun errs -> WorkflowError.ValidationErrors errs)
+
     // 3. we now have a valid domain object to pass
     // in to our workflow
     |> Result.bind myWorkflow

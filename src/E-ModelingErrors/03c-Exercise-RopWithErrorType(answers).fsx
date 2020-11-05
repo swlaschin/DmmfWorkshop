@@ -275,7 +275,9 @@ let updateCustomerR request =
   |> updateDbR
   |> sendEmailR
   |> loggerR
-  |> returnMessageR translateError_FR
+  |> returnMessageR translateError_EN
+  // or change to this
+  // |> returnMessageR translateError_FR
 
 
 // -------------------------------

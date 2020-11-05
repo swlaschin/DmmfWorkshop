@@ -24,7 +24,7 @@ type Request = {
 //===========================================
 
 type ErrorMessage =
-  | ??   // name not blank
+  | NameNotBlank   // name not blank
   | ?? of int  // name not longer than
   | ??   // email not blank
 
@@ -164,7 +164,9 @@ let sendEmail (request:Request) =
 
 let sendEmailR twoTrackInput =
     // convert SMTP exceptions to our list
-    let handler (ex:exn) = SmtpServerError ex.Message
+    let handler (ex:exn) = SmtpServerError ex.Message  
+       // TODO Add SmtpServerError to the Error choice type!
+       // Note that it has data associated with this choice.
     RopUtil.catchR sendEmail handler twoTrackInput
 
 // -------------------------------

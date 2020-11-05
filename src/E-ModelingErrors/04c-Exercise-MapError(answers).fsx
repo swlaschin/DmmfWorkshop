@@ -44,8 +44,22 @@ let updateDatabase input =
 // Exercise: chain these functions together
 // ==============================
 
+(*
+// this will not compile!
+
+let workflow input =
+    input
+    |> checkNameNotBlank
+    |> Result.bind checkEmailNotBlank
+    |> Result.bind updateDatabase
+
+// "The type 'ValidationError' does not match the type 'DatabaseError'"
+
+*)
+
+
 // ----------------------------------
-// define a common type with both errors
+// so we need to define a common type with both errors
 
 type WorkflowError =
 | ValidationCase of ValidationError
@@ -58,26 +72,21 @@ type WorkflowError =
 let workflow input =
 
     // redefine the functions to use the common error type
-    let checkNameNotBlank' input =
+    let validate input =
         input
         |> checkNameNotBlank
+        |> Result.bind checkEmailNotBlank
         |> Result.mapError ValidationCase
 
-    let checkEmailNotBlank' input =
-        input
-        |> checkEmailNotBlank
-        |> Result.mapError ValidationCase
-
-    let updateDatabase' input =
+    let saveToDb input =
         input
         |> updateDatabase
         |> Result.mapError DatabaseCase
 
     // now they can be chained
     input
-    |> checkNameNotBlank'
-    |> Result.bind checkEmailNotBlank'
-    |> Result.bind updateDatabase'
+    |> validate
+    |> Result.bind saveToDb
 
 
 // ----------------------------------
@@ -98,14 +107,17 @@ workflow badCustomer
 
 
 // ----------------------------------
-// Alternative approach
+// Alternative approach using mapError directly
 
 let workflow_v2 input =
 
     // redefine the functions to use the common error type
-    let checkNameNotBlank' = checkNameNotBlank >> Result.mapError ValidationCase
-    let checkEmailNotBlank' = checkEmailNotBlank >> Result.mapError ValidationCase
-    let updateDatabase' = updateDatabase >> Result.mapError DatabaseCase
+    let checkNameNotBlank' =
+        checkNameNotBlank >> Result.mapError ValidationCase
+    let checkEmailNotBlank' =
+        checkEmailNotBlank >> Result.mapError ValidationCase
+    let updateDatabase' =
+        updateDatabase >> Result.mapError DatabaseCase
 
     // now they can be chained
     input
