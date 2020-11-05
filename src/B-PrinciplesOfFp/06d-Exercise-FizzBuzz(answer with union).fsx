@@ -1,6 +1,8 @@
 ﻿// =============================================
 // Exercise:
 // Implement FizzBuzz as a pipeline
+//
+// Answered using a Choice as an intermediate value
 // =============================================
 
 
@@ -17,20 +19,6 @@ Definition of FizzBuzz:
 // helper function
 let isDivisibleBy divisor n =   // question: why put the divisor first?
     (n % divisor) = 0
-
-// a straightforward implementation
-let simpleFizzBuzz n =
-    if n |> isDivisibleBy 15 then
-        "FizzBuzz"    // NOTE no return keyword needed
-    else if n |> isDivisibleBy 3 then
-        "Fizz"
-    else if n |> isDivisibleBy 5 then
-        "Buzz"
-    else
-        string n
-
-// test it on the numbers up to 30
-[1..30] |> List.map simpleFizzBuzz
 
 (*
 
@@ -52,23 +40,22 @@ single "handle" function that can be reused for 3, 5, and 15.
 *)
 
 
-
 // a "choice" data structure to pass between the tests for 3,5,7 etc
-type FizzBuzzData = 
+type FizzBuzzData =
     | Carbonated of string
     | Unprocessed of int
 
 /// Test whether a number is divisible by 15
 /// If true, return the "FizzBuzz" in the Carbonated choice
-/// BUT only do this if Unprocessed
+/// BUT only do this if not already processed
 let handle15case fizzBuzzData =
     match fizzBuzzData with
     // if it is already processed
-    | Carbonated _ -> 
+    | Carbonated _ ->
         fizzBuzzData // leave alone
 
     // if it is not processed
-    | Unprocessed number -> 
+    | Unprocessed number ->
         // is it divisible?
         if not (number |> isDivisibleBy 15) then
             fizzBuzzData // leave alone
@@ -77,17 +64,19 @@ let handle15case fizzBuzzData =
             // create a new value which is carbonated
             Carbonated "FizzBuzz"
 
+/// A much more generic version of handle15case
+/// --------------------------------------------
 /// Test whether a number is divisible by divisor
 /// If true, return the label in the Carbonated choice
-/// BUT only do this if Unprocessed
+/// BUT only do this if not already processed
 let handle divisor label fizzBuzzData =
     match fizzBuzzData with
     // if it is already processed
-    | Carbonated _ -> 
+    | Carbonated _ ->
         fizzBuzzData // leave alone
 
     // if it is not processed
-    | Unprocessed number -> 
+    | Unprocessed number ->
         // is it divisible?
         if not (number |> isDivisibleBy divisor) then
             fizzBuzzData // leave alone
@@ -102,11 +91,11 @@ let handle divisor label fizzBuzzData =
 let finalStep fizzBuzzData =
     match fizzBuzzData with
     // if it is already processed
-    | Carbonated str -> 
+    | Carbonated str ->
         str // use the string
 
     // if it is not processed
-    | Unprocessed number -> 
+    | Unprocessed number ->
         string number // convert to string
 
 
@@ -119,7 +108,7 @@ let fizzBuzz (n:int) :string =
     |> handle 3 "Fizz"
     |> handle 5 "Buzz"
     |> finalStep
-    
+
 
 // test
 [1..30] |> List.map fizzBuzz

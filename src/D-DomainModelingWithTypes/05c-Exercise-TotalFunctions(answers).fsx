@@ -99,12 +99,23 @@ IntUtil.ExtendedOutputDesign.tryStrToInt "hello"   // good
 // -----------------------------------
 
 module ListUtil =
+    // In F#, lists are implemented as linked lists, NOT as arrays/vectors
+
+    // to pattern match:
+    // for empty list, use []
+    // for non-empty list, use firstItem :: rest
+    //    where "rest" is another linked list
+    //
+    // we normally work on the first element only,
+    // not the nth one
 
     module ExceptionBasedDesign =
         let firstItem aList =
             match aList with
-            | first::rest -> first
-            | [] -> failwith "list does not have a first item"
+            | [] ->
+                failwith "list does not have a first item"
+            | first::rest ->
+                first
 
     module ExtendedOutputDesign =
         // Exercise: Convert this function to be total
@@ -115,50 +126,15 @@ module ListUtil =
             | first::rest -> Some first
             | [] -> None
 
-// test the function
-ListUtil.ExceptionBasedDesign.firstItem [1;2;3]           // good
-ListUtil.ExceptionBasedDesign.firstItem ([]:int list)     // exception :(
-
-ListUtil.ExtendedOutputDesign.tryFirstItem [1;2;3]        // good
-ListUtil.ExtendedOutputDesign.tryFirstItem ([]:int list)  // good
-
-// NOTE: the []:int list is just to get around an issue working interactively!
+let emptyList :int list = []
+// NOTE: the :int list is just to get around an issue working interactively!
 // it is not normally needed
 
-
-// -----------------------------------
-// 4. HARDER Create a function that gets the first item in a list
-// by constraining the input
-// -----------------------------------
-
-type NonEmptyList<'a> = {first:'a; rest:'a list}
-
-// Convert a normal list to a NonEmptyList.
-// This is exactly the same idea as NonZeroInteger -- the client
-// is responsible for validating the input before passing it
-// as a parameter
-let toNonEmptyList aList =
-    match aList with
-    | head::tail -> Some {first=head; rest=tail}
-    | [] -> None
-
-// Exercise: define a new type for aConstrainedList
-//           so that "firstItem" always works
-let firstItem (aConstrainedList:NonEmptyList<'a>) =
-    aConstrainedList.first
-
-
-// test
-let showConstrainedInputResult aList =
-    let neListOpt = toNonEmptyList aList
-    match neListOpt with
-    | Some neList ->
-        firstItem neList
-        |> printfn "The first item is %A"
-    | None ->
-        printfn "Input is not a NonEmptyList"
-
-
 // test the function
-showConstrainedInputResult [1;2;3]  // good
-showConstrainedInputResult []       // bad
+ListUtil.ExceptionBasedDesign.firstItem [1;2;3]         // good
+ListUtil.ExceptionBasedDesign.firstItem (emptyList)     // exception :(
+
+ListUtil.ExtendedOutputDesign.tryFirstItem [1;2;3]      // good
+ListUtil.ExtendedOutputDesign.tryFirstItem (emptyList)  // no exception!
+
+

@@ -8,3 +8,4 @@ Read through and understand the TwelveDividedBy example
 
 Do the exercise:
 * 05b-Exercise-TotalFunctions.fsx
+* 05d-Exercise-NonEmptyList.fsx

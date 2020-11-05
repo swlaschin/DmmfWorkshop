@@ -67,11 +67,19 @@ type Order = {
 //============================================
 // Your code starts here
 
+
 // 1. The "PlayMove" workflow
 // The input is a pair: information from outside + game state loaded from storage
 //     This could be refactored to a single record with two fields.
 // The output is a pair: information to return to outside + game state to save to storage
-type PlayMove = MoveInformation * GameState -> MoveResult * GameState
+type PlayMove =
+   // everything on this side is input
+   MoveInformation * GameState -> MoveResult * GameState
+   //                             everything on this side is output
+
+// you might also expose a version where the internal state is hidden
+type PlayMoveWebAPI =
+   MoveInformation -> MoveResult
 
 
 // 2. MoveInformation is modeled as Player AND Position
@@ -195,9 +203,6 @@ module StateMachine =
     type CloseTheDoor = DoorState -> DoorState
 
 
-    //type HeatFood = ColdFood -> HotFood
-
-
 // ====================================
 // How to model interfaces
 // ====================================
@@ -219,69 +224,4 @@ type OpenDoor = DoorState -> DoorState
 *)
 
 
-
-type OperationSelected =
-    | WithdrawRequested of WithdrawRequestInfo
-    | DepositRequested
-    | CheckBalanceRequested
-// a new standalone type
-type WithdrawRequestInfo = string
-
-type Something = {
-    field : OperationSelected
-    }
-type Something2 = {
-    field : DepositRequested   // not OK
-    }
-type Something3 = {
-    field : WithdrawRequestInfo     // OK
-    }
-
-
-
-
-type HeatFood = Food -> bool
-
-type MicrowavableFood = {
-    FoodName : FoodName
-    FoodType : FoodType
-    Heated : HeatedState
-    FoodPosition : FoodPosition
-}
-type HeatFood =
-    PressButton * Button * MicrowavableFood -> MicrowavableFood // Changed state of MicrowavableFood ?????
-
-
-type MicrowaveState = {
-    Running : bool
-    PowerLevel : PowerLevel
-    HowLong : int
-}
-
-type StartMicrowave =
-    TimerAmount * PowerLevel * MicrowaveState -> MicrowaveState
-
-let startMicrowave timerAmount powerLevel microwaveState =
-    if microwaveState.Running then
-        // no change, return the current state
-        microwaveState
-    else
-        // create a new "running" state
-        {Running=true; PowerLevel=powerLevel; HowLong=timerAmount }
-
-
-
-
-type PressStartButton =
-    PressButton * Button * ColdMicrowavableFood -> HeatedMicrowavableFood // Changed state of MicrowavableFood ?????
-
-type HeatedMicrowavableFood
-type ColdMicrowavableFood
-
-type Food =
-    | Heated of MicrowavableFood
-    | Cold of MicrowavableFood
-
-
-type HeatFood = HeatedState -> HeatedState
 

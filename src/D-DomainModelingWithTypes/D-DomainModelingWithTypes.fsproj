@@ -46,6 +46,8 @@
     <None Include="05a-TotalFunctions.fsx" />
     <None Include="05b-Exercise-TotalFunctions.fsx" />
     <None Include="05c-Exercise-TotalFunctions(answers).fsx" />
+    <None Include="05d-Exercise-NonEmptyList.fsx" />
+    <None Include="05e-Exercise-NonEmptyList%28answers%29.fsx" />
   </ItemGroup>
 
 

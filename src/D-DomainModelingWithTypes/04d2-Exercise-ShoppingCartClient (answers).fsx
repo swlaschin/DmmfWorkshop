@@ -40,7 +40,7 @@ module ShoppingCartClient =
             ShoppingCartApi.initCart newItem
         | ActiveCartState data ->
             printfn "Adding item %s to active cart" newItem
-            ShoppingCartApi.addToActive newItem data
+            ShoppingCartApi.addToActive (newItem,data)
         | PaidCartState data ->
             printfn "Can't modify paid cart"
             cart // return original cart
@@ -55,7 +55,7 @@ module ShoppingCartClient =
             cart // return original cart
         | ActiveCartState data ->
             printfn "Paying %g for active cart" payment
-            ShoppingCartApi.pay payment data
+            ShoppingCartApi.pay (payment,data)
         | PaidCartState data ->
             printfn "Cart already paid for"
             cart // return original cart
@@ -70,7 +70,7 @@ module ShoppingCartClient =
             cart
         | ActiveCartState data ->
             printfn "Removing item %s from active cart" itemToRemove
-            ShoppingCartApi.removeFromActive itemToRemove data
+            ShoppingCartApi.removeFromActive (itemToRemove,data)
         | PaidCartState data ->
             printfn "Can't remove item from paid cart"
             cart // return original cart
@@ -81,25 +81,28 @@ module ShoppingCartClient =
 
 open ShoppingCartClient
 
+// define some items
 let item1 = "Book"
 let item2 = "Dvd"
 let item3 = "Headphones"
 
-let cart0 = EmptyCartState
-let cart1 = clientAddItem item1 cart0
-let cart2 = clientAddItem item2 cart1
-let cart3 = clientPayForCart 20.00 cart2
+// create some different carts
+let emptyCart = EmptyCartState
+let activeCart1 = clientAddItem item1 emptyCart
+let activeCart2 = clientAddItem item2 activeCart1
+let paidCart = clientPayForCart 20.00 activeCart2
 
-let cart1a = cart2 |> clientRemoveItem item2
-printfn "Is cart1 == cart1a? %b" (cart1 = cart1a)
-let cart0a = cart1a |> clientRemoveItem item1
-printfn "Is cart0 == cart0a? %b" (cart0 = cart0a)
+// check how the errors are handled
+clientAddItem item2 paidCart
+clientPayForCart 20.00 emptyCart
+clientPayForCart 20.00 paidCart
 
-// errors
-clientAddItem item2 cart3
+emptyCart |> clientRemoveItem item1
+paidCart |> clientRemoveItem item1
 
-clientPayForCart 20.00 cart0
-clientPayForCart 20.00 cart3
+// structural equality!
+let activeCart3 = activeCart2 |> clientRemoveItem item2
+printfn "Is activeCart1 == activeCart3? %b" (activeCart1 = activeCart3)
+let activeCart4 = activeCart3 |> clientRemoveItem item1
+printfn "Is emptyCart == activeCart4? %b" (emptyCart = activeCart4)
 
-cart0 |> clientRemoveItem item1
-cart3 |> clientRemoveItem item1

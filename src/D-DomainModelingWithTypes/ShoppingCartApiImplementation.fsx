@@ -12,7 +12,7 @@
 
 module ShoppingCartDomain =
 
-    type CartItem = string     // placeholder for now
+    type CartItem = string   // placeholder for now
     type Payment = float     // placeholder for now
 
 
@@ -24,11 +24,14 @@ module ShoppingCartDomain =
 module ShoppingCartApi =
     open ShoppingCartDomain
 
-    type CartContents = CartItem list  // placeholder for now
-
     // Create types to represent the data stored for each state
-    type ActiveCartData = CartContents
-    type PaidCartData = CartContents * Payment
+    type ActiveCartData =
+        ActiveCartData of CartItem list
+
+    type PaidCartData = {
+        Contents: CartItem list
+        Payment : Payment
+        }
 
     // Create a "state" type that represent the union of all the states
     type ShoppingCart =
@@ -40,16 +43,20 @@ module ShoppingCartApi =
     // Next, define the transitions using types
 
     /// "initCart" creates a new cart given the first CartItem
-    type InitCart = CartItem -> ShoppingCart
+    type InitCart =
+        CartItem -> ShoppingCart
 
     /// "addToActive" creates a new state from active data and a new CartItem
-    type AddToActive = CartItem -> ActiveCartData -> ShoppingCart
+    type AddToActive =
+        CartItem * ActiveCartData -> ShoppingCart
 
     /// "pay" creates a new state from active data and a Payment
-    type Pay = Payment -> ActiveCartData -> ShoppingCart
+    type Pay =
+        Payment * ActiveCartData -> ShoppingCart
 
     /// "removeFromActive" creates a new state from active data after removing an CartItem
-    type RemoveFromActive = CartItem -> ActiveCartData -> ShoppingCart
+    type RemoveFromActive =
+        CartItem * ActiveCartData -> ShoppingCart
 
 
     // --------------------------------------------
@@ -59,31 +66,38 @@ module ShoppingCartApi =
     /// "initCart" creates a new cart when adding the first item
     let initCart : InitCart =
         fun itemToAdd ->
-            let activeData = [itemToAdd]
-            ActiveCartState activeData
+            let cartItems = [itemToAdd]  // new list with item in it
+            let activeData = ActiveCartData cartItems
+            ActiveCartState activeData    // wrap the list with the State
 
     /// "addToActive" creates a new state from active data and a new item
     let addToActive : AddToActive =
-        fun itemToAdd activeCartData ->
-            let newActiveData = itemToAdd::activeCartData
+        fun (itemToAdd,ActiveCartData cartItems) ->
+            // "::" means prepend to list
+            let newCartItems = itemToAdd::cartItems
+            let newActiveData = ActiveCartData newCartItems
             ActiveCartState newActiveData
 
     /// "pay" creates a new state from active data and a payment amount
     let pay : Pay =
-        fun payment activeCartData ->
-            let paidData = activeCartData, payment
+        fun (payment,ActiveCartData cartItems) ->
+            let paidData = {Contents = cartItems; Payment = payment}
             PaidCartState paidData
 
     // you'll need this helper for removeItem transition
-    let private removeItemFromContents (productToRemove:CartItem) (cart:CartContents) :CartContents =
-        cart |> List.filter (fun prod -> prod <> productToRemove)
+    let private removeItemFromContents (productToRemove:CartItem) (cartItems:CartItem list) :CartItem list =
+        cartItems |> List.filter (fun prod -> prod <> productToRemove)
 
     /// "removeFromActive" creates a new state from active data after removing an item
     let removeFromActive : RemoveFromActive =
-        fun itemToRemove activeCartData ->
-            let newContents = removeItemFromContents itemToRemove activeCartData
+        fun (itemToRemove,ActiveCartData cartItems) ->
+            let newCartItems = removeItemFromContents itemToRemove cartItems
             // removeItem is tricky -- you need to test the card contents after removal to
             // find out what the new state is!
-            match newContents with
-            | [] -> EmptyCartState
-            | smallerData -> ActiveCartState smallerData
+            if newCartItems.IsEmpty then
+                EmptyCartState
+            else
+                let newCartData = ActiveCartData newCartItems
+                ActiveCartState newCartData
+
+

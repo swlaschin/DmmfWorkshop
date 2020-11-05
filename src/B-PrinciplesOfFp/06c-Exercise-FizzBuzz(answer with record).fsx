@@ -1,6 +1,8 @@
 ﻿// =============================================
 // Exercise:
 // Implement FizzBuzz as a pipeline
+//
+// Answered using a Record as an intermediate value
 // =============================================
 
 
@@ -18,19 +20,7 @@ Definition of FizzBuzz:
 let isDivisibleBy divisor n =   // question: why put the divisor first?
     (n % divisor) = 0
 
-// a straightforward implementation
-let simpleFizzBuzz n =
-    if n |> isDivisibleBy 15 then
-        "FizzBuzz"    // NOTE no return keyword needed
-    else if n |> isDivisibleBy 3 then
-        "Fizz"
-    else if n |> isDivisibleBy 5 then
-        "Buzz"
-    else
-        string n
 
-// test it on the numbers up to 30
-[1..30] |> List.map simpleFizzBuzz
 
 (*
 
@@ -50,51 +40,26 @@ After getting this to work, see if you can define a
 single "handle" function that can be reused for 3, 5, and 15.
 
 
-
-F# TIPS:
-* There is no "return" - the last value in the function is a return
-* To check for divisibility use the helper function
-  "isDivisibleBy" defined above
-* To create a string from int use the "string" function
-  string 123
-* In F#, if/then/else expressions look like
-    if x then
-        y
-    else
-        z
-
-DESIGN HINT:
-You will probably need to define an intermediate data structure
-to pass data around.
-
-// define a record type
-type MyData = {something:string; somethingElse:int}
-
-// to create a value
-let myData = {something="hello"; somethingElse=42}
-
-// to copy/update a value
-let myData2 = {myData with somethingElse=42}
-
-// to access a field in the record
-let something = myData.something
 *)
 
 
 
-// Data structure to pass between the tests for 3,5,7 etc
+// Define a record structure to pass between the tests for 3,5,7 etc
 type FizzBuzzData = {carbonated:string; number:int}
 
 /// Test whether a data.number is divisible by 15
 /// If true, return the "FizzBuzz" in data.carbonated.
-/// BUT only do this if data.carbonated is empty
+/// BUT only do this if not already processed (data.carbonated is empty)
 let handle15case fizzBuzzData =
+
     // is it already processed?
     if fizzBuzzData.carbonated <> "" then
         fizzBuzzData // leave alone
+
     // is it divisible?
     else if not (fizzBuzzData.number |> isDivisibleBy 15) then
         fizzBuzzData // leave alone
+
     // ok, handle this case
     else
         // create a new value which is carbonated
@@ -104,16 +69,19 @@ let handle15case fizzBuzzData =
 
 /// A much more generic version of handle15case
 /// --------------------------------------------
-/// Test whether a data.number is divisible by divisor
+/// Test whether data.number is divisible by divisor
 /// If true, return the label in data.carbonated.
-/// BUT only do this if data.carbonated is empty
+/// BUT only do this if not already processed (data.carbonated is empty)
 let handle divisor label fizzBuzzData =
+
     // is it already processed?
     if fizzBuzzData.carbonated <> "" then
         fizzBuzzData // leave alone
+
     // is it divisible?
     else if not (fizzBuzzData.number |> isDivisibleBy divisor) then
         fizzBuzzData // leave alone
+
     // ok, handle this case
     else
         // create a new value which is carbonated
@@ -140,7 +108,7 @@ let fizzBuzz (n:int) :string =
     |> handle 3 "Fizz"
     |> handle 5 "Buzz"
     |> finalStep
-    
+
 
 // test it interactively
 [1..30] |> List.map fizzBuzz

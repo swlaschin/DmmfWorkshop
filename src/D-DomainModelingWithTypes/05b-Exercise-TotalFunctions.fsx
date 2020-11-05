@@ -4,7 +4,8 @@
 // ================================================
 
 // -----------------------------------
-// 1. Create a function that converts a string (e.g "Sunday") into an DayOfWeek type
+// 1. Create a function that converts a string (e.g "Sunday")
+// into an DayOfWeek type
 // -----------------------------------
 
 (*
@@ -90,59 +91,49 @@ IntUtil.ExtendedOutputDesign.strToInt "hello"   // good
 // -----------------------------------
 
 module ListUtil =
+    // In F#, lists are implemented as linked lists, NOT as arrays/vectors
+
+    // to pattern match:
+    // for empty list, use []
+    // for non-empty list, use firstItem :: rest
+    //    where "rest" is another linked list
+    //
+    // we normally work on the first element only,
+    // not the nth one
 
     module ExceptionBasedDesign =
         let firstItem aList =
             match aList with
-            | first::rest -> first
-            | [] -> failwith "list does not have a first item"
+            // match an empty list
+            | [] ->
+                failwith "list does not have a first item"
+            // match an non-empty list
+            | first::rest ->
+                first // return the first item
 
     module ExtendedOutputDesign =
         // Exercise: Convert this function to be total
         //           by extending the output.
         // Should it have a different name?
-        let tryFirstItem aList = notImplemented()
+        let firstItem aList = notImplemented()
 
-// test the function
-ListUtil.ExceptionBasedDesign.firstItem [1;2;3]           // good
-ListUtil.ExceptionBasedDesign.firstItem ([]:int list)     // exception :(
-
-ListUtil.ExtendedOutputDesign.tryFirstItem [1;2;3]        // good
-ListUtil.ExtendedOutputDesign.tryFirstItem ([]:int list)  // good
-
-// NOTE: the []:int list is just to get around an issue working interactively!
+let emptyList :int list = []
+// NOTE: the :int list is just to get around an issue working interactively!
 // it is not normally needed
 
-// -----------------------------------
-// 4. HARDER Create a function that gets the first item in a list
-// by constraining the input
-// -----------------------------------
-
-type ConstrainedList<'a> = undefined
-
-// Convert a normal list to a ConstrainedList
-// This is exactly the same idea as NonZeroInteger -- the client
-// is responsible for validating the input before passing it
-// as a parameter
-let toConstrainedList aList = notImplemented()
-
-// Exercise: define a new type for aConstrainedList
-//           so that "firstItem" always works
-let firstItem (aConstrainedList:ConstrainedList<'a>) =
-    notImplemented()
-
-
-// test
-let showConstrainedInputResult aList =
-    let constrainedListOpt = toConstrainedList aList
-    match constrainedListOpt with
-    | Some constrainedList ->
-        firstItem constrainedList
-        |> printfn "The first item is %A"
-    | None ->
-        printfn "Input is not valid"
-
-
 // test the function
-showConstrainedInputResult [1;2;3]  // good
-showConstrainedInputResult []       // bad
+ListUtil.ExceptionBasedDesign.firstItem [1;2;3]         // good
+ListUtil.ExceptionBasedDesign.firstItem (emptyList)     // exception :(
+
+ListUtil.ExtendedOutputDesign.firstItem [1;2;3]         // good
+ListUtil.ExtendedOutputDesign.firstItem (emptyList)     // no exception!
+
+
+// ========================
+// F# / C# list functions
+// ========================
+// F#           C#
+// List.map     LINQ.Select
+// List.filter  LINQ.Where
+//
+// more at https://gist.github.com/swlaschin/9b0f11a5fccc73a8c11f7f7551ef19a9

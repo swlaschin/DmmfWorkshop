@@ -439,9 +439,8 @@ module AsyncResult =
     //-----------------------------------
     // Utilities lifted from Async
 
-    let sleep ms =
+    let sleep (ms:int) =
         Async.Sleep ms |> ofAsync
-
 
 // ==================================
 // AsyncResult computation expression

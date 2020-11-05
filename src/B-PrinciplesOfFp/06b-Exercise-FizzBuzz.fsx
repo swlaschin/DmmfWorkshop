@@ -33,6 +33,20 @@ let simpleFizzBuzz n =
 [1..30] |> List.map simpleFizzBuzz
 
 (*
+F# TIPS:
+* There is no "return" - the last value in the function is a return
+* To check for divisibility use the helper function
+  "isDivisibleBy" defined above
+* To create a string from int use the "string" function
+  string 123
+* In F#, if/then/else expressions look like
+    if x then
+        y
+    else
+        z
+*)
+
+(*
 
 Exercise:
 
@@ -49,23 +63,11 @@ let fizzBuzz n =
 After getting this to work, see if you can define a
 single "handle" function that can be reused for 3, 5, and 15.
 
-
-
-F# TIPS:
-* There is no "return" - the last value in the function is a return
-* To check for divisibility use the helper function
-  "isDivisibleBy" defined above
-* To create a string from int use the "string" function
-  string 123
-* In F#, if/then/else expressions look like
-    if x then
-        y
-    else
-        z
-
 DESIGN HINT:
-You will probably need to define an intermediate data structure
-to pass data around.
+You will need to define an intermediate data structure
+to pass data around. You can use either a record or a choice type.
+
+/----- How to use a record type -----
 
 // define a record type
 type MyData = {something:string; somethingElse:int}
@@ -73,11 +75,26 @@ type MyData = {something:string; somethingElse:int}
 // to create a value
 let myData = {something="hello"; somethingElse=42}
 
-// to copy/update a value
-let myData2 = {myData with somethingElse=42}
-
 // to access a field in the record
 let something = myData.something
+
+/----- How to use a choice (union) type -----
+
+// define a choice type
+type MyData = 
+    | Something of string 
+    | SomethingElse of int
+
+// to create a value, use one of the cases as a constructor
+let myData = Something "hello"
+let myData2 = SomethingElse 42
+
+// to deconstruct data in the choice
+let result = 
+    match myData with
+    | Something str -> ...
+    | SomethingElse i -> ...
+
 *)
 
 

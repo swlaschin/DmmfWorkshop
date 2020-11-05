@@ -32,7 +32,8 @@
     <None Include="05f-Exercise-Decorator(answer).fsx" />
     <Content Include="06-Exercises.txt" />
     <None Include="06b-Exercise-FizzBuzz.fsx" />
-    <None Include="06c-Exercise-FizzBuzz%28answer%29.fsx" />
+    <None Include="06c-Exercise-FizzBuzz%28answer with record%29.fsx" />
+    <None Include="06d-Exercise-FizzBuzz%28answer with union%29.fsx" />
     <None Include="07a-FunctionsAsThings.fsx" />
     <Content Include="08-Exercises.txt" />
     <None Include="08a-Exercise-TextToTypes.fsx" />
