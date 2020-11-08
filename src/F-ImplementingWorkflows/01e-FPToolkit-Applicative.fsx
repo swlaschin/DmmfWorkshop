@@ -10,6 +10,9 @@
 // FP Toolkit: Applicative
 // ========================================
 
+let oneParamFn (x:int) = x + 1
+let twoParamFn (x:int) (y:int) = x + y
+let threeParamFn (x:int) (y:int) (z:int) = x + y + z
 
 // ===================================
 // Applicative for Option
@@ -17,33 +20,71 @@
 
 module Option =
 
+
+    // "lift" a 2-parameter function to Option world
     let lift2 f opt1 opt2 =
         match (opt1,opt2) with
         | Some x, Some y -> Some (f x y)
         | _ -> None
 
+    // "lift" a 3-parameter function to Option world
     let lift3 f opt1 opt2 opt3 =
         match (opt1,opt2,opt3) with
         | Some x, Some y, Some z -> Some (f x y z)
         | _ -> None
 
+    // A more generic approach!
+    // All we need to how to apply a wrapped function to a wrapped value
+    // Option<f> -> Option<x> -> Option<f(x)>
+    let ap optF optX =
+        match (optF, optX) with
+        | Some f, Some x -> Some (f x)
+        | _ -> None
+
+    // alternative implementation of lift2 using "ap" and "return"
+    let lift2_v2 f xOpt yOpt =
+        let retn = Some
+        ap (ap (retn f) xOpt) yOpt
+
+    // alternative implementation of lift3 using ap
+    let lift3_v2 f xOpt yOpt zOpt =
+        let retn = Some
+        ap (ap (ap (retn f) xOpt) yOpt) zOpt
+
 module OptionApplicativeExamples =
 
-    let add x y = x + y
-    let threeParams x y z = x + y + z
 
-    (Option.lift2 add) (Some 1) (Some 2)
-    (Option.lift2 add) (Some 1) None
-    (Option.lift2 add) None (Some 1)
+    // Error - function does not work in Option world
+    oneParamFn (Some 1)
+    // Ok
+    (Option.map oneParamFn) (Some 1)
 
-    (Option.lift3 threeParams) (Some 1) (Some 2) (Some 3)
-    (Option.lift3 threeParams) (Some 1) None (Some 3)
+    // Error - function does not work in Option world
+    twoParamFn (Some 1) (Some 2)
+    // Ok
+    (Option.lift2 twoParamFn) (Some 1) (Some 2)
+    (Option.lift2 twoParamFn) (Some 1) None
+    (Option.lift2 twoParamFn) None     (Some 2)
+
+    // Error - function does not work in Option world
+    threeParamFn (Some 1) (Some 2) (Some 3)
+    // Ok
+    (Option.lift3 threeParamFn) (Some 1) (Some 2) (Some 3)
+    (Option.lift3 threeParamFn) (Some 1) None     (Some 3)
+
 
 // ===================================
 // Applicative for Result
 // ===================================
 
 module Result =
+
+    let lift2 f r1 r2 =
+        match (r1,r2) with
+        | Ok x, Ok y -> Ok (f x y)
+        | Error e1, Ok _ -> Error e1
+        | Ok _, Error e2 -> Error e2
+        | Error e1, Error e2 -> Error (e1 @ e2)
 
     let lift2 f r1 r2 =
         match (r1,r2) with
@@ -63,18 +104,59 @@ module Result =
         | Error e1, Ok _, Error e3 -> Error (e1 @ e3)
         | Error e1, Error e2, Error e3 -> Error (e1 @ e2 @ e3)
 
+    // A more generic approach!
+    // All we need to how to apply a wrapped function to a wrapped value
+    // Result<f> -> Result<x> -> Result<f(x)>
+    let ap resF resX =
+        match (resF, resX) with
+        | Ok f, Ok x -> Ok (f x)
+        | _ -> None
+
+    // alternative implementation of lift2 using "ap" and "return"
+    let lift2_v2 f xRes yRes =
+        let retn = Ok
+        ap (ap (retn f) xRes) yRes
+
+    // alternative implementation of lift3 using ap
+    let lift3_v2 f xRes yRes zRes =
+        let retn = Ok
+        ap (ap (ap (retn f) xRes) yRes) zRes
 
 
 module ResultApplicativeExamples =
 
-    let add x y = x + y
-    let threeParams x y z = x + y + z
+    // Error - function does not work in Result world
+    oneParamFn (Ok 1)
+    // Ok
+    (Result.map oneParamFn) (Ok 1)  |> printfn "%A"
+    (Result.map oneParamFn) (Error "bad") |> printfn "%A"
 
-    (Result.lift2 add) (Ok 1) (Ok 2) |> printfn "%A"
-    (Result.lift2 add) (Error ["bad"]) (Ok 2) |> printfn "%A"
-    (Result.lift2 add) (Error ["bad"]) (Error ["oops"]) |> printfn "%A"
+    // Error - function does not work in Result world
+    twoParamFn (Ok 1) (Ok 2)
+    // Ok
+    (Result.lift2 twoParamFn) (Ok 1) (Ok 2) |> printfn "%A"
+    (Result.lift2 twoParamFn) (Ok 1) (Error ["oops"])     |> printfn "%A"
+    (Result.lift2 twoParamFn) (Error ["bad"]) (Error ["oops"]) |> printfn "%A"
 
-    (Result.lift3 threeParams) (Ok 1) (Ok 2) (Ok 4) |> printfn "%A"
+    // Error - function does not work in Result world
+    threeParamFn (Ok 1) (Ok 2) (Ok 3)
+    // Ok
+    (Result.lift3 threeParamFn) (Ok 1) (Ok 2) (Ok 3) |> printfn "%A"
+    (Result.lift3 threeParamFn) (Ok 1) (Error ["bad"]) (Ok 3)
+
+
+    /// Validation example
+    let nameOrError1 = Ok "Alice"
+    let nameOrError2  = Error ["name must not be blank"]
+    let emailOrError1 = Ok "a@example.com"
+    let emailOrError2 = Error ["bad email"]
+
+    type Contact = {name:string; email:string}
+    let makeContact name email = {name=name; email=email}
+
+    (Result.lift2 makeContact) nameOrError1 emailOrError1 |> printfn "%A"
+    (Result.lift2 makeContact) nameOrError1 emailOrError2 |> printfn "%A"
+    (Result.lift2 makeContact) nameOrError2 emailOrError2 |> printfn "%A"
 
 // ===================================
 // Applicative for List

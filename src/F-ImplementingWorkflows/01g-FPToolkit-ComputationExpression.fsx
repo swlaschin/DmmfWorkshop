@@ -23,13 +23,16 @@ module OptionComputationExpression =
         member this.Return(x) = Some x
         member this.Bind(x,f) = Option.bind f x
 
+    // Then, create an instance. Normally with the same name...
     let option = OptionBuilder()
+    // ... but any name can be used
+    let myCE = OptionBuilder()
 
 
     // Some Option-returning functions
-    let increment x = Some (x + 1)
-    let double x = Some (x * 2)
-    let square x = Some (x * x)
+    let increment (x:int) = Some (x + 1)  // int -> int option
+    let double x = Some (x * 2)           // int -> int option
+    let square x = Some (x * x)           // int -> int option
 
     // implement a pipeline using bind
     let pipelineWithBind x =
@@ -37,6 +40,7 @@ module OptionComputationExpression =
         |> increment
         |> Option.bind double
         |> Option.bind square
+
 
     // implement a pipeline using CE
     let pipelineWithCE x =
@@ -59,7 +63,7 @@ module OptionComputationExpression =
             let! y = increment x
             let! w = double 2
             let! z = square 3
-            return y + w + z
+            return y + w + z  // use all three of the results
         }
 
     addThreeThingsWithCE 1
@@ -162,8 +166,9 @@ module ListComputationExpression =
         list {
             let! y = increment x
             let! w = double 2
-            let! z = square 3
-            return y + w + z
+            let v = y + w
+            let! z = square v
+            return v + z
         }
 
 
@@ -193,10 +198,20 @@ module AsyncComputationExpression =
     // implement a pipeline using CE
     let pipelineWithCE x =
         async {
+            // await y = async increment x
             let! y = increment x
             let! w = double y
             let! z = square w
             return z
+        }
+
+    let pipelineWithCE2 x =
+        async {
+            let! y = increment x
+            let! w = double y
+            let v = y + w
+            let! z = square v
+            return v + z
         }
 
     // tests

@@ -8,13 +8,27 @@ An alias looks like
 
 An wrapper looks like
     type Age = Age of int
+which is the same as this
+    type Age = {Value:int}
 *)
+
 
 module AliasExample =
 
     // An alias:
     // * does not constrain the value.
     // * can be interchanged with any other value
+
+    // hard to understand :(
+    type Name = string * string
+
+    type FirstName = string  // alias
+    type LastName = string   // alias
+
+    // better to understand :(
+    type Name_v2 = FirstName * LastName
+
+module AliasExample2 =
 
     // define two aliases for int
     type Age = int
