@@ -53,21 +53,20 @@ module Option =
 
 module OptionApplicativeExamples =
 
-
     // Error - function does not work in Option world
-    oneParamFn (Some 1)
+    // oneParamFn (Some 1)
     // Ok
     (Option.map oneParamFn) (Some 1)
 
     // Error - function does not work in Option world
-    twoParamFn (Some 1) (Some 2)
+    // twoParamFn (Some 1) (Some 2)
     // Ok
     (Option.lift2 twoParamFn) (Some 1) (Some 2)
     (Option.lift2 twoParamFn) (Some 1) None
     (Option.lift2 twoParamFn) None     (Some 2)
 
     // Error - function does not work in Option world
-    threeParamFn (Some 1) (Some 2) (Some 3)
+    // threeParamFn (Some 1) (Some 2) (Some 3)
     // Ok
     (Option.lift3 threeParamFn) (Some 1) (Some 2) (Some 3)
     (Option.lift3 threeParamFn) (Some 1) None     (Some 3)
@@ -78,13 +77,6 @@ module OptionApplicativeExamples =
 // ===================================
 
 module Result =
-
-    let lift2 f r1 r2 =
-        match (r1,r2) with
-        | Ok x, Ok y -> Ok (f x y)
-        | Error e1, Ok _ -> Error e1
-        | Ok _, Error e2 -> Error e2
-        | Error e1, Error e2 -> Error (e1 @ e2)
 
     let lift2 f r1 r2 =
         match (r1,r2) with
@@ -110,7 +102,9 @@ module Result =
     let ap resF resX =
         match (resF, resX) with
         | Ok f, Ok x -> Ok (f x)
-        | _ -> None
+        | Error e1, Ok x -> Error e1
+        | Ok f, Error e2 -> Error e2
+        | Error e1, Error e2 -> Error (List.append e1 e2)
 
     // alternative implementation of lift2 using "ap" and "return"
     let lift2_v2 f xRes yRes =
@@ -126,34 +120,36 @@ module Result =
 module ResultApplicativeExamples =
 
     // Error - function does not work in Result world
-    oneParamFn (Ok 1)
+    // oneParamFn (Ok 1)
     // Ok
     (Result.map oneParamFn) (Ok 1)  |> printfn "%A"
     (Result.map oneParamFn) (Error "bad") |> printfn "%A"
 
     // Error - function does not work in Result world
-    twoParamFn (Ok 1) (Ok 2)
+    // twoParamFn (Ok 1) (Ok 2)
     // Ok
     (Result.lift2 twoParamFn) (Ok 1) (Ok 2) |> printfn "%A"
     (Result.lift2 twoParamFn) (Ok 1) (Error ["oops"])     |> printfn "%A"
     (Result.lift2 twoParamFn) (Error ["bad"]) (Error ["oops"]) |> printfn "%A"
 
     // Error - function does not work in Result world
-    threeParamFn (Ok 1) (Ok 2) (Ok 3)
+    // threeParamFn (Ok 1) (Ok 2) (Ok 3)
     // Ok
     (Result.lift3 threeParamFn) (Ok 1) (Ok 2) (Ok 3) |> printfn "%A"
     (Result.lift3 threeParamFn) (Ok 1) (Error ["bad"]) (Ok 3)
 
+module ValidationExample =
+    // domain type
+    type Contact = {name:string; email:string}
+    let makeContact name email = {name=name; email=email}
 
-    /// Validation example
+    // results from validation
     let nameOrError1 = Ok "Alice"
     let nameOrError2  = Error ["name must not be blank"]
     let emailOrError1 = Ok "a@example.com"
     let emailOrError2 = Error ["bad email"]
 
-    type Contact = {name:string; email:string}
-    let makeContact name email = {name=name; email=email}
-
+    // combine the results from validation
     (Result.lift2 makeContact) nameOrError1 emailOrError1 |> printfn "%A"
     (Result.lift2 makeContact) nameOrError1 emailOrError2 |> printfn "%A"
     (Result.lift2 makeContact) nameOrError2 emailOrError2 |> printfn "%A"

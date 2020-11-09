@@ -5,14 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="00-Exercises.txt" />
+    <None Include="00a-IO-AtEdges.fsx" />
+    <None Include="IoExample.fsx" />
+    <None Include="00b-Exercise-IO-AtEdges.fsx" />
+    <None Include="00c-Exercise-IO-AtEdges%28answers%29.fsx" />
     <Content Include="01-Exercises.txt" />
     <None Include="01a-FPToolkit-Monoid.fsx" />
     <None Include="01b-FPToolkit-Map.fsx" />
     <None Include="01c-FPToolkit-Bind.fsx" />
     <None Include="01d-FPToolkit-Kliesli.fsx" />
     <None Include="01e-FPToolkit-Applicative.fsx" />
-    <None Include="01f-FPToolkit-UsingTheToolkit.fsx" />
-    <None Include="01g-FPToolkit-ComputationExpression.fsx" />
+    <None Include="01f-FPToolkit-ComputationExpression.fsx" />
+    <None Include="ToolkitExampleDomain.fsx" />
+    <None Include="01g-Exercise-UsingTheToolkit.fsx" />
+    <None Include="01h-Exercise-UsingTheToolkit%28answers%29.fsx" />
     <Content Include="02-Exercises.txt" />
     <None Include="02a-ResultCE-Validation.fsx" />
     <None Include="02b-AsyncRopWithTicTacToe.fsx" />

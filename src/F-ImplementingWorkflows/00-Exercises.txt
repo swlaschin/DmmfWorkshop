@@ -1,0 +1,11 @@
+﻿// =================================
+// Exercise 0:
+// =================================
+
+Read through and understand all the examples from the slides
+* 00a-IO-AtEdges.fsx
+
+Do the exercises here:
+* 00b-Exercise-IO-AtEdges.fsx
+
+

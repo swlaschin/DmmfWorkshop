@@ -1,14 +1,16 @@
 ﻿// =================================
 // This file contains the code from the "FP Toolkit" slides
 //
-// Exercise:
-//    look at, execute, and understand all the code in this file
+// Exercise: Fix the compiler errors by using the toolkit
 // =================================
 
 open System
 
 // Load a file with library functions for Result
 #load "Result.fsx"
+#load "ToolkitExampleDomain.fsx"
+open ToolkitExampleDomain
+open ToolkitExampleDomain.Domain
 
 // ========================================
 // Combining all the tools
@@ -16,65 +18,6 @@ open System
 
 type Url = System.Uri
 type Json = string
-
-/// Define types and validation for this domain
-module Domain =
-
-    type Name = private Name of string
-    type EmailAddress = private EmailAddress of string
-    type Birthdate = private Birthdate of System.DateTime
-
-    type Customer = {
-        Name: Name
-        Email: EmailAddress
-        Birthdate : Birthdate
-    }
-
-    /// Errors just for Validation
-    type ValidationError =
-        | NameMustNotBeBlank
-        | NameMustNotBeLongerThan of int
-        | EmailMustNotBeBlank
-        | EmailMustHaveAtSign
-        | BirthdateMustBeInPast
-        | InvalidBirthdate
-
-    /// Errors for the workflow as a whole (not used in this example)
-    type WorkflowError =
-      // Validation now contains a LIST of errors
-      | ValidationErrors of ValidationError list
-      // other errors are singles
-      | DbError of string
-      | SmtpServerError of string
-
-    module Name =
-        let create s =
-            if String.IsNullOrEmpty(s) then
-                Error NameMustNotBeBlank
-            elif s.Length > 20 then
-                Error (NameMustNotBeLongerThan 20)
-            else
-                Ok (Name s)
-
-    module EmailAddress =
-        let create s =
-            if String.IsNullOrEmpty(s) then
-                Error EmailMustNotBeBlank
-            elif not (s.Contains("@")) then
-                Error EmailMustHaveAtSign
-            else
-                Ok (EmailAddress s)
-
-    module Birthdate =
-        let create (str:string) =
-            match DateTime.TryParse(str) with
-            | true,d ->
-                if d < DateTime.Now then
-                    Ok (Birthdate d)
-                else
-                    Error BirthdateMustBeInPast
-            | false,_ ->
-                Error InvalidBirthdate
 
 //===========================================
 // A DTO to validate
@@ -90,8 +33,6 @@ type CustomerDto = {
 //===========================================
 // Workflow steps to compose using the toolkit
 //===========================================
-
-open Domain
 
 // Download a URL into a JSON file
 type DownloadFile = Url -> Async<Result<Json,WorkflowError>>
@@ -109,7 +50,7 @@ type StoreCustomerInDb = Customer -> Async<Result<unit,WorkflowError>>
 // Download
 //===========================================
 
-// a dummy implementation of DownloadFile
+// A dummy implementation of DownloadFile
 let downloadFile : DownloadFile =
     fun url -> async {
         return (Ok "")
@@ -119,7 +60,7 @@ let downloadFile : DownloadFile =
 // Decode JSON to DTO
 //===========================================
 
-// a dummy implementation of DecodeCustomerDto
+// A dummy implementation of DecodeCustomerDto
 let decodeCustomerDto : DecodeCustomerDto =
     fun json ->
         Ok {Name=""; Email=""; Birthdate=""}
@@ -129,12 +70,12 @@ let decodeCustomerDto : DecodeCustomerDto =
 // CreateValidCustomer
 //===========================================
 
-// a correct implementation of CreateValidCustomer
+// An implementation of CreateValidCustomer
 let createValidCustomer : CreateValidCustomer =
     fun dto ->
 
         // a "constructor" function
-        let createCustomer name email bdate =
+        let createCustomer name email bdate :Domain.Customer =
            {Name= name; Email=email; Birthdate=bdate }
 
         // the validated components
@@ -151,9 +92,10 @@ let createValidCustomer : CreateValidCustomer =
             |> Domain.Birthdate.create
             |> Validation.ofResult
 
-        // use the "lift3" function (because there are three parameters)
+        // Exercise: create the customer by using the "createCustomer" function
+        // Tip: use the "lift3" function on createCustomer (because there are three parameters)
         let customerOrError =
-            (Validation.lift3 createCustomer) nameOrError emailOrError bdateOrError
+            createCustomer nameOrError emailOrError bdateOrError
 
         customerOrError
 
@@ -162,7 +104,7 @@ let createValidCustomer : CreateValidCustomer =
 // StoreCustomer
 //===========================================
 
-// a dummy implementation of StoreCustomer
+// A dummy implementation of StoreCustomer
 let storeCustomerInDb : StoreCustomerInDb =
     fun customer -> async {
         return Ok ()
@@ -172,17 +114,37 @@ let storeCustomerInDb : StoreCustomerInDb =
 // Workflow
 //===========================================
 
-let processCustomerDto jsonOrError =
-    let createValidCustomer' =
-        createValidCustomer >> Result.mapError WorkflowError.ValidationErrors
+/// Convert a jsonOrError into a customerOrError
+let processCustomerDto (jsonOrError:Result<Json,WorkflowError>) =
 
-    jsonOrError
-    |> Result.bind decodeCustomerDto
-    |> Result.bind createValidCustomer'
+    // (helper function for pipeline below)
+    // Create a valid customer from the DTO
+    // and then convert the list of validation errors
+    // into the "ValidationErrors" case WorkflowError
+    let createValidCustomer' customerDto =
+        customerDto
+        |> createValidCustomer
+        |> Result.mapError WorkflowError.ValidationErrors
 
+    // Exercise: Eliminate the compiler errors
+    // by using Result.map or Result.bind as needed
+    jsonOrError             // NOTE:this is two-track input
+    |> decodeCustomerDto    // Json -> DTO
+    |> createValidCustomer' // DTO -> Customer
+
+// type signature is:
+// val processCustomerDto : jsonOrError:Result<Json,WorkflowError> -> Result<Customer,WorkflowError>
+
+
+// Exercise: Eliminate the compiler errors
+// by using one of Async.map/Async.bind/AsyncResult.map/AsyncResult.bind
 let downloadAndStoreCustomer url =
     url
-    |> downloadFile
-    |> Async.map processCustomerDto
-    |> AsyncResult.bind storeCustomerInDb
+    |> downloadFile        // download -> Json
+    |> processCustomerDto  // Json -> Customer
+    |> storeCustomerInDb   // Customer -> database
+
+// type signature is:
+// val downloadAndStoreCustomer : url:Url -> AsyncResult<unit,WorkflowError>
+
 
