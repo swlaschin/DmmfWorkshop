@@ -13,8 +13,8 @@ Rule: "You can't pay for a cart twice"
 
 States are:
 * EmptyCartState
-* ActiveCartState
-* PaidCartState
+* ActiveCartState (with a list of items)
+* PaidCartState (with a list of items AND a payment amount)
 *)
 
 // -----------------------------------------------
@@ -35,17 +35,21 @@ module ShoppingCartDomain =
 module ShoppingCartApi =
     open ShoppingCartDomain
 
-    type CartContents = CartItem list  // placeholder for now
-
     // Create types to represent the data stored for each state
-    type ActiveCartData = CartContents
-    type PaidCartData = CartContents * Payment
+    type ActiveCartData =
+        ActiveCartData of CartItem list
+
+    type PaidCartData = {
+        Contents: CartItem list
+        Payment : Payment
+        }
 
     // Create a "state" type that represents the union of all the states
     type ShoppingCart =
         | EmptyCartState
         | ActiveCartState of ActiveCartData
         | PaidCartState of PaidCartData
+
 
     // Next, define the transitions using types but
     // don't worry about implementing them right now
@@ -62,6 +66,46 @@ module ShoppingCartApi =
     /// "removeFromActive" creates a new state from ActiveCartData after removing an CartItem
     type RemoveFromActive = ActiveCartData * CartItem -> ShoppingCart
 
+(*
+// A COMMON QUESTION: What's the difference between "tuple" form and "arrow" form?
+// Ask me!
+type AddToActive = (ActiveCartData * CartItem) -> ShoppingCart
+type AddToActive = ActiveCartData -> CartItem -> ShoppingCart
+*)
+
+(*
+Perhaps the three state design is not the best. What about a 2-state design
+and then treat the Paid state as something different?
+*)
+module AlternativeApi =
+    open ShoppingCartDomain
+
+    // Create types to represent the data stored for each state
+    type ActiveCartData =
+        ActiveCartData of CartItem list
+
+    type UnpaidCart =
+        | EmptyCartState
+        | ActiveCartState of ActiveCartData
+
+    // "PaidCard" can be renamed to "Order"
+    type Order = {
+        Contents: CartItem list
+        Payment : Payment
+        }
+
+    /// "initCart" creates a new cart given the first CartItem
+    type InitCart = CartItem -> UnpaidCart
+
+    /// "addToActive" creates a new state from ActiveCartData and a new CartItem
+    type AddToActive = ActiveCartData * CartItem -> UnpaidCart
+
+    /// "pay" creates a new Order from ActiveCartData and a Payment
+    type Pay = ActiveCartData  * Payment -> Order
+
+    /// "removeFromActive" creates a new state from ActiveCartData after removing an CartItem
+    type RemoveFromActive = ActiveCartData * CartItem -> UnpaidCart
+
 
 
 //-------------------------------
@@ -71,7 +115,7 @@ module ShoppingCartApi =
 (*
 These designs use the form:
 
-    Substate * ExtraInfo -> WholeState
+    Data for Substate * ExtraInfo -> WholeState
 e.g
     ActiveCartData * Payment -> ShoppingCart
     ActiveCartData * CartItem -> ShoppingCart
@@ -89,7 +133,8 @@ The answer is that the first style never has any
 unhandled cases -- it always succeeds.
 
 In the second style, we have unhandled cases to consider:
-E.g. "what is the cart is not in the ActiveCart state and we try to pay?"
+E.g. "what if the cart is not in the ActiveCart state and
+      we try to pay?"
 
 In the first case, the *client* makes these decisions.
 In the second case, the *server* makes these decisions.

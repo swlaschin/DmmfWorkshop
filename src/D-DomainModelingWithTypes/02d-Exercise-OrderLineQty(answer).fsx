@@ -91,24 +91,29 @@ decrement OrderLineQty.maxValue
 
 
 // =========================================
-// Adding boundaries
+// Adding defaults
 // =========================================
 
 // If you want to get rid of the optional value,
 // you can use Option.defaultValue to get
 // a default value in the None case
 
+// example
+(Some 42) |> Option.defaultValue 0    // 42
+None |> Option.defaultValue 0         // 0
+// Note that these always return an int instead of an option int
+
+// Example using the increment function above
+// These now return a normal OrderLineQty instead of an optional one.
 increment OrderLineQty.minValue
 |> Option.defaultValue OrderLineQty.maxValue
 
 increment OrderLineQty.maxValue
 |> Option.defaultValue OrderLineQty.maxValue
 
-decrement OrderLineQty.minValue
-|> Option.defaultValue OrderLineQty.minValue
-
-decrement OrderLineQty.maxValue
-|> Option.defaultValue OrderLineQty.minValue
+// =========================================
+// Exercise: Implement functions that dont return options
+// =========================================
 
 
 // Exercise: Write a function that adds one to an OrderLineQty
@@ -136,3 +141,4 @@ let decrement_v2 (olq:OrderLineQty) =
 // Note that it does NOT return an option now!
 // val decrement_v2 :
 //   olq:OrderLineQty -> OrderLineQty
+

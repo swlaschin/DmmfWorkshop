@@ -45,7 +45,7 @@ let add1Logged x =
 
 // alternative implementation using composition
 // instead of piping
-let add1Logged_v2 =  
+let add1Logged_v2 =
     // note that there is no "x" parameter
     logTheInput >> add1 >> logTheOutput
 
@@ -61,7 +61,7 @@ List.map add1Logged [1..10]      // do "add1Logged" for each element of a list
 let sayHello name = "hello" + name
 sayHello "alice"
 
-// Exercise: define the logged version of sayHello 
+// Exercise: define the logged version of sayHello
 let sayHelloLogged x =
     x |> logTheInput |> sayHello |> logTheOutput
     // Why does this code have a compiler error?

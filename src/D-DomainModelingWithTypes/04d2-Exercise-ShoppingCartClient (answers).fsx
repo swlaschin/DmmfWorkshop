@@ -20,6 +20,8 @@ States are:
 // Load the Domain and API (implemented in a separate file)
 // ================================================
 
+// "#load" keyword brings in an external file
+// The # is not a comment  :)
 #load "ShoppingCartApiImplementation.fsx"
 open ShoppingCartApiImplementation
 open ShoppingCartApiImplementation.ShoppingCartDomain
@@ -30,6 +32,14 @@ open ShoppingCartApiImplementation.ShoppingCartApi
 // ================================================
 module ShoppingCartClient =
 
+    (*
+    // reminder how to wrap and unwrap if you need to...
+    // to wrap
+    let activeCartData = (ActiveCartData items)
+    // to unwrap
+    let (ActiveCartData items) = activeCartData
+    *)
+
     // "clientAddItem" changes the cart state after adding an item
     // function signature should be
     //     CartItem -> ShoppingCart-> ShoppingCart
@@ -38,10 +48,10 @@ module ShoppingCartClient =
         | EmptyCartState ->
             printfn "Adding item %s to empty cart" newItem
             ShoppingCartApi.initCart newItem
-        | ActiveCartState data ->
+        | ActiveCartState activeCartData ->
             printfn "Adding item %s to active cart" newItem
-            ShoppingCartApi.addToActive (newItem,data)
-        | PaidCartState data ->
+            ShoppingCartApi.addToActive (newItem,activeCartData)
+        | PaidCartState paidCardData ->
             printfn "Can't modify paid cart"
             cart // return original cart
 
@@ -53,10 +63,10 @@ module ShoppingCartClient =
         | EmptyCartState ->
             printfn "Can't pay for empty cart"
             cart // return original cart
-        | ActiveCartState data ->
+        | ActiveCartState activeCartData ->
             printfn "Paying %g for active cart" payment
-            ShoppingCartApi.pay (payment,data)
-        | PaidCartState data ->
+            ShoppingCartApi.pay (payment,activeCartData)
+        | PaidCartState paidCardData ->
             printfn "Cart already paid for"
             cart // return original cart
 
@@ -71,7 +81,7 @@ module ShoppingCartClient =
         | ActiveCartState data ->
             printfn "Removing item %s from active cart" itemToRemove
             ShoppingCartApi.removeFromActive (itemToRemove,data)
-        | PaidCartState data ->
+        | PaidCartState paidCardData ->
             printfn "Can't remove item from paid cart"
             cart // return original cart
 

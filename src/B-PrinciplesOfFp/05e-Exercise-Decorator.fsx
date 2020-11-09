@@ -52,7 +52,7 @@ List.map add1Logged [1..10]      // do "add1Logged" for each element of a list
 let sayHello name = "hello" + name
 sayHello "alice"
 
-// Exercise: define the logged version of sayHello 
+// Exercise: define the logged version of sayHello
 let sayHelloLogged x =
     x |> logTheInput |> sayHello |> logTheOutput
 

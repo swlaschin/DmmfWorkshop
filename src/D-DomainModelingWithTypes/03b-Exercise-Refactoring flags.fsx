@@ -18,6 +18,9 @@ An ecommerce site has customers
 * if they have not registered, they just have a name
 The original design uses a flag to tell the two cases apart
 
+An illegal state is possible! The registered flag can be true
+but there is no ID assigned.
+
 Your task: redesign this type into two states:
 * RegisteredCustomer (with an id)
 * OR GuestCustomer (without an id)
@@ -33,7 +36,7 @@ module Customer_Before =
         {
         CustomerName: string
         // redesign to rid of this bool
-        IsGuest: bool
+        IsRegistered: bool
         // redesign to rid of this option
         RegistrationId: int option
         }
@@ -49,6 +52,11 @@ Exercise 3b
 An internet connection is either connected or disconnected.
 The original design uses a flag to tell the two cases apart
 
+Illegal states are possible!
+* The IsConnected can be true but ConnectionStartedUtc is not assigned.
+* The IsConnected can be false but ConnectionHandle is assigned.
+
+
 Your task: Redesign this type into two states: Connected and Disconnected
 Also, replace "int" and "string" with words from the domain
 
@@ -61,7 +69,7 @@ module Connection_Before =
        {
        IsConnected: bool
        ConnectionStartedUtc: System.DateTime option
-       ConnectionHandle: int
+       ConnectionHandle: int option
        ReasonForDisconnection: string
        }
 
@@ -75,6 +83,9 @@ module Connection_After =
 // Exercise 3c
 
 An Order is either Paid or Unpaid.
+If it is paid, the Amount and PaidDate are set.
+
+Question: What are the illegal states?
 
 Your task: redesign this type into two states.
 Can you guess what the states are from the flags?

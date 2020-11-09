@@ -88,13 +88,16 @@ type PlaceOrder =
 (*
 // Reminder of the definition of the record
 type PersonalName = {   // A record type used for modeling "AND" relations
-  FirstName: Text
-  LastName: Text
-}
+    FirstName: Text
+    LastName: Text
+    }
 *)
 
 // to create
-let name = {FirstName="a"; LastName="c"}
+let name = {
+    FirstName="Alice"
+    LastName="Smith"
+    }
 // to extract
 let first = name.FirstName
 

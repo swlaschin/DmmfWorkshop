@@ -93,7 +93,7 @@ module Example1 =
     let api input =
 
         // create a value from the input (eg JSON)
-        let str10option = String10.create input 
+        let str10option = String10.create input
 
         // If you try to call the workflow without checking if it is valid
         // you will get a compile-time error
@@ -110,18 +110,18 @@ module Example2 =
     let api input =
 
         // create a value from the input (eg JSON)
-        let str10option = String10.create input 
+        let str10option = String10.create input
 
         match str10option with
         | Some str10 ->
             // the input is valid, so call the workflow
-            let result = MyWorkflows.mainWorkflow str10 
+            let result = MyWorkflows.mainWorkflow str10
             match result with
             | true -> "200 OK"
             | false -> "500 ServerError"
         | None ->
             // the input is not valid, so return an error
-            "400 BadRequest"   
+            "400 BadRequest"
 
 
 // test

@@ -81,13 +81,16 @@ type PlaceOrder =
 (*
 // Reminder of the definition of the record
 type PersonalName = {   // A record type used for modeling "AND" relations
-  FirstName: Text
-  LastName: Text
-}
+    FirstName: Text
+    LastName: Text
+    }
 *)
 
 // to create
-let name = {FirstName="a"; LastName="c"}
+let name = {
+    FirstName="Alice"
+    LastName="Smith"
+    }
 // to extract
 let first = name.FirstName
 
@@ -113,6 +116,7 @@ let cardInfo = notImplemented()
 // To construct the Card case of PaymentMethod, use "Card" as a constructor,
 // with "cardInfo" as extra information
 let paymentMethod2 = Card cardInfo
+
 
 //TODO Write some code to make this compile
 let emailAddress = notImplemented()

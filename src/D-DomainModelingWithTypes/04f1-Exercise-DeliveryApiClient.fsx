@@ -24,10 +24,6 @@ open DeliveryApiImplementation
 open DeliveryApiImplementation.DeliveryDomain
 open DeliveryApiImplementation.DeliveryApi
 
-#load "DeliveryApiImplementation.fsx"
-open DeliveryApiImplementation
-open DeliveryApiImplementation.DeliveryDomain
-open DeliveryApiImplementation.DeliveryApi
 
 // ================================================
 // Now write some client code that uses this API

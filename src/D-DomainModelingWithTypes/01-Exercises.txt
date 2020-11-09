@@ -4,6 +4,7 @@
 
 Continue the type exercises from last time:
 * src/B-PrinciplesOfFp/08-Exercises.txt
+* start with 08d-Exercise-ImplementingTypes.fsx
 
 Finish converting the domain models from the first session to code:
 * See src/A-DDD/02-Exercise.txt

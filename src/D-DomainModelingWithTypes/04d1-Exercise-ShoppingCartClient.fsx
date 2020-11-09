@@ -20,6 +20,8 @@ States are:
 // Load the Domain and API (implemented in a separate file)
 // ================================================
 
+// "#load" keyword brings in an external file
+// The # is not a comment  :)
 #load "ShoppingCartApiImplementation.fsx"
 open ShoppingCartApiImplementation
 open ShoppingCartApiImplementation.ShoppingCartDomain
@@ -30,6 +32,14 @@ open ShoppingCartApiImplementation.ShoppingCartApi
 // ================================================
 module ShoppingCartClient =
 
+    (*
+    // reminder how to wrap and unwrap if you need to...
+    // to wrap
+    let activeCartData = (ActiveCartData items)
+    // to unwrap
+    let (ActiveCartData items) = activeCartData
+    *)
+
     // "clientAddItem" changes the cart state after adding an item
     // function signature should be
     //     CartItem -> ShoppingCart-> ShoppingCart
@@ -38,9 +48,9 @@ module ShoppingCartClient =
         | EmptyCartState ->
             printfn "Adding item %s to empty cart" newItem
             ShoppingCartApi.initCart newItem
-        | ActiveCartState data ->
+        | ActiveCartState activeCartData ->
             printfn "Adding item %s to active cart" newItem
-            ShoppingCartApi.addToActive (newItem,data)
+            ShoppingCartApi.addToActive (newItem,activeCartData)
         // | paid -> what here?
 
     // "clientPayForCart " changes the cart state after paying
@@ -63,7 +73,7 @@ module ShoppingCartClient =
         | EmptyCartState ->
             printfn "Can't remove item from empty cart"
             cart
-        //| ActiveCartState -> ??
+        //| ActiveCartState activeCartData -> ??
 
 
 // ================================================

@@ -49,6 +49,25 @@ module DomainTypes =
       Name: PersonalName
       Email: EmailContactInfo }
 
+
+    // An alternative design is to move the "unverified"
+    // to the Contact, shown below.
+    //
+    // It's logically equivalent, but can be used differently
+    module AlternativeDesign =
+        type UnverifiedContact = {
+          Name: PersonalName
+          Email: EmailAddress }
+
+        type VerifiedContact = {
+          Name: PersonalName
+          Email: VerifiedEmail }
+
+        // Then you might have a function that takes an UnverifiedContact
+        // and turns it into a VerifiedContact.
+        // QUESTION: Is this signature correct?
+        type ValidateInput = UnverifiedContact -> VerifiedContact
+
 // ================================================
 // (from slides) The new domain with address info added as well
 // ================================================
