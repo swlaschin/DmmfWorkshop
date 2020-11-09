@@ -35,7 +35,7 @@ let testK x =
 let testL (f:int -> string) x =
     f x
 
-let testM f (x:int) :string = 
+let testM f (x:int) :string =
     f x
 
 let testN x :string = x 1   // hint: what does :string modify?

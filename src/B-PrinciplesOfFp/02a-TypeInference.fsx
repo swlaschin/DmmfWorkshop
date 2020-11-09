@@ -137,7 +137,7 @@ val returnSameThing : x:'a -> 'a
 (*
 // NOTE in C# this would be written as...
 T returnSameThing<T>(T x) {
-  return X
+  return x;
   }
 *)
 

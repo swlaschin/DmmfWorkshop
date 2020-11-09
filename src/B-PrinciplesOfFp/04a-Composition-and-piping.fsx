@@ -70,7 +70,7 @@ add1_double 5
 let add1_double_square = add1 >> double >> square
 
 // call this new function
-add1_double_square 5
+add1_double_square 5    // 144
 
 
 // ================================================
