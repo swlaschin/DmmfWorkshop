@@ -6,8 +6,14 @@
 
   <ItemGroup>
     <Content Include="00-Overview-of-part-C.txt" />
-    <None Include="01a-GuessingGame-Imperative.fsx" />
-    <None Include="01b-GuessingGame-Functional.fsx" />
+    <Content Include="01-Exercises.txt" />
+    <None Include="01a-IO-AtEdges.fsx" />
+    <None Include="IoExample.fsx" />
+    <None Include="01b-Exercise-IO-AtEdges.fsx" />
+    <None Include="01c-Exercise-IO-AtEdges%28answers%29.fsx" />
+    <Content Include="02-Exercises.txt" />
+    <None Include="02a-GuessingGame-Imperative.fsx" />
+    <None Include="02b-GuessingGame-Functional.fsx" />
   </ItemGroup>
 
 

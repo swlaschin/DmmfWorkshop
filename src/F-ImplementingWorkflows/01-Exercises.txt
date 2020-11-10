@@ -2,12 +2,12 @@
 // Exercise 1:
 // =================================
 
-Read through and understand all the examples from the slides
+Exercise:
+* 01g-Exercise-UsingTheToolkit.fsx
+
+Optionally, read through and understand all the examples from the slides
 * 01b-FPToolkit-Map.fsx
 * 01c-FPToolkit-Bind.fsx
 * 01e-FPToolkit-Applicative.fsx
+* You can skip the other ones
 
-You can skip the other ones
-
-Exercise:
-* 01g-Exercise-UsingTheToolkit.fsx

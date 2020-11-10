@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="00-Exercises.txt" />
-    <None Include="00a-IO-AtEdges.fsx" />
-    <None Include="IoExample.fsx" />
-    <None Include="00b-Exercise-IO-AtEdges.fsx" />
-    <None Include="00c-Exercise-IO-AtEdges%28answers%29.fsx" />
     <Content Include="01-Exercises.txt" />
     <None Include="01a-FPToolkit-Monoid.fsx" />
     <None Include="01b-FPToolkit-Map.fsx" />

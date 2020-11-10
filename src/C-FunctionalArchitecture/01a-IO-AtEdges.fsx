@@ -17,7 +17,7 @@ Print whether the first is bigger, smaller, or equal to the second
 
 module Example1_Impure =
 
-    let compare_two_numbers() =
+    let compare_two_strings() =
         printfn "Enter the first value"
         let str1 = System.Console.ReadLine()
         printfn "Enter the second value"
@@ -32,7 +32,7 @@ module Example1_Impure =
 
 // impure test
 (*
-Example1_Impure.compare_two_numbers()
+Example1_Impure.compare_two_strings()
 *)
 
 // -------------------------
@@ -45,7 +45,7 @@ module Example1_Pure_Core =
         | Smaller
         | Equal
 
-    let compare_two_numbers str1 str2 =
+    let compare_two_strings str1 str2 =
         if str1 > str2 then
             Bigger
         else if str1 < str2 then
@@ -54,8 +54,8 @@ module Example1_Pure_Core =
             Equal
 
 // It's easy to unit test a pure function
-Example1_Pure_Core.compare_two_numbers "a" "b"
-Example1_Pure_Core.compare_two_numbers "a" "a"
+Example1_Pure_Core.compare_two_strings "a" "b"
+Example1_Pure_Core.compare_two_strings "a" "a"
 
 
 // The shell layer handles the I/O
@@ -63,7 +63,7 @@ Example1_Pure_Core.compare_two_numbers "a" "a"
 module Example1_Pure_Shell =
     open Example1_Pure_Core
 
-    let compare_two_numbers() =
+    let compare_two_strings() =
         // impure section
         printfn "Enter the first value"
         let str1 = System.Console.ReadLine()
@@ -71,7 +71,7 @@ module Example1_Pure_Shell =
         let str2 = System.Console.ReadLine()
 
         // pure section
-        let result = Example1_Pure_Core.compare_two_numbers str1 str2
+        let result = Example1_Pure_Core.compare_two_strings str1 str2
 
         // impure section
         match result with
@@ -84,7 +84,7 @@ module Example1_Pure_Shell =
 
 // impure test
 (*
-Example1_Pure_Shell.compare_two_numbers()
+Example1_Pure_Shell.compare_two_strings()
 *)
 
 (*
