@@ -28,9 +28,11 @@ List.map add1 [1..10]      // do "add1" for each element of a list
 // Exercise: define the logging functions here
 // ===========================================
 
-let logTheInput x = ??  // use printfn
+
+let logTheInput x = ??  // use printfn with %i, %s, or %A?
 
 let logTheOutput x = ??  // use printfn
+
 
 
 // ===========================================

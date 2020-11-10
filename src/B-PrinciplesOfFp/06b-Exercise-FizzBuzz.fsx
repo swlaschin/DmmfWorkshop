@@ -81,8 +81,8 @@ let something = myData.something
 /----- How to use a choice (union) type -----
 
 // define a choice type
-type MyData = 
-    | Something of string 
+type MyData =
+    | Something of string
     | SomethingElse of int
 
 // to create a value, use one of the cases as a constructor
@@ -90,12 +90,25 @@ let myData = Something "hello"
 let myData2 = SomethingElse 42
 
 // to deconstruct data in the choice
-let result = 
+let result =
     match myData with
     | Something str -> ...
     | SomethingElse i -> ...
 
 *)
+
+
+let handle15Case myData =
+    // 1. Has myData been handled already? If true:
+    //    return myData unchanged
+    // 2. Is myData divisible by 15? If false:
+    //    return myData unchanged
+    // 3. Change myData to include "FizzBuzz"
+    ??
+
+    // After getting this to work, see if you can refactor to it into a
+    // single "handle" function that can be reused for 3, 5, and 15.
+
 
 
 // fizzBuzz takes an int and returns a string
@@ -104,6 +117,13 @@ let fizzBuzz (n:int) :string =
     // then handle 3 with "Fizz"
     // then handle 5 with "Buzz"
     // then handle what's left
+
+    let myData = ??
+    myData
+    |> handle15case
+    |> handle3case
+    |> handle5case
+    |> finalStep
 
 // test it on the numbers up to 30
 [1..30] |> List.map fizzBuzz

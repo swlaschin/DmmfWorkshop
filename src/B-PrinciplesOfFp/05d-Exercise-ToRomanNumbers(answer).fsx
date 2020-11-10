@@ -68,7 +68,7 @@ toRomanNumerals 1947
 // Inline version
 let toRomanNumerals_v2 number =
     String.replicate number "I"
-    |> replace "IIIII" "V"
+    |> replace "IIIII" "V"  // partial application
     |> replace "VV" "X"
     |> replace "XXXXX" "L"
     |> replace "LL" "C"
