@@ -106,16 +106,26 @@ module Result =
         | Ok f, Error e2 -> Error e2
         | Error e1, Error e2 -> Error (List.append e1 e2)
 
-    // alternative implementation of lift2 using "ap" and "return"
+    // alternative implementation of lift2/3 using "ap" and "return"
     let lift2_v2 f xRes yRes =
         let retn = Ok
         ap (ap (retn f) xRes) yRes
 
-    // alternative implementation of lift3 using ap
     let lift3_v2 f xRes yRes zRes =
         let retn = Ok
         ap (ap (ap (retn f) xRes) yRes) zRes
 
+    // alternative implementation of lift2/3 using <!> and <*>
+    let lift2_v3 f xRes yRes =
+        let (<!>) = Result.map
+        let (<*>) = ap
+        f <!> xRes <*> yRes
+
+    let lift3_v3 f xRes yRes zRes =
+        let (<!>) = Result.map
+        let (<*>) = ap
+        // f xRes yRes zRes
+        f <!> xRes <*> yRes <*> zRes
 
 module ResultApplicativeExamples =
 

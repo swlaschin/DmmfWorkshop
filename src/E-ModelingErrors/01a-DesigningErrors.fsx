@@ -33,7 +33,7 @@ module ResultWithOption =
 // test
 ResultWithOption.validateInput {Name="Scott"; Email="scott@example.com"}
 ResultWithOption.validateInput {Name=""; Email="scott@example.com"}
-ResultWithOption.validateInput {Name="Scott"; Email=""}
+ResultWithOption.validateInput {Name="Scott"; Email=""}  // None
 
 //--------------------------------------------------
 // Using a Result with a string to indicate an error.
@@ -57,7 +57,9 @@ module ResultWithString =
 // test
 ResultWithString.validateInput {Name="Scott"; Email="scott@example.com"}
 ResultWithString.validateInput {Name=""; Email="scott@example.com"}
+
 ResultWithString.validateInput {Name="Scott"; Email=""}
+   // Error "Email must not be blank"
 
 
 //--------------------------------------------------
@@ -71,6 +73,13 @@ module ResultWithErrorType =
     type ValidationError =
         | NameMustNotBeBlank
         | EmailMustNotBeBlank
+
+    type DbError =
+        | UserNotFound
+
+    type WorkflowError =
+        | Validation of ValidationError
+        | Db of DbError
 
     let validateInput input =
        if input.Name = "" then
@@ -86,4 +95,6 @@ module ResultWithErrorType =
 // test
 ResultWithErrorType.validateInput {Name="Scott"; Email="scott@example.com"}
 ResultWithErrorType.validateInput {Name=""; Email="scott@example.com"}
+
 ResultWithErrorType.validateInput {Name="Scott"; Email=""}
+// Error EmailMustNotBeBlank
