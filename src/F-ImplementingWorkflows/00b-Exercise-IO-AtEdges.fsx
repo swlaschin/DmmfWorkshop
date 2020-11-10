@@ -44,14 +44,18 @@ module PureImplementation =
 
     // Exercise: Reimplement the code above to move all IO to the edges
 
+    // TIP: define a structure to represent the three results:
+    //  1. no change
+    //  2. update customer
+    //  3. update customer and also send email
     type WorkflowResult =
         | NoChange
-        | CustomerUpdated of Domain.Customer * EmailServer.EmailMessage option
+        | ??
 
     // Pure business logic -- decisions only -- no I/O
     let updateCustomer (newCustomer:Domain.Customer) (existingCustomer:Domain.Customer) : WorkflowResult =
-        // decide whether a verification email should be sent
-        // decide whether the database should be updated
+        // 1. decide whether a verification email should be sent
+        // 2. decide whether the database should be updated
 
         // Exercise -- implement this logic without any IO
         ???
@@ -72,5 +76,5 @@ module PureImplementation_Shell =
         match result with
         | NoChange ->
             ()  // do nothing
-
-        // Exercise -- implement the remaining IO
+        | ?? ->
+           // Exercise -- implement the remaining IO

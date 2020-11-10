@@ -44,14 +44,20 @@ module PureImplementation =
 
     // Exercise: Reimplement the code above to move all IO to the edges
 
+    // TIP: define a structure to represent the three results:
+    //  1. no change
+    //  2. update customer
+    //  3. update customer and also send email
     type WorkflowResult =
         | NoChange
         | CustomerUpdated of Domain.Customer * EmailServer.EmailMessage option
+        // NOTE I used an option here for the email,
+        // but I could defined a three-choice type instead
 
     // Pure business logic -- decisions only -- no I/O
     let updateCustomer (newCustomer:Domain.Customer) (existingCustomer:Domain.Customer) :WorkflowResult =
 
-        // decide whether a verification email should be sent
+        // 1. decide whether a verification email should be sent
         let emailMessageOption =
             if (existingCustomer.EmailAddress <> newCustomer.EmailAddress) then
                 let emailMessage : EmailServer.EmailMessage = {
@@ -62,7 +68,7 @@ module PureImplementation =
             else
                 None
 
-        // decide whether the database should be updated
+        // 2. decide whether the database should be updated
         if (existingCustomer.Name <> newCustomer.Name) ||
            (existingCustomer.EmailAddress <> newCustomer.EmailAddress) then
             // signal that the customer should be updated
