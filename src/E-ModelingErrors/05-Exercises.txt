@@ -2,11 +2,12 @@
 // Exercise 5:
 // =================================
 
-Read through and understand the example
-* 05a-Validation.fsx
-
 Do the exercises here:
-* 05b-Exercise-DtoValidation.fsx
+* 05b-Exercise-ValidationWithLift.fsx
+* 05d-Exercise-DtoValidation.fsx
+
+Complete example, with JSON deserialization
+* 05f-DtoValidationWithJson.fsx
 
 For a real-world, complex example, see:
 * 05c-NewsDomainDtoExample.fsx
