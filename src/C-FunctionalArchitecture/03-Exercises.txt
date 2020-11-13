@@ -1,11 +1,10 @@
 ﻿// =================================
-// Exercise 1:
+// Exercise 2:
 // =================================
 
-Do the exercises here:
-* 01a-Exercise-DtoValidation.fsx
-
 Read through and understand all the code
-* 01c-WorkflowWithJson.fsx
+* 03a-GuessingGame-Imperative.fsx
+* 03b-GuessingGame-Functional.fsx
+
 
 

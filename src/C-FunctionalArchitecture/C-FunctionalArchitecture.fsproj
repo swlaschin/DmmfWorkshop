@@ -7,13 +7,19 @@
   <ItemGroup>
     <Content Include="00-Overview-of-part-C.txt" />
     <Content Include="01-Exercises.txt" />
-    <None Include="01a-IO-AtEdges.fsx" />
-    <None Include="IoExample.fsx" />
-    <None Include="01b-Exercise-IO-AtEdges.fsx" />
-    <None Include="01c-Exercise-IO-AtEdges%28answers%29.fsx" />
+    <None Include="PersonDomain.fsx" />
+    <None Include="01a-Exercise-DtoValidation.fsx" />
+    <None Include="01b-Exercise-DtoValidation%28answers%29.fsx" />
+    <None Include="01c-WorkflowWithJson.fsx" />
     <Content Include="02-Exercises.txt" />
-    <None Include="02a-GuessingGame-Imperative.fsx" />
-    <None Include="02b-GuessingGame-Functional.fsx" />
+    <None Include="02a-IO-AtEdges.fsx" />
+    <None Include="IoExample.fsx" />
+    <None Include="02b-Exercise-IO-AtEdges.fsx" />
+    <None Include="02c-Exercise-IO-AtEdges%28answers%29.fsx" />
+    <Content Include="03-Exercises.txt" />
+    <None Include="03a-GuessingGame-Imperative.fsx" />
+    <None Include="03b-GuessingGame-Functional.fsx" />
+    <None Include="Result.fsx" />
   </ItemGroup>
 
 

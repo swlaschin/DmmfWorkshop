@@ -2,9 +2,10 @@
 // Exercise 2:
 // =================================
 
-Read through and understand all the code
-* 02a-GuessingGame-Imperative.fsx
-* 02b-GuessingGame-Functional.fsx
+Read through and understand all the examples from the slides
+* 02a-IO-AtEdges.fsx
 
+Do the exercises here:
+* 02b-Exercise-IO-AtEdges.fsx
 
 
