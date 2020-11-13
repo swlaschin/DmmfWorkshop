@@ -2,6 +2,9 @@
 // Exercise 5:
 // =================================
 
+Read through this example:
+* 05a-ValidationWithLift.fsx
+
 Do the exercises here:
 * 05b-Exercise-ValidationWithLift.fsx
 * 05d-Exercise-DtoValidation.fsx

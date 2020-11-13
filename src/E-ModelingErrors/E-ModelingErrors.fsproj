@@ -26,6 +26,7 @@
     <None Include="04b-Exercise-MapError.fsx" />
     <None Include="04c-Exercise-MapError%28answers%29.fsx" />
     <Content Include="05-Exercises.txt" />
+    <None Include="05a-ValidationWithLift.fsx" />
     <None Include="05b-Exercise-ValidationWithLift.fsx" />
     <None Include="05c-Exercise-ValidationWithLift%28answers%29.fsx" />
     <None Include="05d-Exercise-DtoValidation.fsx" />
