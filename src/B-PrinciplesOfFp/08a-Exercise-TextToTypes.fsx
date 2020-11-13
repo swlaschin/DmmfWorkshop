@@ -40,6 +40,22 @@ type ContactInfo = Name * Address
 type ContactInfo = Name * Address * Email
 
 
+(*
+// Question: When to use tuples vs records?
+
+// 1) a tuple has no named fields so you must construct and deconstruct explicitly
+let info = name,address  // construct
+let name,address = info  // deconstruct
+
+// 2) a record has named fields so it is better when the types aren't self-documenting
+type PersonalName = string * string                // unclear
+type PersonalName = {first:string; last:string}    // better
+
+// 3) Use records if the data *always* belongs together. Tuples are more casual.
+// As always: it depends!
+*)
+
+
 // --------------------
 // Use Choices for OR
 // --------------------

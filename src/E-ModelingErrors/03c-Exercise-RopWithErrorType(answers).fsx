@@ -101,12 +101,12 @@ let goodRequest = {
 }
 goodRequest |> validateRequest
 
-let badRequest1 = {
+let badRequest = {
   UserId=0
   Name= ""
   Email="abc@example.com"
 }
-badRequest1 |> validateRequest
+badRequest |> validateRequest
 
 let unsendableRequest = {
   UserId=0
@@ -151,7 +151,7 @@ let updateDbR twoTrackInput =
 // test the "updateDbR" step interactively
 // before implementing the next step
 
-goodRequest
+goodRequest    // also try badRequest and unsendableRequest here
 |> validateRequest
 |> canonicalizeEmailR
 |> updateDbR
@@ -187,7 +187,7 @@ unsendableRequest
 |> validateRequest
 |> canonicalizeEmailR
 |> updateDbR
-|> sendEmailR
+|> sendEmailR           // unsendableRequest fails here
 
 //===========================================
 // Step 5 of the pipeline: Log the errors
@@ -199,13 +199,13 @@ let loggerR twoTrackInput =
         printfn "LOG INFO Name=%s EMail=%s" req.Name req.Email
     | Error err ->
         printfn "LOG ERROR %A" err
-    twoTrackInput
+    twoTrackInput   // return same input for use in the next step of the pipeline
 
 // -------------------------------
 // test the "loggerR" step interactively
 // before implementing the next step
 
-goodRequest
+goodRequest     // also try badRequest and unsendableRequest here
 |> validateRequest
 |> canonicalizeEmailR
 |> updateDbR
@@ -281,11 +281,11 @@ let updateCustomerR request =
 
 
 // -------------------------------
-// test the entire pipeline
+// test the entire pipeline with different inputs
 
 goodRequest |> updateCustomerR
 
-badRequest1 |> updateCustomerR
+badRequest |> updateCustomerR
 
 unsendableRequest |> updateCustomerR
 

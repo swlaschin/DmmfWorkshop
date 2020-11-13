@@ -57,7 +57,7 @@ module ResultWithString =
 // test
 ResultWithString.validateInput {Name="Scott"; Email="scott@example.com"}
 ResultWithString.validateInput {Name=""; Email="scott@example.com"}
-
+   // Error "Name must not be blank"
 ResultWithString.validateInput {Name="Scott"; Email=""}
    // Error "Email must not be blank"
 
@@ -73,13 +73,6 @@ module ResultWithErrorType =
     type ValidationError =
         | NameMustNotBeBlank
         | EmailMustNotBeBlank
-
-    type DbError =
-        | UserNotFound
-
-    type WorkflowError =
-        | Validation of ValidationError
-        | Db of DbError
 
     let validateInput input =
        if input.Name = "" then
@@ -98,3 +91,30 @@ ResultWithErrorType.validateInput {Name=""; Email="scott@example.com"}
 
 ResultWithErrorType.validateInput {Name="Scott"; Email=""}
 // Error EmailMustNotBeBlank
+
+//========================================================
+// Question: How can you keep the errors for each subsystem separate?
+//========================================================
+
+module CompoundErrors =
+
+    // errors for validation subsystem
+    type ValidationError =
+        | NameMustNotBeBlank
+        | EmailMustNotBeBlank
+
+    // errors for DB subsystem
+    type DbError =
+        | UserNotFound
+        | DuplicateKey
+        | AuthenticationError
+
+    // This type combines all the errors for all subsystems
+    type WorkflowError =
+        | Validation of ValidationError
+        | Db of DbError
+
+    // An alternative is to "collapse" the subsystem errors to something simpler
+    type WorkflowError_v2 =
+        | Validation of ValidationError
+        | SystemError of string // convert detailed error to a simpler one

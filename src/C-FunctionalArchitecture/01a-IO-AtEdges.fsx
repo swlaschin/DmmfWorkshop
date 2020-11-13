@@ -168,7 +168,9 @@ let state3 = Example2_Pure_Core.processOneString state2 ""
 let prompt =
     let enum = (seq {"a"; "b"; ""}).GetEnumerator()
     fun () ->
+        // each time it is called, move to the next element...
         enum.MoveNext() |> ignore
+        // .. and return it
         enum.Current
 
 Example2_Pure_Core.buildListOfStrings prompt

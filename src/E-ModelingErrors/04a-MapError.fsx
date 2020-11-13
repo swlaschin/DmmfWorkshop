@@ -56,9 +56,12 @@ let functionAThenB apple =
 // 1. define a common type with both errors
 
 type FruitError =
-| AppleErrorCase of AppleError
-| BananaErrorCase of BananaError
+    | AppleErrorCase of AppleError
+    | BananaErrorCase of BananaError
 
+type FoodError =
+    | FruitErrorCase of FruitError
+    | MeatErrorCase
 
 // ----------------------------------
 // 2. redefine the functions to use the common error type
@@ -67,16 +70,23 @@ type FruitError =
 // often to indicate a variant/modification of the original
 
 let functionA' apple =   // "functionA'" means a modification of "functionA"
+
+    // define the converter function to be used with mapError
+    let transformError appleError =  // wraps the AppleError in a FruitError
+        AppleErrorCase appleError
+
     apple
     |> functionA
-    |> Result.mapError AppleErrorCase
+    |> Result.mapError transformError
+
+    // alternative inline version
+    // |> Result.mapError (fun appleError -> AppleErrorCase appleError)
 
 let functionB' banana =
     banana
     |> functionB
-    |> Result.mapError BananaErrorCase
-    // same as
-    // functionB >> Result.mapError BananaErrorCase
+    |> Result.mapError BananaErrorCase  // short version.
+                                        // The case tag can be used as a mapper function directly!
 
 // ----------------------------------
 // 3. now they can be chained
