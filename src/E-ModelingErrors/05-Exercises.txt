@@ -7,10 +7,6 @@ Read through this example:
 
 Do the exercises here:
 * 05b-Exercise-ValidationWithLift.fsx
-* 05d-Exercise-DtoValidation.fsx
-
-Complete example, with JSON deserialization
-* 05f-DtoValidationWithJson.fsx
 
 For a real-world, complex example, see:
 * 05c-NewsDomainDtoExample.fsx

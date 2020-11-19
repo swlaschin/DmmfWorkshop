@@ -11,7 +11,7 @@
 ========================================
 Example 1
 ========================================
-Read two strings and compare them.
+Read two strings from input and compare them.
 Print whether the first is bigger, smaller, or equal to the second
 *)
 

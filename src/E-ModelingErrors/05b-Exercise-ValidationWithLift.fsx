@@ -77,29 +77,29 @@ module Domain =
 open Domain
 
 /// Create a constructor for PersonalName
-let createName first last :PersonalName =
+let createName (first:String10) (last:String10) :PersonalName =
     {First=first; Last=last}
 
 
-let goodName = 
-    let firstOrError = 
-        String10.create "firstName" "123456789" // less than 10 -- good!
+let goodName =
+    let firstOrError =
+        String10.create "firstName" "Albert" // less than 10 -- good!
         |> Validation.ofResult
-    let lastOrError = 
-        String10.create "lastName"  "123456789" // less than 10 -- good!
+    let lastOrError =
+        String10.create "lastName"  "Smith"  // less than 10 -- good!
         |> Validation.ofResult
-    // Exercise: fix the compiler error by using Validation.lift2 
+    // Exercise: fix the compiler error by using Validation.lift2
     createName firstOrError lastOrError
 
 
-let badName = 
-    let firstOrError = 
-        String10.create "FirstName" "12345678901" // more than 10 -- bad!
+let badName =
+    let firstOrError =
+        String10.create "FirstName" "Jean-Claude" // more than 10 -- bad!
         |> Validation.ofResult
-    let lastOrError = 
-        String10.create "LastName"  "12345678901" // more than 10 -- bad!
+    let lastOrError =
+        String10.create "LastName"  ""            // empty -- bad
         |> Validation.ofResult
-    // Exercise: fix the compiler error by using Validation.lift2 
+    // Exercise: fix the compiler error by using Validation.lift2
     createName firstOrError lastOrError
 
 
@@ -111,46 +111,46 @@ let badName =
 let createPerson name age email :Person =
     {Name=name; Age=age; Email=email}
 
-let goodPerson = 
-    let nameOrError = 
-        let firstOrError = 
-            String10.create "firstName" "123456789" 
+let goodPerson =
+    let nameOrError =
+        let firstOrError =
+            String10.create "firstName" "123456789"
             |> Validation.ofResult
-        let lastOrError = 
-            String10.create "lastName"  "123456789" 
+        let lastOrError =
+            String10.create "lastName"  "123456789"
             |> Validation.ofResult
-        // Exercise: fix the compiler error by using Validation.lift2 
+        // Exercise: fix the compiler error by using Validation.lift2
         createName firstOrError lastOrError
 
-    let ageOrError = 
+    let ageOrError =
         Age.create 42
         |> Validation.ofResult
-    let emailOrError = 
+    let emailOrError =
         Email.create "test@example.com"
         |> Validation.ofResult
 
-    // Exercise: fix the compiler error by using Validation.lift3 
+    // Exercise: fix the compiler error by using Validation.lift3
     createPerson nameOrError ageOrError emailOrError
 
 
 
-let badPerson = 
-    let nameOrError = 
+let badPerson =
+    let nameOrError =
         // Exercise: fix all the compiler errors
-        let firstOrError = 
-            String10.create "firstName" "12345678901" 
-        let lastOrError = 
-            String10.create "lastName"  "12345678901" 
+        let firstOrError =
+            String10.create "firstName" "12345678901"
+        let lastOrError =
+            String10.create "lastName"  "12345678901"
         createName firstOrError lastOrError
 
-    let ageOrError = 
+    let ageOrError =
         Age.create 999
         |> Validation.ofResult
-    let emailOrError = 
+    let emailOrError =
         Email.create "example.com"
         |> Validation.ofResult
 
-    // Exercise: fix the compiler error by using Validation.lift3 
+    // Exercise: fix the compiler error by using Validation.lift3
     createPerson nameOrError ageOrError emailOrError
 
 

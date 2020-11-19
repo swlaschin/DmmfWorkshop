@@ -239,9 +239,9 @@ module EmailServiceApi =
     // helper function to convert Error type into a HTTP Response code
     let returnHttpResponse (result:Result<_,WorkflowError>) =
         // helper functions -- a real library would have these built in
-        let makeHttpOk s = "200 " + s
-        let makeHttpBadRequest s = "400 " + s
-        let makeHttpServerError s = "500 " + s
+        let makeHttpOk s = "200 OK\n\n" + s
+        let makeHttpBadRequest s = "400 Bad Request\n\n" + s
+        let makeHttpServerError s = "500 Internal Server Error\n\n" + s
 
         match result with
         // if the validation was OK, return OK

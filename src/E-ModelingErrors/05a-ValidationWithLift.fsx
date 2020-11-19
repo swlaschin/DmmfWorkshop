@@ -41,28 +41,40 @@ module Domain =
 open Domain
 
 /// Create a constructor for PersonalName
-let createName first last :PersonalName =
+let createName (first:String10) (last:String10) :PersonalName =
     {First=first; Last=last}
 
 
 let goodName =
+    // input from user
+    let strFirst = "Albert" // less than 10 -- good!
+    let strLast = "Smith"   // less than 10 -- good!
+
     let firstOrError =
-        String10.create "firstName" "123456789" // less than 10 -- good!
+        strFirst 
+        |> String10.create "FirstName" 
         |> Validation.ofResult
     let lastOrError =
-        String10.create "lastName"  "123456789" // less than 10 -- good!
+        strLast 
+        |> String10.create "LastName"  
         |> Validation.ofResult
-    // Exercise: fix the compiler error by using Validation.lift2
+
     (Validation.lift2 createName) firstOrError lastOrError
 
 
 let badName =
+    // input from user
+    let strFirst = "Jean-Claude"   // more than 10 -- bad!
+    let strLast = ""               // empty -- bad!
+    
     let firstOrError =
-        String10.create "FirstName" "12345678901" // more than 10 -- bad!
+        strFirst 
+        |> String10.create "FirstName" 
         |> Validation.ofResult
     let lastOrError =
-        String10.create "LastName"  "12345678901" // more than 10 -- bad!
+        strLast 
+        |> String10.create "LastName"  
         |> Validation.ofResult
-    // Exercise: fix the compiler error by using Validation.lift2
+    
     (Validation.lift2 createName) firstOrError lastOrError
 
