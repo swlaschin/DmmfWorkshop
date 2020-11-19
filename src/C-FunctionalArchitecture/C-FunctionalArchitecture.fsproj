@@ -11,6 +11,7 @@
     <None Include="01a-Exercise-DtoValidation.fsx" />
     <None Include="01b-Exercise-DtoValidation%28answers%29.fsx" />
     <None Include="01c-WorkflowWithJson.fsx" />
+    <None Include="01d-NewsDomainDtoExample.fsx" />
     <Content Include="02-Exercises.txt" />
     <None Include="02a-IO-AtEdges.fsx" />
     <None Include="IoExample.fsx" />

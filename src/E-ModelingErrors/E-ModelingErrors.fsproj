@@ -29,10 +29,6 @@
     <None Include="05a-ValidationWithLift.fsx" />
     <None Include="05b-Exercise-ValidationWithLift.fsx" />
     <None Include="05c-Exercise-ValidationWithLift%28answers%29.fsx" />
-    <None Include="05d-Exercise-DtoValidation.fsx" />
-    <None Include="05e-Exercise-DtoValidation%28answers%29.fsx" />
-    <None Include="05f-DtoValidationWithJson.fsx" />
-    <None Include="05g-NewsDomainDtoExample.fsx" />
     <None Include="Result.fsx" />
   </ItemGroup>
 

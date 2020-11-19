@@ -8,8 +8,6 @@ Read through this example:
 Do the exercises here:
 * 05b-Exercise-ValidationWithLift.fsx
 
-For a real-world, complex example, see:
-* 05c-NewsDomainDtoExample.fsx
 
 Further reading:
 * https://fsharpforfunandprofit.com/posts/serializating-your-domain-model/

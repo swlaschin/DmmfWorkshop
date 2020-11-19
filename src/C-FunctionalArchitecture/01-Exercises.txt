@@ -8,4 +8,7 @@ Do the exercises here:
 Read through and understand all the code
 * 01c-WorkflowWithJson.fsx
 
+For a real-world, complex example, see:
+* 01d-NewsDomainDtoExample.fsx
+
 
