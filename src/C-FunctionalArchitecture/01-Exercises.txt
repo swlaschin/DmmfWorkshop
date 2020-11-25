@@ -5,10 +5,7 @@
 Do the exercises here:
 * 01a-Exercise-DtoValidation.fsx
 
-Read through and understand all the code
-* 01c-WorkflowWithJson.fsx
-
 For a real-world, complex example, see:
-* 01d-NewsDomainDtoExample.fsx
+* 01c-NewsDomainDtoExample.fsx
 
 

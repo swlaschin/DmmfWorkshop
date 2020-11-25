@@ -1,0 +1,10 @@
+﻿// =================================
+// Exercise 4:
+// =================================
+
+Read through and understand all the code
+* 04a-GuessingGame-Imperative.fsx
+* 04b-GuessingGame-Functional.fsx
+
+
+

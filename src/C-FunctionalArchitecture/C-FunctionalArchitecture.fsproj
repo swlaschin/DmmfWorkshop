@@ -10,16 +10,24 @@
     <None Include="PersonDomain.fsx" />
     <None Include="01a-Exercise-DtoValidation.fsx" />
     <None Include="01b-Exercise-DtoValidation%28answers%29.fsx" />
-    <None Include="01c-WorkflowWithJson.fsx" />
-    <None Include="01d-NewsDomainDtoExample.fsx" />
+    <None Include="01c-NewsDomainDtoExample.fsx" />
     <Content Include="02-Exercises.txt" />
     <None Include="02a-IO-AtEdges.fsx" />
     <None Include="IoExample.fsx" />
     <None Include="02b-Exercise-IO-AtEdges.fsx" />
     <None Include="02c-Exercise-IO-AtEdges%28answers%29.fsx" />
     <Content Include="03-Exercises.txt" />
-    <None Include="03a-GuessingGame-Imperative.fsx" />
-    <None Include="03b-GuessingGame-Functional.fsx" />
+    <None Include="03a-CompleteApp-Domain.fsx" />
+    <None Include="03b-CompleteApp-Implementation.fsx" />
+    <None Include="03c-CompleteApp-Dto.fsx" />
+    <None Include="03d-CompleteApp-Api.fsx" />
+    <Content Include="04-Exercises.txt" />
+    <None Include="04a-GuessingGame-Imperative.fsx" />
+    <None Include="04b-GuessingGame-Functional.fsx" />
+    <None Include="04c-AnagramGame-Imperative.fsx" />
+    <None Include="AnagramDictionary.fsx" />
+    <Content Include="WordListTest.txt" />
+    <Content Include="WordList10000.txt" />
     <None Include="Result.fsx" />
   </ItemGroup>
 
