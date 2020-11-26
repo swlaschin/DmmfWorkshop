@@ -66,10 +66,13 @@ let invalidEmailObj = invalidEmailJson |> jsonToRequest
 *)
 
 
-// -------------------------------
-// To build a complete pipeline, we need one more step
-// to convert the Result to a JSON string
-// -------------------------------
+//===============================================
+// Top level code (e.g "API") that combines 
+// * the implementation 
+// * serialization 
+// * other I/O
+//===============================================
+
 module EmailServiceApi =
     open EmailServiceDomain
 
@@ -89,7 +92,7 @@ module EmailServiceApi =
         // if the validation had errors, return BadRequest
         | Error (WorkflowError.ValidationErrors errors) ->
             errors
-            |> List.map string  // convert thee error type to string for serialization
+            |> List.map string  // convert the error type to string for serialization
             |> serializeJson
             |> makeHttpBadRequest
 

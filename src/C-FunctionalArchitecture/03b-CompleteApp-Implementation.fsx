@@ -19,7 +19,7 @@ open ``03a-CompleteApp-Domain``
 
 
 //===============================================
-// Implementation of the workflow(s) 
+// Implementation of the workflow(s) defined in the domain
 //===============================================
 
 module EmailServiceImplementation =
