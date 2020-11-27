@@ -82,7 +82,7 @@ type Response =
     | GetInput of target:string * anagram:string
     | RevealTarget of target:string
     | CorrectGuess
-    | FailedGuess
+    | FailedGuess of target:string
     | Exit of target:string
 
 
@@ -133,7 +133,7 @@ module Pure =
                     gameState,nextRequest
                 // 4d
                 else
-                    let nextRequest = FailedGuess
+                    let nextRequest = FailedGuess target
                     gameState,nextRequest
 
 // =============================================
@@ -173,8 +173,8 @@ module Impure =
     let printSolved() =
         printfn "Solved!"
 
-    let printFailed() =
-        printfn "Failed!"
+    let printFailed target =
+        printfn "Failed! The word was '%s'" target
 
     /// Print the game over message (in response to ".")
     let printGameOver target =
@@ -202,8 +202,8 @@ let play() =
             Impure.printGameState gameState
             let request = StartRound
             loop gameState request
-        | FailedGuess ->
-            Impure.printFailed()
+        | FailedGuess target ->
+            Impure.printFailed target
             Impure.printGameState gameState
             let request = StartRound
             loop gameState request

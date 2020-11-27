@@ -120,7 +120,7 @@ let rec play() =
             printGameState()
         // 4d
         else
-            printfn "Failed!"
+            printfn "Failed! The word was '%s'" target
             printGameState()
 
     // loop again?

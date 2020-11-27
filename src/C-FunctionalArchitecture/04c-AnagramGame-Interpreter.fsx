@@ -77,17 +77,12 @@ type Anagram = string
 type Input = string
 
 type Program =
-    //                (params for IO)    (handle response from interpreter)
-    | GetInput     of GameState * Target * Anagram * (Input -> Program)
-    | RevealTarget of GameState * Target           * (unit -> Program)
-    | FailedGuess  of GameState                    * (unit -> Program)
-    | CorrectGuess of GameState                    * (unit -> Program)
+    //                (params for IO)       (handle response from interpreter)
+    | GetInput     of Anagram             * (Input -> Program)
+    | RevealTarget of GameState * Target  * (unit -> Program)
+    | CorrectGuess of GameState           * (unit -> Program)
+    | FailedGuess  of GameState * Target  * (unit -> Program)
     | Exit         of GameState * Target
-
-type Request =
-    | StartRound
-    | HandleInput of input:string * target:string * anagram:string
-
 
 // =============================================
 // All the pure code -- completely deterministic and testable
@@ -107,7 +102,7 @@ module Pure =
             |> Seq.head
 
         // Step 2. tell the UI to print the anagram and instructions and get input
-        GetInput (gameState,target,anagram, fun input ->
+        GetInput (anagram,fun input ->
 
             // Step 3. Accept input
             match input with
@@ -129,7 +124,7 @@ module Pure =
                     CorrectGuess (gameState,fun () -> play gameState)
                 // 4d
                 else
-                    FailedGuess (gameState,fun () -> play gameState)
+                    FailedGuess (gameState,target,fun () -> play gameState)
             )
 
 // =============================================
@@ -169,8 +164,8 @@ module Impure =
     let printSolved() =
         printfn "Solved!"
 
-    let printFailed() =
-        printfn "Failed!"
+    let printFailed target =
+        printfn "Failed! The word was '%s'" target
 
     /// Print the game over message (in response to ".")
     let printGameOver target =
@@ -180,7 +175,7 @@ module Impure =
 // intepret the program
 let rec interpret (program:Program) =
     match program with
-    | GetInput (gameState,target,anagram, next) ->
+    | GetInput (anagram,next) ->
         Impure.printAnagramAndInstructions anagram
         let input = System.Console.ReadLine()
         let newProgram = next input
@@ -195,8 +190,8 @@ let rec interpret (program:Program) =
         Impure.printGameState gameState
         let newProgram = next()
         interpret newProgram
-    | FailedGuess (gameState,next) ->
-        Impure.printFailed()
+    | FailedGuess (gameState,target,next) ->
+        Impure.printFailed target
         Impure.printGameState gameState
         let newProgram = next()
         interpret newProgram
