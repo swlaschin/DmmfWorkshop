@@ -1,5 +1,5 @@
 ﻿// =================================
-// Anagram game - Functional implementation
+// Anagram game - Interpreter implementation
 //
 // How the game works:
 //
@@ -52,12 +52,10 @@ For each round:
 *)
 
 // =====================================
-// This is the functional implementation
-// * IO is separated from pure code
-// * The "Pure.play" function handles a "request" and
-//   returns a "response" with instructions for the shell I/O
-// * The top level shell interprets the response by reading or writing
-//   and then sending another request to the pure code.
+// This is the Interpreter implementation
+// * The "Pure.play" function returns a "program" with instructions for the shell I/O
+// * The top level shell interprets those instructions by reading or writing
+//   However it could be interpreted in another way, e.g. with a GUI
 // =====================================
 
 #load "AnagramDictionary.fsx"
@@ -74,16 +72,21 @@ type GameState = {
     RandomDictionaryWords : string seq
 }
 
+type Target = string
+type Anagram = string
+type Input = string
+
+type Program =
+    //                (params for IO)    (handle response from interpreter)
+    | GetInput     of GameState * Target * Anagram * (Input -> Program)
+    | RevealTarget of GameState * Target           * (unit -> Program)
+    | FailedGuess  of GameState                    * (unit -> Program)
+    | CorrectGuess of GameState                    * (unit -> Program)
+    | Exit         of GameState * Target
+
 type Request =
     | StartRound
     | HandleInput of input:string * target:string * anagram:string
-
-type Response =
-    | GetInput of target:string * anagram:string
-    | RevealTarget of target:string
-    | CorrectGuess
-    | FailedGuess
-    | Exit of target:string
 
 
 // =============================================
@@ -92,36 +95,30 @@ type Response =
 
 module Pure =
 
-    let rec play (gameState:GameState) request =
-        match request with
-        | StartRound ->
-            // update the game state
-            let gameState = {gameState with Rounds = gameState.Rounds + 1}
+    let rec play (gameState:GameState) : Program =
+        // update the game state
+        let gameState = {gameState with Rounds = gameState.Rounds + 1}
 
-            // Step 1. Pick a word (the TARGET) from the wordlist
-            let target = gameState.RandomDictionaryWords |> Seq.head
-            let anagram =
-                Anagram.permutations target
-                |> Seq.filter (gameState.IsDictionaryWord >> not)
-                |> Seq.head
+        // Step 1. Pick a word (the TARGET) from the wordlist
+        let target = gameState.RandomDictionaryWords |> Seq.head
+        let anagram =
+            Anagram.permutations target
+            |> Seq.filter (gameState.IsDictionaryWord >> not)
+            |> Seq.head
 
-            // Step 2. tell the UI to print the anagram and instructions and get input
-            let nextRequest = GetInput (target,anagram)
-            gameState,nextRequest
+        // Step 2. tell the UI to print the anagram and instructions and get input
+        GetInput (gameState,target,anagram, fun input ->
 
-        // Step 3. Accept input
-        | HandleInput (input,target,anagram) ->
+            // Step 3. Accept input
             match input with
 
             // Step 4a. If the input is "." then quit
             | "." ->
-                let nextRequest = Exit target
-                gameState,nextRequest
+                Exit (gameState,target)
 
             // Step 4b. If the input is CR then show the answer
             | "" ->
-                let nextRequest = RevealTarget target
-                gameState,nextRequest
+                RevealTarget (gameState,target,fun () -> play gameState)
 
             // Step 4c & 4d.
             | guess ->
@@ -129,12 +126,11 @@ module Pure =
                 if guess |> gameState.IsDictionaryWord && Anagram.isAnagram guess anagram then
                     // increment AnagramsSolved
                     let gameState = {gameState with AnagramsSolved = gameState.AnagramsSolved + 1}
-                    let nextRequest = CorrectGuess
-                    gameState,nextRequest
+                    CorrectGuess (gameState,fun () -> play gameState)
                 // 4d
                 else
-                    let nextRequest = FailedGuess
-                    gameState,nextRequest
+                    FailedGuess (gameState,fun () -> play gameState)
+            )
 
 // =============================================
 // All the impure code -- this could be made async to make it obvious!
@@ -181,40 +177,41 @@ module Impure =
         printfn "The word was '%s'" target
         printfn "Game over. Thanks for playing"
 
+// intepret the program
+let rec interpret (program:Program) =
+    match program with
+    | GetInput (gameState,target,anagram, next) ->
+        Impure.printAnagramAndInstructions anagram
+        let input = System.Console.ReadLine()
+        let newProgram = next input
+        interpret newProgram
+    | RevealTarget (gameState,target,next) ->
+        Impure.printTarget target
+        Impure.printGameState gameState
+        let newProgram = next()
+        interpret newProgram
+    | CorrectGuess (gameState,next) ->
+        Impure.printSolved()
+        Impure.printGameState gameState
+        let newProgram = next()
+        interpret newProgram
+    | FailedGuess (gameState,next) ->
+        Impure.printFailed()
+        Impure.printGameState gameState
+        let newProgram = next()
+        interpret newProgram
+    | Exit (gameState,target) ->
+        Impure.printGameOver target
+        Impure.printGameState gameState
+        // exit loop
+
+
 // the top level function that mixes pure and impure code in a loop
 let play() =
 
-    let rec loop gameState request =
-        let gameState,response = Pure.play gameState request
-        match response with
-        | GetInput (target,anagram) ->
-            Impure.printAnagramAndInstructions anagram
-            let input = System.Console.ReadLine()
-            let request = HandleInput (input,target,anagram)
-            loop gameState request
-        | RevealTarget target ->
-            Impure.printTarget target
-            Impure.printGameState gameState
-            let request = StartRound
-            loop gameState request
-        | CorrectGuess ->
-            Impure.printSolved()
-            Impure.printGameState gameState
-            let request = StartRound
-            loop gameState request
-        | FailedGuess ->
-            Impure.printFailed()
-            Impure.printGameState gameState
-            let request = StartRound
-            loop gameState request
-        | Exit target ->
-            Impure.printGameOver target
-            Impure.printGameState gameState
-            // exit loop
-
     let initialGameState = Impure.initialGameState()
-    let initialRequest = StartRound
-    loop initialGameState initialRequest
+    let initialProgram = Pure.play initialGameState
+    interpret initialProgram
 
 // to start the game,
 // 1. highlight all code and execute

@@ -9,3 +9,6 @@ Read through and understand all the code
 * 04a-AnagramGame-Imperative.fsx
 * 04b-AnagramGame-Functional.fsx
 
+Another approach is to use an interpreter (aka Free Monad)
+* 04c-AnagramGame-Interpreter.fsx
+

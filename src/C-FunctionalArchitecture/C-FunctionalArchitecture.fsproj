@@ -25,6 +25,7 @@
     <Content Include="04-Exercises.txt" />
     <None Include="04a-AnagramGame-Imperative.fsx" />
     <None Include="04b-AnagramGame-Functional.fsx" />
+    <None Include="04c-AnagramGame-Interpreter.fsx" />
     <Content Include="05-Exercises.txt" />
     <None Include="05a-GuessingGame-Imperative.fsx" />
     <None Include="05b-GuessingGame-Functional.fsx" />
