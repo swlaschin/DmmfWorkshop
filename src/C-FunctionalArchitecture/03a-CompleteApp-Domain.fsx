@@ -9,7 +9,7 @@
 open System
 
 //===============================================
-// The Domain 
+// The Domain
 //===============================================
 
 /// Define types and validation for an Email Service
