@@ -3,8 +3,12 @@
 // =================================
 
 Read through and understand all the code
-* 04a-GuessingGame-Imperative.fsx
-* 04b-GuessingGame-Functional.fsx
+* 04a-AnagramGame-Imperative.fsx
+* 04b-AnagramGame-Functional.fsx
+
+Read through and understand all the code
+* 04c-GuessingGame-Imperative.fsx
+* 04d-GuessingGame-Functional.fsx
 
 
 

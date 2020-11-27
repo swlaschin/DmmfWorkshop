@@ -255,10 +255,21 @@ let invalidEmailObj = invalidEmailJson |> jsonToRequest
 *)
 
 //===============================================
-// Top level code (e.g "API") that combines
+// Infrastructure code: SMTP, databases, file system, etc
+//===============================================
+
+
+module SmtpService =
+
+    /// Actually send a message to the email server
+    let sendEmail (emailMessage:string) =
+        printfn "sending message %s" emailMessage
+
+//===============================================
+// Top level code (e.g "Program", "Shell", "API") that combines
 // * the implementation
 // * serialization
-// * other I/O
+// * other I/O and infrastructure
 //===============================================
 
 module EmailServiceApi =
@@ -294,7 +305,7 @@ module EmailServiceApi =
 
     /// Actually send a message to the email server
     let contactSmtpServer (workflowResponse:EmailServiceDomain.Response) =
-        printfn "sending message %s" workflowResponse.EmailMessage
+        SmtpService.sendEmail workflowResponse.EmailMessage
         workflowResponse
 
     // --------------------------------------
@@ -304,7 +315,7 @@ module EmailServiceApi =
     /// 1. convert json to a domain object
     /// 2. Call the Implementation workflow
     /// 3. Convert the result back to an HTTP response
-    let sendAMessage services json =
+    let sendAMessage json =
         printfn "sendAMessage with input %s" json
 
         json

@@ -23,9 +23,10 @@
     <None Include="03d-CompleteApp-Api.fsx" />
     <None Include="03e-CompleteApp-Combined.fsx" />
     <Content Include="04-Exercises.txt" />
-    <None Include="04a-GuessingGame-Imperative.fsx" />
-    <None Include="04b-GuessingGame-Functional.fsx" />
-    <None Include="04c-AnagramGame-Imperative.fsx" />
+    <None Include="04a-AnagramGame-Imperative.fsx" />
+    <None Include="04b-AnagramGame-Functional.fsx" />
+    <None Include="04c-GuessingGame-Imperative.fsx" />
+    <None Include="04d-GuessingGame-Functional.fsx" />
     <None Include="AnagramDictionary.fsx" />
     <Content Include="WordListTest.txt" />
     <Content Include="WordList10000.txt" />
