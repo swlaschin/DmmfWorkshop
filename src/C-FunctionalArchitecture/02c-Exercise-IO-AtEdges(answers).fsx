@@ -51,8 +51,11 @@ module PureImplementation =
     type WorkflowResult =
         | NoChange
         | CustomerUpdated of Domain.Customer * EmailServer.EmailMessage option
-        // NOTE I used an option here for the email,
-        // but I could defined a three-choice type instead
+        // NOTE I used an option here for the email message,
+        // but I could have defined a three-choice type instead
+        // | NoChange
+        // | CustomerUpdated of Domain.Customer
+        // | CustomerUpdatedWithNewEmail of Domain.Customer * EmailServer.EmailMessage
 
     // Pure business logic -- decisions only -- no I/O
     let updateCustomer (newCustomer:Domain.Customer) (existingCustomer:Domain.Customer) :WorkflowResult =

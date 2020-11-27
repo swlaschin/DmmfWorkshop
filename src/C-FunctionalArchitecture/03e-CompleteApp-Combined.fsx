@@ -109,7 +109,7 @@ module EmailServiceImplementation =
 
     /// Implement the core workflow defined in the domain
     /// Note that this is completely pure. There is no I/O
-    let sendAMessage : SendAMessage = 
+    let sendAMessage : SendAMessage =
         fun request ->
             let fromAddress = EmailAddress.value request.FromAddress
             let toAddress = EmailAddress.value request.ToAddress
@@ -126,7 +126,7 @@ module EmailServiceImplementation =
                 Ok result
 
 //===============================================
-// Implementation of the DTOs 
+// Implementation of the DTOs
 //===============================================
 
 // Load a file with library functions for Result
@@ -183,7 +183,7 @@ module Dto =
 // Some interactive tests
 //===========================================
 
-module TestDtos = 
+module TestDtos =
     open EmailServiceDomain
     open Dto
 
@@ -239,7 +239,7 @@ let jsonToRequest json =
 
 // uncomment this block for testing
 // or just highlight and run inside the comment!
-(* 
+(*
 
 // some good JSON
 let goodJson  = """{"UserId":1,"FromAddress":"abc@gmail.com","ToAddress":"xyz@gmail.com","Body":"Hello",}"""
@@ -255,9 +255,9 @@ let invalidEmailObj = invalidEmailJson |> jsonToRequest
 *)
 
 //===============================================
-// Top level code (e.g "API") that combines 
-// * the implementation 
-// * serialization 
+// Top level code (e.g "API") that combines
+// * the implementation
+// * serialization
 // * other I/O
 //===============================================
 
@@ -292,7 +292,7 @@ module EmailServiceApi =
             error
             |> makeHttpServerError
 
-    /// Actually send a message to the email server 
+    /// Actually send a message to the email server
     let contactSmtpServer (workflowResponse:EmailServiceDomain.Response) =
         printfn "sending message %s" workflowResponse.EmailMessage
         workflowResponse
@@ -301,10 +301,10 @@ module EmailServiceApi =
     // Top level public API for the workflows
     // --------------------------------------
 
-    /// 1. convert json to a domain object 
+    /// 1. convert json to a domain object
     /// 2. Call the Implementation workflow
     /// 3. Convert the result back to an HTTP response
-    let sendAMessage json =
+    let sendAMessage services json =
         printfn "sendAMessage with input %s" json
 
         json
@@ -330,7 +330,7 @@ module EmailServiceApi =
 
 // uncomment this block for testing
 // or just highlight and run inside the comment!
-(* 
+(*
 
 // TEST: try the good and bad JSON
 goodJson |> EmailServiceApi.sendAMessage

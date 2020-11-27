@@ -59,6 +59,12 @@ let toDto (person:Person) :PersonDto =
     last = String10.value person.Name.Last
     age = Age.value person.Age
     email = Email.value person.Email
+
+    // getting the value could also be written using piping
+    // first = person.Name.First |> String10.value
+    // last = person.Name.Last |> String10.value
+    // etc
+
     }
 
 /// Exercise: Create a person from a DTO.

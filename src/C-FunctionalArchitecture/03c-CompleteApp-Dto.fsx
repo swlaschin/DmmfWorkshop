@@ -9,19 +9,17 @@
 open System
 
 
-// uncomment when working with this file standalone
-// comment when including this file in another file
-(*
 // Load a file with library functions for Result
 #load "Result.fsx"
 
-// Load the domain
-#load "03a-CompleteApp-Domain.fsx"
+// Load the implementation and domain
+#load "03b-CompleteApp-Implementation.fsx"
 open ``03a-CompleteApp-Domain``
-*)
+open ``03b-CompleteApp-Implementation``
+
 
 //===============================================
-// Implementation of the DTOs 
+// Implementation of the DTOs
 //===============================================
 
 module Dto =
@@ -75,7 +73,7 @@ module Dto =
 // Some interactive tests
 //===========================================
 
-module Test = 
+module Test =
     open EmailServiceDomain
     open Dto
 

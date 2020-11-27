@@ -8,12 +8,7 @@ Read through and understand all the code
 * 03c-CompleteApp-Dto.fsx
 * 03d-CompleteApp-Api.fsx
 
-(Due to an issue when loading files, 
-please uncomment the "#load"s in each file, but comment them again 
-when working with the top level API file)
-
-
-Or to see everything in one file (without any issues)
+Or to see everything in one file
 * 03e-CompleteApp-Combined.fsx
 
 

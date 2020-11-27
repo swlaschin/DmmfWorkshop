@@ -8,14 +8,9 @@
 
 open System
 
-
-// uncomment when working with this file standalone
-// comment when including this file in another file
-(*
 // Load the domain
 #load "03a-CompleteApp-Domain.fsx"
 open ``03a-CompleteApp-Domain``
-*)
 
 
 //===============================================
@@ -27,7 +22,7 @@ module EmailServiceImplementation =
 
     /// Implement the core workflow defined in the domain
     /// Note that this is completely pure. There is no I/O
-    let sendAMessage : SendAMessage = 
+    let sendAMessage : SendAMessage =
         fun request ->
             let fromAddress = EmailAddress.value request.FromAddress
             let toAddress = EmailAddress.value request.ToAddress

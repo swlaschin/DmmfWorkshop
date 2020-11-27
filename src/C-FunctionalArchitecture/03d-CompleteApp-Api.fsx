@@ -8,19 +8,10 @@
 
 open System
 
-// Load a file with library functions for Result
-#load "Result.fsx"
-
-// Load the domain
-#load "03a-CompleteApp-Domain.fsx"
+// Load the Domain, implementation and DTO
+#load "03c-CompleteApp-Dto.fsx"
 open ``03a-CompleteApp-Domain``
-
-// Load the implementation
-#load "03b-CompleteApp-Implementation.fsx"   // ignore the red squiggly!
 open ``03b-CompleteApp-Implementation``
-
-// Load the DTO 
-#load "03c-CompleteApp-Dto.fsx"   // ignore the red squiggly!
 open ``03c-CompleteApp-Dto``
 
 
@@ -50,7 +41,7 @@ let jsonToRequest json =
 
 // uncomment this block for testing
 // or just highlight and run inside the comment!
-(* 
+(*
 
 // some good JSON
 let goodJson  = """{"UserId":1,"FromAddress":"abc@gmail.com","ToAddress":"xyz@gmail.com","Body":"Hello",}"""
@@ -67,9 +58,9 @@ let invalidEmailObj = invalidEmailJson |> jsonToRequest
 
 
 //===============================================
-// Top level code (e.g "API") that combines 
-// * the implementation 
-// * serialization 
+// Top level code (e.g "API") that combines
+// * the implementation
+// * serialization
 // * other I/O
 //===============================================
 
@@ -104,7 +95,7 @@ module EmailServiceApi =
             error
             |> makeHttpServerError
 
-    /// Actually send a message to the email server 
+    /// Actually send a message to the email server
     let contactSmtpServer (workflowResponse:EmailServiceDomain.Response) =
         printfn "sending message %s" workflowResponse.EmailMessage
         workflowResponse
@@ -113,7 +104,7 @@ module EmailServiceApi =
     // Top level public API for the workflows
     // --------------------------------------
 
-    /// 1. convert json to a domain object 
+    /// 1. convert json to a domain object
     /// 2. Call the Implementation workflow
     /// 3. Convert the result back to an HTTP response
     let sendAMessage json =
@@ -142,7 +133,7 @@ module EmailServiceApi =
 
 // uncomment this block for testing
 // or just highlight and run inside the comment!
-(* 
+(*
 
 // TEST: try the good and bad JSON
 goodJson |> EmailServiceApi.sendAMessage
