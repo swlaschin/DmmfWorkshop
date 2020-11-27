@@ -1,11 +1,13 @@
 ﻿// =================================
-// Exercise 4:
+// Exercise 5:
 // =================================
 
 This demonstrates how an imperative implemention (with IO mixed in with logic)
 can be converted to a impure/pure/impure sandwich
 
 Read through and understand all the code
-* 04a-AnagramGame-Imperative.fsx
-* 04b-AnagramGame-Functional.fsx
+* 05a-GuessingGame-Imperative.fsx
+* 05b-GuessingGame-Functional.fsx
+
+
 
