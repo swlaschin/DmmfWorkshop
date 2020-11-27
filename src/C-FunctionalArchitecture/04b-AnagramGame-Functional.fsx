@@ -1,24 +1,29 @@
 ﻿// =================================
 // Anagram game - Functional implementation
-//
-// How the game works:
-//
-// In each round of the game, the player is presented with an
-// anagram of a six-letter word where that anagram is not itself
-// a word (so ANTLER might be presented as AELNRT but not LEARNT).
-//
-// The user can enter an answer, or hit return to see the answer,
-// or enter a full stop to quit the game completely.
-// If there is more than one solution to an anagram,
-// all of them are valid (so ANTLER, LEARNT and RENTAL would all be correct
-// answers to AELNRT)
-//
-// At the end of each round, the user is shown the number of rounds
-// attempted and the number of anagrams solved.
 // =================================
 
 (*
+How the game works:
+
+In each round of the game, the player is presented with an
+anagram of a six-letter word where that anagram is not itself
+a word (so ANTLER might be presented as AELNRT but not LEARNT).
+
+The user can enter an answer, or hit return to see the answer,
+or enter a full stop to quit the game completely.
+If there is more than one solution to an anagram,
+all of them are valid (so ANTLER, LEARNT and RENTAL would all be correct
+answers to AELNRT)
+
+At the end of each round, the user is shown the number of rounds
+attempted and the number of anagrams solved.
+*)
+
+
+(*
+------------------------------------------
 Implementation details:
+------------------------------------------
 
 For each round:
 1. Pick a word (the TARGET) from the wordlist and
@@ -64,7 +69,7 @@ For each round:
 open AnagramDictionary
 
 // =============================================
-// All the pure code
+// The domain with the state and the request and response types
 // =============================================
 
 type GameState = {
@@ -141,7 +146,6 @@ module Pure =
 // =============================================
 
 module Impure =
-    open Pure
 
     let initialGameState() =
         let wd =
@@ -181,7 +185,15 @@ module Impure =
         printfn "The word was '%s'" target
         printfn "Game over. Thanks for playing"
 
-// the top level function that mixes pure and impure code in a loop
+    let readLine() =
+        System.Console.ReadLine()        
+
+
+// =============================================
+// Top level code
+// =============================================
+
+// the main "play" function
 let play() =
 
     let rec loop gameState request =
@@ -189,7 +201,7 @@ let play() =
         match response with
         | GetInput (target,anagram) ->
             Impure.printAnagramAndInstructions anagram
-            let input = System.Console.ReadLine()
+            let input = Impure.readLine()
             let request = HandleInput (input,target,anagram)
             loop gameState request
         | RevealTarget target ->
@@ -216,20 +228,21 @@ let play() =
     let initialRequest = StartRound
     loop initialGameState initialRequest
 
-// to start the game,
+// to start the game interactively,
 // 1. highlight all code and execute
 // 2. type this in the F# interactive terminal
 (*
 play();;
 *)
-
-// or to run from the command line, uncomment the "mainLoop" section above
-// and then do
-(*
-dotnet fsi 03c-AnagramGame-Imperative.fsx
-*)
-
 // if you need to kill the game!
 // * in Visual Studio, "Reset Interactive Session"
 // * in VS Code, kill the terminal
 
+// or to run from the command line, do
+(*
+dotnet fsi 04b-AnagramGame-Functional.fsx
+*)
+// which will make the following code work
+if System.Environment.CommandLine.Contains(__SOURCE_FILE__) then
+    // running from comment line
+    play()
