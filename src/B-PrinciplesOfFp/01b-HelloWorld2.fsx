@@ -44,6 +44,9 @@ let printSquares n =
 // call it with 5
 printSquares 5
 
+// type inference!
+// val printSquares : n:int -> unit
+
 // ======================================
 // sprintf is like printfn except that it returns a string
 // ======================================
