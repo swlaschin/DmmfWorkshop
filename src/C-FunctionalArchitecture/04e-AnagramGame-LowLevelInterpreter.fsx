@@ -8,7 +8,7 @@ This is the Interpreter implementation
 * The "Pure.play" function returns a "program" with instructions for the shell I/O
 * The top level shell interprets those instructions by reading or writing
   However it could be interpreted in another way, e.g. with a GUI
-* In this implementation, the instructions are "low level" 
+* In this implementation, the instructions are "low level"
   such as ReadLine, WriteLine, etc.
   The exact text to display is now part of the core logic.
 
@@ -34,7 +34,7 @@ What's bad about this:
     ReadLine (fun input ->
 
 *)
- 
+
 
 #load "AnagramDictionary.fsx"
 open AnagramDictionary
@@ -55,7 +55,7 @@ type Program =
     //                (params for IO)       (handle response from interpreter)
     | ReadLine     of (*none*)              (string -> Program)
     | WriteLine    of string              * (unit -> Program)
-    | Exit         
+    | Exit
 
 // =============================================
 // All the pure code -- completely deterministic and testable
@@ -90,8 +90,8 @@ module Pure =
         // Step 4a. If the input is "." then quit
         | "." ->
             WriteLine (sprintf "The word was '%s'" target, fun () ->
-            WriteLine ("Game over. Thanks for playing", fun () -> 
-            printGameState gameState (fun () -> 
+            WriteLine ("Game over. Thanks for playing", fun () ->
+            printGameState gameState (fun () ->
             Exit )))
 
         // Step 4b. If the input is CR then show the answer
@@ -122,7 +122,7 @@ module Pure =
 // =============================================
 
 module Impure =
-    
+
     let initialGameState() =
         let wd =
             let filename = System.IO.Path.Combine(__SOURCE_DIRECTORY__,"WordList10000.txt")
@@ -140,7 +140,7 @@ module Impure =
         printfn "%s" str
 
     let readLine() =
-        System.Console.ReadLine()        
+        System.Console.ReadLine()
 
 // =============================================
 // Top level code

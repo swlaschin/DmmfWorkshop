@@ -5,10 +5,10 @@
 
 
 (*
-In this implementation, a computation expression is used to hide the 
+In this implementation, a computation expression is used to hide the
 details of the continuations.
 
-What's nice about this is that it hides the continuation passing 
+What's nice about this is that it hides the continuation passing
 
     // using continations
     WriteLine (sprintf "The anagram is '%s'" anagram, fun () ->
@@ -21,7 +21,7 @@ What's nice about this is that it hides the continuation passing
     let! input = readLine()
     match input with
 *)
- 
+
 
 #load "AnagramDictionary.fsx"
 open AnagramDictionary
@@ -42,7 +42,7 @@ type Program<'a> =
     //                (params for IO)       (handle response from interpreter)
     | ReadLine     of (*none*)              (string -> Program<'a>)
     | WriteLine    of string              * (unit -> Program<'a>)
-    | Exit         
+    | Exit
     // added to keep CE generic
     | Stop         of 'a
 
@@ -57,7 +57,7 @@ module ProgramCE =
 
     let rec bindP (f:'a->Program<'b>) (program:Program<'a>) : Program<'b> =
         match program with
-        | Stop x -> 
+        | Stop x ->
             f x
         | ReadLine next ->
             ReadLine(next >> bindP f)
@@ -84,7 +84,7 @@ module ProgramCE =
 // All the pure code -- completely deterministic and testable
 // =============================================
 
-open ProgramCE 
+open ProgramCE
 
 module Pure =
 
@@ -119,13 +119,13 @@ module Pure =
             | "." ->
                 do! writeLine (sprintf "The word was '%s'" target)
                 do! writeLine "Game over. Thanks for playing"
-                do! printGameState gameState 
-                do! exit 
+                do! printGameState gameState
+                do! exit
 
             // Step 4b. If the input is CR then show the answer
             | "" ->
                 do! writeLine (sprintf "The word was '%s'" target)
-                do! printGameState gameState 
+                do! printGameState gameState
                 do! play gameState  // play again with current gameState
 
             // Step 4c & 4d.
@@ -135,12 +135,12 @@ module Pure =
                     // increment AnagramsSolved
                     let gameState = {gameState with AnagramsSolved = gameState.AnagramsSolved + 1}
                     do! writeLine "Solved!"
-                    do! printGameState gameState 
+                    do! printGameState gameState
                     do! play gameState  // play again with current gameState
                 // 4d
                 else
                     do! writeLine (sprintf "Failed! The word was '%s'" target)
-                    do! printGameState gameState 
+                    do! printGameState gameState
                     do! play gameState  // play again with current gameState
 
         }
@@ -150,7 +150,7 @@ module Pure =
 // =============================================
 
 module Impure =
-    
+
     let initialGameState() =
         let wd =
             let filename = System.IO.Path.Combine(__SOURCE_DIRECTORY__,"WordList10000.txt")
@@ -168,7 +168,7 @@ module Impure =
         printfn "%s" str
 
     let readLine() =
-        System.Console.ReadLine()        
+        System.Console.ReadLine()
 
 // =============================================
 // Top level code

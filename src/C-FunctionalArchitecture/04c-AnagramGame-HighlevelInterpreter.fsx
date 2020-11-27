@@ -8,12 +8,12 @@ This is the Interpreter implementation
 * The "Pure.play" function returns a "program" with instructions for the shell I/O
 * The top level shell interprets those instructions by reading or writing
   However it could be interpreted in another way, e.g. with a GUI
-* In this implementation, the instructions are "high level" 
+* In this implementation, the instructions are "high level"
   such as GetInput, RevealTarget, etc.
   The exact text to display is left as a low level detail for the interpreter
 
 What's good about this:
-* Very easy to change the interpreter 
+* Very easy to change the interpreter
 * High level instructions are easier to understand and better for testing
 
 What's bad about this:
@@ -29,7 +29,7 @@ What's bad about this:
     match input with
 
 *)
- 
+
 
 #load "AnagramDictionary.fsx"
 open AnagramDictionary
@@ -105,7 +105,7 @@ module Pure =
 // =============================================
 
 module Impure =
-    
+
     let initialGameState() =
         let wd =
             let filename = System.IO.Path.Combine(__SOURCE_DIRECTORY__,"WordList10000.txt")
@@ -145,7 +145,7 @@ module Impure =
         printfn "Game over. Thanks for playing"
 
     let readLine() =
-        System.Console.ReadLine()        
+        System.Console.ReadLine()
 
 // =============================================
 // Top level code

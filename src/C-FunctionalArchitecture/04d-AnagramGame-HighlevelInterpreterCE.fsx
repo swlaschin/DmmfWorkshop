@@ -1,13 +1,13 @@
 ﻿// =================================
-// Anagram game - High Level Interpreter implementation 
+// Anagram game - High Level Interpreter implementation
 // using computation expressions
 // =================================
 
 (*
-In this implementation, a computation expression is used to hide the 
+In this implementation, a computation expression is used to hide the
 details of the continuations.
 
-What's nice about this is that it hides the continuation passing 
+What's nice about this is that it hides the continuation passing
 
     // using continations
     GetInput (anagram,fun input ->
@@ -42,7 +42,7 @@ type Program<'a> =
     | RevealTarget of GameState * Target  * (unit -> Program<'a>)
     | CorrectGuess of GameState           * (unit -> Program<'a>)
     | FailedGuess  of GameState * Target  * (unit -> Program<'a>)
-    | Exit         of GameState * Target 
+    | Exit         of GameState * Target
     // added to keep CE generic
     | Stop         of 'a
 
@@ -57,7 +57,7 @@ module ProgramCE =
 
     let rec bindP (f:'a->Program<'b>) (program:Program<'a>) : Program<'b> =
         match program with
-        | Stop x -> 
+        | Stop x ->
             f x
         | GetInput(anagram,next) ->
             GetInput(anagram,next >> bindP f)
@@ -93,7 +93,7 @@ module ProgramCE =
 open ProgramCE
 
 module Pure =
-    
+
     // using a computation, the pure code can be written l
     let rec play (gameState:GameState) : Program<_> =
         programCE {
@@ -128,7 +128,7 @@ module Pure =
                 if guess |> gameState.IsDictionaryWord && Anagram.isAnagram guess anagram then
                     // increment AnagramsSolved
                     let gameState = {gameState with AnagramsSolved = gameState.AnagramsSolved + 1}
-                    do! correctGuess gameState     
+                    do! correctGuess gameState
                     do! play gameState   // play again
                 // 4d
                 else
@@ -181,7 +181,7 @@ module Impure =
         printfn "Game over. Thanks for playing"
 
     let readLine() =
-        System.Console.ReadLine()        
+        System.Console.ReadLine()
 
 // =============================================
 // Top level code

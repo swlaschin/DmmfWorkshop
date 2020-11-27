@@ -186,7 +186,7 @@ module Impure =
         printfn "Game over. Thanks for playing"
 
     let readLine() =
-        System.Console.ReadLine()        
+        System.Console.ReadLine()
 
 
 // =============================================

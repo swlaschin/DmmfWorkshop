@@ -9,7 +9,7 @@ Read through and understand all the code
 * 04a-AnagramGame-Imperative.fsx
 * 04b-AnagramGame-Functional.fsx
 
-Another approach is to use an interpreter which creates 
+Another approach is to use an interpreter which creates
 a data structure consisting of a list of instructions
 * 04c-AnagramGame-HighLevelInterpreter.fsx
 

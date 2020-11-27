@@ -67,26 +67,37 @@ gen |> Seq.take 10 |> Seq.toList
 
 module Anagram =
 
-    // return a lazy sequence of all permutations of a word
-    // (lazy because there may be many thousands)
+    // return a lazy sequence of all random shuffles of a word
     let rec permutations word =
-        let len = String.length word
-        if len <= 1 then
-           seq {yield word}
-        else seq {
-            let first = word.[0..0]
-            let rest = word.[1..]
-            for perm in permutations rest do
-                for i in [0..len-1] do
-                    let result = perm.[0..i-1] + first + perm.[i..]
-                    yield result
-            }
+        let n = String.length word
+        let rand = System.Random()
+
+        // Fisher-Yates shuffle
+        let shuffle() =
+            let a = word |> Seq.toArray
+            for i in [0..n-1] do
+                // pick j, random integer such that i ≤ j < n
+                let j = rand.Next(i,n)
+                // exchange
+                let x = a.[j]
+                a.[j] <- a.[i]
+                a.[i] <- x
+
+            // convert back to string
+            a |> System.String
+
+        // return an infinite sequence. The first shuffle might be in
+        // the dictionary, so the client may need to retrieve another.
+        Seq.initInfinite (fun _ -> shuffle() )
+
 
     // permutations ""
     // permutations "c"
     // permutations "ca"
     // permutations "cat"
     // permutations "cata"
+    // permutations "catapult"
+    // permutations "catamorphism"
 
 
     /// Given an element and a list
