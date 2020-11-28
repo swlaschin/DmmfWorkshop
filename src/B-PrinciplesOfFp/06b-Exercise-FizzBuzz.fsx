@@ -72,7 +72,7 @@ to pass data around. You can use either a record or a choice type.
 // define a record type
 type MyData = {something:string; somethingElse:int}
 
-// to create a value
+// to construct a value
 let myData = {something="hello"; somethingElse=42}
 
 // to access a field in the record

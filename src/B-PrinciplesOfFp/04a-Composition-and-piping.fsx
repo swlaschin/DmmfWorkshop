@@ -47,29 +47,32 @@ in a familiar way, putting the parameter after the function, like this:
 // Composition examples
 // ================================================
 
+(*
+Composition in most programming languages means nesting the function calls, like this
+*)
+
 add1(5)                   // = 6
 double(add1(5))           // = 12
-square(double(add1 (5)))  // = 144
+square(double(add1(5)))   // = 144
 
 
 (*
-New "track" is created by joining small pieces of "track".
+In functional languages, new "track" is created by joining small pieces of "track".
 
 Here's some examples of composition in use:
 *)
 
-
-// create a new bigger track
+// create a new bigger track...
 let add1_double = add1 >> double
 
-// call this new function
+// ... and call this new function
 add1_double 5
 
 
-// create a new bigger track
+// create a new bigger track...
 let add1_double_square = add1 >> double >> square
 
-// call this new function
+// ... and call this new function
 add1_double_square 5    // 144
 
 
@@ -107,7 +110,7 @@ let addDoubleSquare x =
     x
     |> add1
     |> double
-    |> square // = 144
+    |> square
 
 addDoubleSquare 5 // 144
 

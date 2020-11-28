@@ -141,10 +141,15 @@ T returnSameThing<T>(T x) {
   }
 *)
 
+// A useful example of generics is to swap a tuple
+let swap (x,y) = (y,x)
+// val swap : 'a * 'b -> 'b * 'a
+
 
 // The unit type is the empty value, like void.
 // It is written as ()
 
+// these functions ignore their input, and so the input is inferred to be generic!
 let ignoreTheInput x = ()
 let ignoreTwoInputs x y = ()
 let ignoreThreeInputs x y z = ()

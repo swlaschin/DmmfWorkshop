@@ -285,3 +285,18 @@ let resultMap f result =
 
 success |> resultMap (fun x -> x + 42) |> printResult
 error |> resultMap (fun x -> x + 42) |> printResult
+
+
+// ======================================================
+// Modeling recursive data with a choice
+// ======================================================
+
+type StringList =
+    | Empty
+    | NonEmpty of string * StringList
+
+type DirectoryItem =
+    | SubDir of Directory
+    | File of string
+and Directory = DirectoryItem list
+

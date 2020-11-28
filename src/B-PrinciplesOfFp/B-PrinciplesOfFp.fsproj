@@ -42,6 +42,7 @@
     <None Include="08d-Exercise-ImplementingTypes.fsx" />
     <None Include="08e-Exercise-ImplementingTypes(answer).fsx" />
     <None Include="08f-ModelingWithChoices.fsx" />
+    <None Include="09-FP-FrequentQuestions.fsx" />
   </ItemGroup>
 
 

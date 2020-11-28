@@ -14,7 +14,7 @@
     <None Include="02a-DomainModel-TicTacToe.fsx" />
     <None Include="02b-DomainModel-YourOwnDomain.fsx" />
     <None Include="02c-DomainModel-YourOwnDomain2.fsx" />
-    <None Include="02d-DomainModel-FAQ.fsx" />
+    <None Include="99-DomainModeling-FrequentQuestions.fsx" />
   </ItemGroup>
 
 

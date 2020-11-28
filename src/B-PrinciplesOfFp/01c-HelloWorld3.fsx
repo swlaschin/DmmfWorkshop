@@ -26,15 +26,15 @@ x = 11        // this is wrong
 // ====================================
 
 // Equality	is "=" not "=="
-// 1==2   // C# syntax
+// 1==2   // C-style syntax
 // 1=2    // F# syntax
 
 // Inequality is "<>" not "!="
-// 1 != 2     // C# syntax
+// 1 != 2     // C-style syntax
 // 1 <> 2     // F# syntax
 
 // Negation	is "not" not "!"
-// !(1==2)    // C# syntax
+// !(1==2)    // C-style syntax
 // not (1=2)  // F# syntax
 
 // First assignment is "let"
@@ -42,14 +42,14 @@ x = 11        // this is wrong
 // let x = 1     // F# syntax
 
 // Mutation is "<-"
-// x = 2;    // C# syntax
+// x = 2;    // C-style syntax
 // x <- 2    // F# syntax
 
 // Function parameter separator is space not comma
-// int f(int x,int y) {...}   // C# syntax to define a function
+// int f(int x,int y) {...}   // C-style syntax to define a function
 // let f x y = ...            // F# syntax to define a function
 
-// f(x,y);   // C# syntax to call a function
+// f(x,y);   // C-style syntax to call a function
 // f x y     // F# syntax to call a function
 
 // List separator is semicolon not comma
@@ -57,9 +57,14 @@ x = 11        // this is wrong
 // { name="Scott"; age=27}  // F# syntax for a new record
 
 // Tuples use a comma!
-// let x = (2,3)
+// let x = (2,3)   // construct
+// let (y,z) = x   // deconstruct
 
-// Colon is normal somthin g types	Colon
+// Colon is normally something to do with types
+// val x:int = 1
+//      ^---type
+// type MyRecord = {x:int}
+//                   ^---type
 
 // Curly braces	are NOT used for blocks
 let x =
