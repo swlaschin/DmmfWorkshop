@@ -4,8 +4,9 @@
 
 Read through and understand all the examples from the slides
 * 02a-IO-AtEdges.fsx
+* 02b-IO-AtEdgesAsync.fsx
 
 Do the exercises here:
-* 02b-Exercise-IO-AtEdges.fsx
+* 02c-Exercise-IO-AtEdges.fsx
 
 

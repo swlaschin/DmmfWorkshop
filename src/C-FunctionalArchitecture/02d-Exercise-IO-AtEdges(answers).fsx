@@ -22,15 +22,17 @@ open IoExample.Domain
 
 module ImpureImplementation =
 
-    let updateCustomer (newCustomer:Domain.Customer) =
+    let updateCustomer (newCustomer:Domain.Customer) = async {
 
-        let existingCustomer = CustomerDatabase.readCustomer newCustomer.Id
+        let! existingCustomer = CustomerDatabase.readCustomer newCustomer.Id
+            // use let! when there is a return value in the Async
 
         // check for changes
         if (existingCustomer.Name <> newCustomer.Name) ||
            (existingCustomer.EmailAddress <> newCustomer.EmailAddress) then
             // store updated customer
-            CustomerDatabase.updateCustomer newCustomer
+            do! CustomerDatabase.updateCustomer newCustomer  
+                // use do! when there is no return value in the Async
 
         // send verification email if email changed
         if (existingCustomer.EmailAddress <> newCustomer.EmailAddress) then
@@ -38,7 +40,8 @@ module ImpureImplementation =
                 EmailAddress = newCustomer.EmailAddress
                 EmailBody = "Please verify your new email"
                 }
-            EmailServer.sendMessage emailMessage
+            do! EmailServer.sendMessage emailMessage
+        }
 
 module PureImplementation =
 
@@ -84,10 +87,10 @@ module PureImplementation_Shell =
     open PureImplementation
 
     // Does IO, then calls the pure business logic
-    let updateCustomer (newCustomer:Domain.Customer) =
+    let updateCustomer (newCustomer:Domain.Customer) = async {
 
         // impure
-        let existingCustomer = CustomerDatabase.readCustomer newCustomer.Id
+        let! existingCustomer = CustomerDatabase.readCustomer newCustomer.Id
 
         // pure business logic
         let result = PureImplementation.updateCustomer existingCustomer newCustomer
@@ -98,8 +101,10 @@ module PureImplementation_Shell =
             ()  // do nothing
 
         | CustomerUpdated (newCustomer,None) ->
-            CustomerDatabase.updateCustomer newCustomer
+            do! CustomerDatabase.updateCustomer newCustomer
 
         | CustomerUpdated (newCustomer,Some emailMessage) ->
-            CustomerDatabase.updateCustomer newCustomer
-            EmailServer.sendMessage emailMessage
+            do! CustomerDatabase.updateCustomer newCustomer
+            do! EmailServer.sendMessage emailMessage
+
+        }

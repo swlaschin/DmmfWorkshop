@@ -26,12 +26,14 @@ module CustomerDatabase =
         EmailAddress = EmailAddress "alice@example.com"
         }
 
-    let readCustomer (customerId:CustomerId) :Customer =
-        dummyCustomer
+    let readCustomer (customerId:CustomerId) :Async<Customer> = async {
+        return dummyCustomer
+        }
 
-    let updateCustomer (updatedCustomer:Customer) =
+    let updateCustomer (updatedCustomer:Customer) : Async<unit> = async {
         printfn "Updating Customer in database"
         // ignore
+        }
 
 module EmailServer =
     open Domain
@@ -42,9 +44,9 @@ module EmailServer =
         }
 
     // send a message
-    let sendMessage (message:EmailMessage) =
+    let sendMessage (message:EmailMessage) : Async<unit> = async {
         printfn "Sending message to %A" message.EmailAddress
         printfn "... %s" message.EmailBody
-
+        }
 
 

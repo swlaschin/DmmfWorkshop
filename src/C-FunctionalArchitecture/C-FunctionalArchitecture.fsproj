@@ -13,9 +13,10 @@
     <None Include="01c-NewsDomainDtoExample.fsx" />
     <Content Include="02-Exercises.txt" />
     <None Include="02a-IO-AtEdges.fsx" />
+    <None Include="02b-IO-AtEdgesAsync.fsx" />
     <None Include="IoExample.fsx" />
-    <None Include="02b-Exercise-IO-AtEdges.fsx" />
-    <None Include="02c-Exercise-IO-AtEdges%28answers%29.fsx" />
+    <None Include="02c-Exercise-IO-AtEdges.fsx" />
+    <None Include="02d-Exercise-IO-AtEdges%28answers%29.fsx" />
     <Content Include="03-Exercises.txt" />
     <None Include="03a-CompleteApp-Domain.fsx" />
     <None Include="03b-CompleteApp-Implementation.fsx" />
