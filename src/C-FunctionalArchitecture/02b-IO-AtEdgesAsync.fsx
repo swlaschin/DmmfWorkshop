@@ -36,7 +36,7 @@ module Example1_Impure =
         do! IO.writeLine "Enter the first value"
             // use do! when there is no return value in the Async
 
-        let str1 = System.Console.ReadLine()
+        let! str1 = IO.readLine()
         do! IO.writeLine "Enter the second value"
         let! str2 = IO.readLine()
             // use let! when there is a return value in the Async

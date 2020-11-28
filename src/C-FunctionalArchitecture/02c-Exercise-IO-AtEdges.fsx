@@ -20,6 +20,11 @@ Use-case: Update the name and email in a user account
 open IoExample
 open IoExample.Domain
 
+// -------------------------
+// A impure/non-deterministic implementation
+// with async I/O mixed in with business logic
+// -------------------------
+
 module ImpureImplementation =
 
     let updateCustomer (newCustomer:Domain.Customer) = async {
@@ -43,6 +48,11 @@ module ImpureImplementation =
             do! EmailServer.sendMessage emailMessage
         }
 
+// -------------------------
+// A completely pure/deterministic implementation
+// with no async or I/O. This will be easy to test!
+// -------------------------
+
 module PureImplementation =
 
     // Exercise: Reimplement the code above to move all IO to the edges
@@ -62,6 +72,80 @@ module PureImplementation =
 
         // Exercise -- implement this logic without any IO
         ???
+
+// -------------------------
+// test the pure code
+// -------------------------
+
+/// this would be replaced with a proper test framework
+module TestFramework =
+
+    let expectAreEqual testName expected actual = 
+        if expected = actual then 
+            printfn "Test '%s': Passed" testName 
+        else 
+            let reason = sprintf "Expected=%A. Actual=%A" expected actual
+            printfn "Test '%s': Failed '%s" testName reason
+
+    let failed testName reason = 
+        printfn "Test '%s': Failed '%s" testName reason
+
+
+/// My tests for the pure code
+module MyTests =
+
+    open PureImplementation
+
+    let expectSameResultCase testName case expectedCust result = 
+
+        match case,result  with
+        | "NoChange",NoChange -> 
+            () // passed
+
+        | ??,YourCase(??)-> 
+            TestFramework.expectAreEqual testName expectedCust custToUpdate 
+
+        | ??,YourCase(??)-> 
+            TestFramework.expectAreEqual testName expectedCust custToUpdate 
+            // can't compare the email message because we dont wnat's in it, but we can check that
+            // it contains the email address
+            TestFramework.expectAreEqual testName expectedCust.EmailAddress emailToSend.EmailAddress
+
+        | _ ->
+            // all other cases are a mismatch
+            let reason = sprintf "Expected case=%A. Actual result=%A" case result
+            TestFramework.failed testName reason
+
+    let existingCustomer = 
+        {Id=CustomerId 1; EmailAddress=EmailAddress "x@example.com"; Name="Alice"}
+    let customerWithChangedNameOnly = 
+        {Id=CustomerId 1; EmailAddress=EmailAddress "x@example.com"; Name="Bob"}
+    let customerWithChangedNameAndEmail = 
+        {Id=CustomerId 1; EmailAddress=EmailAddress "z@example.com"; Name="Bob"}
+
+    let test1() = 
+        let result = PureImplementation.updateCustomer existingCustomer existingCustomer  
+        expectSameResultCase "When no change to customer expect no customer to update" "NoChange" existingCustomer result
+
+    let test2() = 
+        let result = PureImplementation.updateCustomer customerWithChangedNameOnly existingCustomer  
+        expectSameResultCase "When only name changed expect a customer to update" "??" customerWithChangedNameOnly result
+
+    let test3() = 
+        let result = PureImplementation.updateCustomer customerWithChangedNameAndEmail existingCustomer  
+        expectSameResultCase "When name and email changed expect a customer to update and email to send" "??" customerWithChangedNameAndEmail result
+
+// run the tests!
+(*
+MyTests.test1()
+MyTests.test2()
+MyTests.test3()
+*)
+
+
+// -------------------------
+// Impure "Shell"/API layer
+// -------------------------
 
 module PureImplementation_Shell =
     open PureImplementation
