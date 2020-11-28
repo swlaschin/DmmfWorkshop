@@ -82,6 +82,9 @@ let functionA' apple =   // "functionA'" means a modification of "functionA"
     // alternative inline version
     // |> Result.mapError (fun appleError -> AppleErrorCase appleError)
 
+    // even more inline version
+    // |> Result.mapError (AppleErrorCase)
+
 let functionB' banana =
     banana
     |> functionB

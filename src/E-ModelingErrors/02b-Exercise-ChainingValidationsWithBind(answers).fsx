@@ -31,11 +31,6 @@ let checkEmailNotBlank input =
   else
     Ok input
 
-let checkEmailMustHaveAtSign input =
-  if not (input.Email.Contains("@")) then
-    Error "Email must have @ sign"
-  else
-    Ok input
 
 //-------------------------------------
 // Here is the custom bind function for Result
@@ -59,22 +54,7 @@ let validateInput input =
     |> checkNameNotBlank
     |> resultBind checkName50
     |> resultBind checkEmailNotBlank
-    |> Result.bind checkEmailMustHaveAtSign  // Can also use built-in Result.bind
 
-    // add some more validations if you like
-
-// The "bind" function has many different names in different contexts
-// E.g "flatMap"
-// For example, we could also call it "andThen" to make it read more easily
-let andThen = Result.bind
-
-// and here is the same code written using "andThen"
-let validateInput_v2 input =
-    input
-    |> checkNameNotBlank
-    |> andThen checkName50
-    |> andThen checkEmailNotBlank
-    |> andThen checkEmailMustHaveAtSign
 
 // -------------------------------
 // test that the validation works
@@ -88,3 +68,48 @@ validateInput blankName
 
 let blankEmail = {Name="Scott";Email=""}
 validateInput blankEmail
+
+
+//-------------------------------------
+// Different names for "bind"
+//-------------------------------------
+
+// The "bind" function has many different names in different contexts
+// E.g "flatMap"
+// For example, we could also call it "andThen" to make it read more easily
+let andThen = Result.bind
+
+// and here is the same code written using "andThen"
+let validateInput_AndThen input =
+    input
+    |> checkNameNotBlank
+    |> andThen checkName50
+    |> andThen checkEmailNotBlank
+
+
+//-------------------------------------
+// Exercise: add some more validation functions
+//-------------------------------------
+// examples:
+// * email contains @ symbol  -- use Email.Contains("@")
+// * email length < 50        -- use Email.Length
+
+let checkEmailMustHaveAtSign input =
+  if not (input.Email.Contains("@")) then
+    Error "Email must have @ sign"
+  else
+    Ok input
+
+let checkEmailLength input =
+  if not (input.Email.Length < 50) then
+    Error "Email must be < 50 chars"
+  else
+    Ok input
+
+let validateInput_v2 input =
+    input
+    |> checkNameNotBlank
+    |> resultBind checkName50
+    |> resultBind checkEmailNotBlank
+    |> Result.bind checkEmailMustHaveAtSign  // Can also use built-in Result.bind
+    |> Result.bind checkEmailLength

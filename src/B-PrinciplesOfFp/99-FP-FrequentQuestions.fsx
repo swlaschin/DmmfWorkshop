@@ -1,11 +1,10 @@
-﻿module rec FAQ
-
-type undefined = exn
-let notImplemented() = failwith "not implemented"
-
-// ====================================
+﻿// ====================================
 // Common questions about functional programming
 // ====================================
+
+// helper functions for examples
+type undefined = exn
+let notImplemented() = failwith "not implemented"
 
 
 // ====================================

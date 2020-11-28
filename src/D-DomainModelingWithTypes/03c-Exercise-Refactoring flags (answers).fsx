@@ -118,30 +118,81 @@ module Order_Before =
        PaidDate: System.DateTime option
        }
 
-// contains the redesigned code
-module Order_After =
+// contains the redesigned code (but see an alternative design below)
+module Order_After_v1 =
 
     type OrderId = OrderId of int
-    type PaidAmount = float
-    type PaidDate = System.DateTime
+    type Amount = float
+    type Date = System.DateTime
 
     type PaidOrder = {
         OrderId : OrderId
-        PaidAmount : PaidAmount
-        PaidDate : PaidDate
+        PaidAmount : Amount
+        PaidDate : Date
         }
 
     type Order =
         | Unpaid of OrderId
         | Paid of PaidOrder
 
+// ====================================
+// Question: Both Unpaid and Paid have a OrderId? Can that be refactored out?
+// Answer: Yes, absolutely. The alternative design below does that.
+//         The good news is that both designs are equivalent and so either can be used.
+//         Which is better? It depends on the domain language? Do people say
+//           PaidOrder OR UnpaidOrder
+//         or do they say
+//           An Order with PaidStatus OR UnpaidStatus
+// ====================================
+
+// alternative design
+module Order_After_v2 =
+
+    type OrderId = OrderId of int
+    type Amount = float
+    type Date = System.DateTime
+
+    type OrderStatus =
+        | Paid of Amount * Date
+        | Unpaid
+
+    type Order = {
+        Id: OrderId
+        Status: OrderStatus
+        }
+
+// ====================================
+// Question: You used "type Amount = float" above rather than creating a new record type.
+//           When does it make sense to use a type alias rather than a separate type?
+// Answer: For initial sketching of a domain, an alias is fine.
+//         If you need more behavior or constraints later, it is easy to change over
+//         later on as you refine and refactor.
+// ====================================
+
+// ====================================
+// Question: Should we use more specific types such as
+//              type PaidAmount = ...
+//              type PaidDate = ...
+//           rather than the more generic
+//              type Amount = ...
+//              type Date = ...
+// Answer: It depends on whether PaidAmount and PaidDate have special behavior different from
+//         Amount and Date?
+//         In this case I don't this there is. But some dates (like say, a DeliveryDate)
+//         might have special constraints such as being on a weekday or something.
+//
+// WARNING: Beware of mixing up "policy" (which changes) with constraints (which never change)
+// * An EmailAddress MUST have an @ sign.
+// * A DeliveryDate being on a weekday is a policy and might easily change later.
+// ====================================
+
+// ====================================
+// Question: You used "Amount * Date" above rather than creating a new record type.
+//           When does it make sense to use a tuple rather than a separate type?
+// Answer: It depends! For the data associated with a choice, it is sometimes easier.
+//         But it will be exposed as API, or might need to change, you might want to use a record.
+//         You don't have to get it right on the first try -- it is easy to change over from one style
+//         to another later on as you refine and refactor.
+// ====================================
 
 
-(*
-Questions for discussion:
-
-* When does it make sense to use a type alias rather than a separate type?
-
-* When does it make sense to define a new type rather than use a tuple?
-
-*)

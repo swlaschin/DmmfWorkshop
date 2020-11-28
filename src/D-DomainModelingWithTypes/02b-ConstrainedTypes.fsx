@@ -13,6 +13,10 @@ module ConstrainedTypes =
     /// Only code in the same module can use this constructor now.
     type String10 = private String10 of string
 
+    // Question: Is this overkill? Does everything have to be wrapped?
+    // Question: When to use public vs.private constructors?
+    // Answer: See "02g-ConstrainedTypes_FrequentQuestions.fsx"
+
     /// Define a helper module for String10 that
     /// has access to the private constructor
     module String10 =
@@ -30,6 +34,17 @@ module ConstrainedTypes =
         /// Expose a public function
         /// to extract the wrapped value
         let value (String10 str) = str
+
+        // Alternative implementations to extract the wrapped value
+
+        // remember that wrapping and unwrapping are symmetrical!
+        // let str10 = (String10 str)  // wrap
+        // let (String10 str) = str10  // unwrap
+
+        let value_v2 (str10:String10) =
+            let (String10 str) = str10  // unwrap
+            str
+            // the unwrapping (String10 str) is normally done directly in the parameter list though
 
 
 
@@ -68,6 +83,13 @@ let invalidString10 = String10.create("12345678901")
 let validEmail = EmailAddress.create("a@example.com")
 let invalidEmail = EmailAddress.create("example.com")
 
+// Now we have to match if we want to get the inner value out
+match validEmail with
+| Some email ->
+    let inner = EmailAddress.value email
+    printfn "The inner is %s" inner
+| None -> ()
+
 // --------------------------------------------
 // using constrained types in a workflow
 // --------------------------------------------
@@ -90,7 +112,7 @@ module MyWorkflows =
 module Example1 =
 
     // the main public API that wraps the workflow
-    let api input =
+    let myWorkflow input =
 
         // create a value from the input (eg JSON)
         let str10option = String10.create input
@@ -100,14 +122,14 @@ module Example1 =
         MyWorkflows.mainWorkflow str10option
 
 // test
-Example1.api "1234567890"
+Example1.myWorkflow "1234567890"
 
 
 // Instead, you need to check first
 module Example2 =
 
     // the main public API that wraps the workflow
-    let api input =
+    let myWorkflow input =
 
         // create a value from the input (eg JSON)
         let str10option = String10.create input
@@ -125,13 +147,14 @@ module Example2 =
 
 
 // test
-Example2.api "1234567890"
+Example2.myWorkflow "1234567890"
 
 
 // --------------------------------------------
-// compare two ways of constraining a value
+// Compare two ways of constraining a value
 // 1. using a type
 // 2. using a validation attribute
+// See "02g-ConstrainedTypes_FrequentQuestions.fsx"
 // --------------------------------------------
 
 type Contact = {

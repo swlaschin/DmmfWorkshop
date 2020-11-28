@@ -55,7 +55,6 @@ let validateInput input =
     |> ??
     |> ??
 
-    // add some more validations if you like
 
 // -------------------------------
 // test that the validation works
@@ -69,3 +68,12 @@ validateInput blankName
 
 let blankEmail = {Name="Scott";Email=""}
 validateInput blankEmail
+
+
+//-------------------------------------
+// Exercise: add some more validation functions
+//-------------------------------------
+// examples:
+// * email contains @ symbol  -- use Email.Contains("@")
+// * email length < 50        -- use Email.Length
+
