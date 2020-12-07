@@ -69,5 +69,9 @@ type Order = {
 //============================================
 // Your code starts here
 
+// TIP define a "undefined" type to use when you don't know the answer yet 
+type undefined = exn
 
 type MyWorkflow = MyInputData -> MyOutputData
+
+type MyInputData = undefined

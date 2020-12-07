@@ -3,6 +3,17 @@
 // Common questions about domain modeling
 // ====================================
 
+// ====================================
+// Question: How to model types that we don't know anything about yet?
+// Answer: Define a "undefined" type to use 
+// ====================================
+
+type undefined = exn
+
+// if we don't know the details yet, use "undefined"
+type CustomerDetails = undefined
+
+
 
 // ====================================
 // Question: Using Tuples vs. using Records, which is better?
@@ -22,11 +33,36 @@ type LastName = string
 type EmailAddress = string // a proper domain concept with extra validation
 
 
+// ====================================
+// Question: How many parameters should we pass to a workflow function?
+// Answer: Group them if they always occur together, keep separate otherwise
+// ====================================
+
+type ProductState = undefined
+type ProductId = undefined
+type ProductPrice = undefined
+type MyOutputData = undefined
+
+// option 1 -- all parameters separate
+type UpdateProductPrice_v1 = ProductState * ProductId * ProductPrice -> MyOutputData
+
+// option 2 -- some parameters separate, some together
+type ProductUpdateRequest = ProductId * ProductPrice
+type UpdateProductPrice_v2 = ProductState * ProductUpdateRequest -> MyOutputData
+
+// option 3 -- all parameters together
+type AllInputData = ProductState * ProductId * ProductPrice
+type UpdateProductPrice_v3 = AllInputData -> MyOutputData
+
+// There's no "correct" answer. If they frequently occur together, and
+// the domain experts have a name for them, then
+// group them into a tuple or record.
+
 
 
 // ====================================
 // Question: How to return X OR Y from a function?
-// Answer: Use a choice type
+// Answer: Define a new choice type
 // ====================================
 
 module ChoiceExample =
@@ -106,6 +142,17 @@ module EntityExample =
     c1a.Name = c1b.Name  //false
 
 
+    
+// ====================================
+// Question: How can you use non-standard characters in the definitions?
+// Answer: Yes, it can be hard. You will have to be creative!
+// ====================================
+    
+// Non-standard characters like % will not compile
+
+// type Percent = 5% | 10%  // compile error
+
+type Percent = FivePercent | TenPercent  // OK
 
 // ====================================
 // Question: How do you model "void"?
@@ -186,8 +233,6 @@ or as a function:
 In a functional approach, a client is given just the TWO functions it needs,
 one to open the door and one to close it. See below
 *)
-
-type undefined = exn
 
 module InterfaceAsFunctions =
 
