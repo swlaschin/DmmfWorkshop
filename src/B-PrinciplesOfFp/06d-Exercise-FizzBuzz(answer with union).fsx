@@ -42,16 +42,16 @@ single "handle" function that can be reused for 3, 5, and 15.
 
 // a "choice" data structure to pass between the tests for 3,5,7 etc
 type FizzBuzzData =
-    | Carbonated of string
+    | Processed of string
     | Unprocessed of int
 
 /// Test whether a number is divisible by 15
-/// If true, return the "FizzBuzz" in the Carbonated choice
+/// If true, return the "FizzBuzz" in the Processed choice
 /// BUT only do this if not already processed
 let handle15case fizzBuzzData =
     match fizzBuzzData with
     // if it is already processed
-    | Carbonated _ ->
+    | Processed _ ->
         fizzBuzzData // leave alone
 
     // if it is not processed
@@ -61,18 +61,18 @@ let handle15case fizzBuzzData =
             fizzBuzzData // leave alone
         // ok, handle this case
         else
-            // create a new value which is carbonated
-            Carbonated "FizzBuzz"
+            // create a new value which is processed
+            Processed "FizzBuzz"
 
 /// A much more generic version of handle15case
 /// --------------------------------------------
 /// Test whether a number is divisible by divisor
-/// If true, return the label in the Carbonated choice
+/// If true, return the label in the Processed choice
 /// BUT only do this if not already processed
 let handle divisor label fizzBuzzData =
     match fizzBuzzData with
     // if it is already processed
-    | Carbonated _ ->
+    | Processed _ ->
         fizzBuzzData // leave alone
 
     // if it is not processed
@@ -82,16 +82,16 @@ let handle divisor label fizzBuzzData =
             fizzBuzzData // leave alone
         // ok, handle this case
         else
-            // create a new value which is carbonated
-            Carbonated label
+            // create a new value which is processed
+            Processed label
 
 // If still unprocessed at the end,
 // convert number into a string,
-// else return carbonated
+// else return the Processed value
 let finalStep fizzBuzzData =
     match fizzBuzzData with
     // if it is already processed
-    | Carbonated str ->
+    | Processed str ->
         str // use the string
 
     // if it is not processed

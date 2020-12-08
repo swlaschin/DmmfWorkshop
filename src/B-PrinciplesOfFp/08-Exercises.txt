@@ -10,5 +10,8 @@ Do work through the code in
 * 08c-Aliases-vs-WrapperTypes.fsx
 * 08f-ModelingWithChoices.fsx
 
+and see questions from previous session
+* src/A-DDD/99-DomainModeling-FrequentQuestions.fsx
+
 Optional Homework: convert the domain models from the first session to code.
 See src/A-DDD/03-ConvertingDomainModelsToCode.txt

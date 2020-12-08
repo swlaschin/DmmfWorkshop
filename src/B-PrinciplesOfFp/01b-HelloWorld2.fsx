@@ -15,12 +15,17 @@ true     // bool
 [1;2;3]  // list (immutable)
 ()       // unit (like void)
 
+// a one line comment
+(* a multi line comment *)
+//    /* not a multi line comment */
 
 // ======================================
 // Playing around with printfn
 // ======================================
 
 // C# equivalent to printfn is Console.WriteLine
+// Java: System.Out
+// Kotlin: printLn
 
 printfn "%s" "hello"  // %s string
 printfn "%i" 42       // %i int

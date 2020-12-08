@@ -6,6 +6,9 @@
 // and if a function, what is the function signature?
 //
 // If in doubt, run them to find out!
+//
+// If you are using VS Code or Rider, you will see the answers already!
+// In that case, make sure you understand WHY the signatures are what they are.
 // =============================================
 
 let testA = 2

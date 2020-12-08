@@ -67,4 +67,7 @@ In VS Code:
 2. "Use Sdk Scripts": Use 'dotnet fsi' instead of 'fsi.exe'/'fsharpi' checkbox.
 3. (optionally) "Dot Net Root": change to /usr/share/dotnet/ or whatever the path is
 
+4. try uninstalling Ionide and reinstalling it
+
+
 *)

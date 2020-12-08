@@ -45,15 +45,15 @@ single "handle" function that can be reused for 3, 5, and 15.
 
 
 // Define a record structure to pass between the tests for 3,5,7 etc
-type FizzBuzzData = {carbonated:string; number:int}
+type FizzBuzzData = {processed:string; number:int}
 
 /// Test whether a data.number is divisible by 15
-/// If true, return the "FizzBuzz" in data.carbonated.
-/// BUT only do this if not already processed (data.carbonated is empty)
+/// If true, return the "FizzBuzz" in data.processed.
+/// BUT only do this if not already processed (data.processed is empty)
 let handle15case fizzBuzzData =
 
     // is it already processed?
-    if fizzBuzzData.carbonated <> "" then
+    if fizzBuzzData.processed <> "" then
         fizzBuzzData // leave alone
 
     // is it divisible?
@@ -62,20 +62,20 @@ let handle15case fizzBuzzData =
 
     // ok, handle this case
     else
-        // create a new value which is carbonated
-        {carbonated="FizzBuzz"; number=fizzBuzzData.number}
+        // create a new value which is processed
+        {processed="FizzBuzz"; number=fizzBuzzData.number}
         // alternatively you can copy with update
-        // {fizzBuzzData with carbonated=label}
+        // {fizzBuzzData with processed=label}
 
 /// A much more generic version of handle15case
 /// --------------------------------------------
 /// Test whether data.number is divisible by divisor
-/// If true, return the label in data.carbonated.
-/// BUT only do this if not already processed (data.carbonated is empty)
+/// If true, return the label in data.processed.
+/// BUT only do this if not already processed (data.processed is empty)
 let handle divisor label fizzBuzzData =
 
     // is it already processed?
-    if fizzBuzzData.carbonated <> "" then
+    if fizzBuzzData.processed <> "" then
         fizzBuzzData // leave alone
 
     // is it divisible?
@@ -84,24 +84,24 @@ let handle divisor label fizzBuzzData =
 
     // ok, handle this case
     else
-        // create a new value which is carbonated
-        {carbonated=label; number=fizzBuzzData.number}
+        // create a new value which is processed
+        {processed=label; number=fizzBuzzData.number}
         // alternatively you can copy with update
-        // {fizzBuzzData with carbonated=label}
+        // {fizzBuzzData with processed=label}
 
 
 // If still unprocessed at the end,
 // convert data.number into a string,
-// else return data.carbonated
+// else return data.processed
 let finalStep fizzBuzzData =
-    if fizzBuzzData.carbonated = "" then
+    if fizzBuzzData.processed = "" then
         string fizzBuzzData.number
     else
-        fizzBuzzData.carbonated
+        fizzBuzzData.processed
 
 // Finally, the main fizzBuzz function!
 let fizzBuzz (n:int) :string =
-    let initialData = {carbonated=""; number=n}
+    let initialData = {processed=""; number=n}
 
     initialData
     |> handle 15 "FizzBuzz"

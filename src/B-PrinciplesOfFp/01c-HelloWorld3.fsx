@@ -9,6 +9,7 @@
 1 + 1.5
 1 + int 1.5
 float 1 + 1.5
+
 1 + "2"
 1 + int "2"
 string 1 + "2"
@@ -92,8 +93,12 @@ module MyModule =
 // access the code in a module with the name
 MyModule.add2 40  // Result => 42
 
-// alternatively, bring the entire module
+// Without the module prefix, the functions are not in scope
+add2 40   // error
+
+// But you can bring the entire module
 // into scope with "open"
 open MyModule  // "open" is same as "using" in C#
 add2 40
+add3 30
 

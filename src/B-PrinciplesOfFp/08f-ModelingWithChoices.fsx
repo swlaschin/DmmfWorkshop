@@ -7,6 +7,34 @@
 //    look at, execute, and understand all the code in this file
 //===================================
 
+(*
+IMPORTANT: Choice/Union types are not subclasses!
+
+type PaymentMethod =
+| Cash
+| Card of CardInfo
+| PayPal of EmailAddress
+
+You can think of the choices as more as like different constructors
+for the same type.
+
+In an OO language this would be like having constructors like this:
+
+class PaymentMethod {
+    static PaymentMethod Cash() {...}
+    static PaymentMethod Card(CardInfo cardInfo) {...}
+    static PaymentMethod PayPal(EmailAddress emailAddress) {...}
+    }
+
+Cash, Card and PayPal are NOT separate types.
+So it is NOT like having the subclasses below:
+
+class PaymentMethod {}
+sealed class Cash extends PaymentMethod {}
+sealed class Card extends PaymentMethod {}
+sealed class PayPal extends PaymentMethod {}
+
+*)
 
 // ======================================================
 // Modeling temperature as a choice
