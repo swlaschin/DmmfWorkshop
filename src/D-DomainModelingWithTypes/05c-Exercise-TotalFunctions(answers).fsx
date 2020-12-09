@@ -72,8 +72,9 @@ module IntUtil =
 
         let strToInt (s:string) =
             match System.Int32.TryParse s with
-            | true, i -> i
-            | false, _ -> failwith "input is not an int"
+            // the Int32.TryParse method returns a tuple
+            | (true,i) -> i
+            | (false,_) -> failwith "input is not an int"
 
     module ExtendedOutputDesign =
         // Exercise: Convert this function to be total
@@ -84,8 +85,9 @@ module IntUtil =
         // Question: Should it have a different name?
         let tryStrToInt (s:string) =
             match System.Int32.TryParse s with
-            | true, i -> Some i
-            | false, _ -> None
+            // the Int32.TryParse method returns a tuple
+            | (true,i) -> Some i
+            | (false,_) -> None
 
 // test the function
 IntUtil.ExceptionBasedDesign.strToInt "123"     // good

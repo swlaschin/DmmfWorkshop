@@ -67,8 +67,9 @@ module IntUtil =
         let strToInt (s:string) =
             // this is how to parse an int
             match System.Int32.TryParse s with
-            | true, i -> i
-            | false, _ -> failwith "input is not an int"
+            // the Int32.TryParse method returns a tuple
+            | (true,i) -> i
+            | (false,_) -> failwith "input is not an int"
 
     module ExtendedOutputDesign =
         // Exercise: Convert this function to be total

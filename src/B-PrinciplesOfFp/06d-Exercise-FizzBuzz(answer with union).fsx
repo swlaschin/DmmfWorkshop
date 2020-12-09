@@ -51,7 +51,7 @@ type FizzBuzzData =
 let handle15case fizzBuzzData =
     match fizzBuzzData with
     // if it is already processed
-    | Processed _ ->
+    | Processed label ->
         fizzBuzzData // leave alone
 
     // if it is not processed
