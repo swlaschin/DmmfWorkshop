@@ -105,8 +105,8 @@ None |> Option.defaultValue 0         // 0
 
 // Example using the increment function above
 // These now return a normal OrderLineQty instead of an optional one.
-increment OrderLineQty.minValue
-|> Option.defaultValue OrderLineQty.maxValue
+decrement OrderLineQty.minValue
+|> Option.defaultValue OrderLineQty.minValue
 
 increment OrderLineQty.maxValue
 |> Option.defaultValue OrderLineQty.maxValue

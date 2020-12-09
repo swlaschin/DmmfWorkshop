@@ -76,12 +76,12 @@ open ConstrainedTypes
 // let compileError = String10 "1234567890"
 
 // create using the exposed constructor
-let validString10 = String10.create("1234567890")
-let invalidString10 = String10.create("12345678901")
+let validString10 = String10.create "1234567890"
+let invalidString10 = String10.create "12345678901"
 
 // create using the exposed constructor
-let validEmail = EmailAddress.create("a@example.com")
-let invalidEmail = EmailAddress.create("example.com")
+let validEmail = EmailAddress.create "a@example.com"
+let invalidEmail = EmailAddress.create "example.com"
 
 // Now we have to match if we want to get the inner value out
 match validEmail with
@@ -129,15 +129,25 @@ Example1.myWorkflow "1234567890"
 module Example2 =
 
     // the main public API that wraps the workflow
-    let myWorkflow input =
+    let myApi input =
 
+        // ----------------------------------
+        // Validation at the edges
+        // ----------------------------------
         // create a value from the input (eg JSON)
         let str10option = String10.create input
+        // lots of other validations here
 
         match str10option with
         | Some str10 ->
+
+            // ----------------------------------
+            // Core code uses only validated data
+            // ----------------------------------
             // the input is valid, so call the workflow
             let result = MyWorkflows.mainWorkflow str10
+
+
             match result with
             | true -> "200 OK"
             | false -> "500 ServerError"
@@ -147,7 +157,7 @@ module Example2 =
 
 
 // test
-Example2.myWorkflow "1234567890"
+Example2.myApi "1234567890"
 
 
 // --------------------------------------------

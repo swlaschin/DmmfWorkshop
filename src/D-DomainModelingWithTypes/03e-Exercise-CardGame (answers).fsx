@@ -79,15 +79,18 @@ module CardGame =
     /// or must be agreed at the beginning
     type AreAcesHigh = bool
 
+    // You might want to score cards and hands.
     // For example Ace=13 Two=2
-    type CardScore = int // constraint 1 - 13
+    type Score = int // no constraint -- can be large when adding up a hand
 
-    type ScoreCard = Card * AreAcesHigh -> CardScore
-    type ScoreHand = Hand * AreAcesHigh -> CardScore
+    // calculate a number for one single card
+    type ScoreCard = Card * AreAcesHigh -> Score
+    // calculate a number for a complete hand
+    type ScoreHand = Hand * AreAcesHigh -> Score
 
     // An alternative approach is to pass a "scoring" function
     // that has the AreAcesHigh flag baked in.
-    type ScoreHand_v2 = Hand * (Card -> CardScore) -> CardScore
+    type ScoreHand_v2 = Hand * (Card -> Score) -> Score
 
 // =====================================
 // Helper functions
@@ -138,6 +141,7 @@ module CardGameImplementation =
 
     let shuffle : Shuffle =
         fun (Deck cardList) ->
+            // use the utility function from above
             let shuffledCards = Util.fisherYatesShuffle cardList
             // and wrap
             ShuffledDeck shuffledCards

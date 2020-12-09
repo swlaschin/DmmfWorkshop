@@ -63,10 +63,13 @@ module CardGame =
     /// or must be agreed at the beginning
     type AreAcesHigh = bool
 
+    // You might want to score cards and hands.
     // For example Ace=13 Two=2
-    type CardScore = int // constraint 1 - 13
+    type Score = int // no constraint -- can be large when adding up a hand
 
-    type ScoreCard = Card * AreAcesHigh -> CardScore
+    // calculate a number for one single card
+    type ScoreCard = Card * AreAcesHigh -> Score
+    // calculate a number for a complete hand
     type ScoreHand = ??
 
 // =====================================
@@ -129,14 +132,9 @@ module CardGameImplementation =
     (*
     let shuffle : Shuffle =
         fun deck ->
-            // don't worry about how to do proper shuffling
-            let random = System.Random()
-
-            deck
-            |> List.map (fun card -> random.Next(), card )  // add a random to each card
-            |> List.sortBy (fun (rand,card) -> rand)        // sort
-            |> List.map ??                                  // remove the random number
-            |> ??
+            // use the utility function from above
+            let shuffledCards = Util.fisherYatesShuffle ??
+            ??
     *)
 
     (*

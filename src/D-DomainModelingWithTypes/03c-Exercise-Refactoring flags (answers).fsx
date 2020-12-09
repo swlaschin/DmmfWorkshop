@@ -23,7 +23,7 @@ but there is no ID assigned.
 
 Your task: redesign this type into two states:
 * RegisteredCustomer (with an id)
-* OR GuestCustomer (without an id)
+* OR Guest (without an id)
 Also, replace "int" and "string" with words from the domain
 
 *)
@@ -41,7 +41,7 @@ module Customer_Before =
         }
 
 // contains the redesigned code
-module Customer_After =
+module Customer_After_v1 =
 
     type CustomerName = CustomerName of string
     type RegistrationId  = RegistrationId of int
@@ -50,6 +50,42 @@ module Customer_After =
         | Guest of CustomerName
         | RegisteredCustomer of CustomerName * RegistrationId
                                 // this could also be a custom record type
+                                // (see below)
+
+// Alternative design with custom record type for RegisteredCustomer
+module Customer_After_v2 =
+
+    type CustomerName = CustomerName of string
+    type RegistrationId  = RegistrationId of int
+
+    type RegisteredCustomer = {
+        Name: CustomerName
+        RegistrationId : RegistrationId
+        }
+
+    type Customer =
+        | Guest of CustomerName
+        | RegisteredCustomer of RegisteredCustomer
+
+    // I can now treat RegisteredCustomer as a type
+    // with special behavior (similar to VerifiedEmail)
+    type HandleRegisteredOnly = RegisteredCustomer -> unit
+
+// Alternative design with common data refactored out
+module Customer_After_v3 =
+
+    type CustomerName = CustomerName of string
+    type RegistrationId  = RegistrationId of int
+
+    // extract out the common data (the name)
+    type RegistrationStatus =
+        | Guest
+        | Registered of RegistrationId
+
+    type Customer = {
+        Name: CustomerName  // common to both choices
+        RegistrationStatus : RegistrationStatus
+        }
 
 (*
 Exercise 3b
