@@ -97,12 +97,19 @@ let badDto = {
     email = "xexample.com"
     }
 
-// check that validation happens
+// check that validation happens when creating a domain object from a DTO
 goodDto |> fromDto
 badDto |> fromDto
 
-// convert to domain object and then convert back to a DTO
-match goodDto |> fromDto with
-| Ok domainObj -> toDto domainObj
-| Error _ -> failwith "should not happen"
+
+// roundtrip a DTO to a domain object and back
+let roundTrip dto =
+    let domainObjOrError = fromDto dto
+    match  domainObjOrError with
+    | Ok domainObj -> Ok (toDto domainObj)
+    | Error e -> Error e
+
+// check the round trip logic
+goodDto |> roundTrip
+badDto |> roundTrip
 

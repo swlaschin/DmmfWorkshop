@@ -38,7 +38,7 @@ module ImpureImplementation =
         if (existingCustomer.Name <> newCustomer.Name) ||
            (existingCustomer.EmailAddress <> newCustomer.EmailAddress) then
             // store updated customer
-            do! CustomerDatabase.updateCustomer newCustomer  
+            do! CustomerDatabase.updateCustomer newCustomer
                 // use do! when there is no return value in the Async
 
         // send verification email if email changed
@@ -72,6 +72,15 @@ module PureImplementation =
         // | CustomerUpdated of Domain.Customer
         // | CustomerUpdatedWithNewEmail of Domain.Customer * EmailServer.EmailMessage
 
+    // alternative design:
+    // have a list all the things that can need to happen in the IO
+    type Decision =
+        | UpdateCustomer of Domain.Customer
+        | SendEmail of EmailServer.EmailMessage
+
+    type Decisions = Decision list
+
+
     // Pure business logic -- decisions only -- no I/O
     let updateCustomer (newCustomer:Domain.Customer) (existingCustomer:Domain.Customer) :WorkflowResult =
 
@@ -103,14 +112,14 @@ module PureImplementation =
 /// this would be replaced with a proper test framework
 module TestFramework =
 
-    let expectAreEqual testName expected actual = 
-        if expected = actual then 
-            printfn "Test '%s': Passed" testName 
-        else 
+    let expectAreEqual testName expected actual =
+        if expected = actual then
+            printfn "Test '%s': Passed" testName
+        else
             let reason = sprintf "Expected=%A. Actual=%A" expected actual
             printfn "Test '%s': Failed '%s" testName reason
 
-    let failed testName reason = 
+    let failed testName reason =
         printfn "Test '%s': Failed '%s" testName reason
 
 
@@ -119,17 +128,17 @@ module MyTests =
 
     open PureImplementation
 
-    let expectSameResultCase testName case expectedCust result = 
+    let expectSameResultCase testName case expectedCust result =
 
         match case,result  with
-        | "NoChange",NoChange -> 
+        | "NoChange",NoChange ->
             () // passed
 
-        | "CustomerUpdatedWithNoEmail",CustomerUpdated (custToUpdate,None) -> 
-            TestFramework.expectAreEqual testName expectedCust custToUpdate 
+        | "CustomerUpdatedWithNoEmail",CustomerUpdated (custToUpdate,None) ->
+            TestFramework.expectAreEqual testName expectedCust custToUpdate
 
-        | "CustomerUpdatedWithEmail",CustomerUpdated (custToUpdate,Some emailToSend) -> 
-            TestFramework.expectAreEqual testName expectedCust custToUpdate 
+        | "CustomerUpdatedWithEmail",CustomerUpdated (custToUpdate,Some emailToSend) ->
+            TestFramework.expectAreEqual testName expectedCust custToUpdate
             // can't compare the email message because we dont wnat's in it, but we can check that
             // it contains the email address
             TestFramework.expectAreEqual testName expectedCust.EmailAddress emailToSend.EmailAddress
@@ -139,23 +148,23 @@ module MyTests =
             let reason = sprintf "Expected case=%A. Actual result=%A" case result
             TestFramework.failed testName reason
 
-    let existingCustomer = 
+    let existingCustomer =
         {Id=CustomerId 1; EmailAddress=EmailAddress "x@example.com"; Name="Alice"}
-    let customerWithChangedNameOnly = 
+    let customerWithChangedNameOnly =
         {Id=CustomerId 1; EmailAddress=EmailAddress "x@example.com"; Name="Bob"}
-    let customerWithChangedNameAndEmail = 
+    let customerWithChangedNameAndEmail =
         {Id=CustomerId 1; EmailAddress=EmailAddress "z@example.com"; Name="Bob"}
 
-    let test1() = 
-        let result = PureImplementation.updateCustomer existingCustomer existingCustomer  
+    let test1() =
+        let result = PureImplementation.updateCustomer existingCustomer existingCustomer
         expectSameResultCase "When no change to customer expect no customer to update" "NoChange" existingCustomer result
 
-    let test2() = 
-        let result = PureImplementation.updateCustomer customerWithChangedNameOnly existingCustomer  
+    let test2() =
+        let result = PureImplementation.updateCustomer customerWithChangedNameOnly existingCustomer
         expectSameResultCase "When only name changed expect a customer to update" "CustomerUpdatedWithNoEmail" customerWithChangedNameOnly result
 
-    let test3() = 
-        let result = PureImplementation.updateCustomer customerWithChangedNameAndEmail existingCustomer  
+    let test3() =
+        let result = PureImplementation.updateCustomer customerWithChangedNameAndEmail existingCustomer
         expectSameResultCase "When name and email changed expect a customer to update and email to send" "CustomerUpdatedWithEmail" customerWithChangedNameAndEmail result
 
 // run the tests!
@@ -177,7 +186,7 @@ module PureImplementation_Shell =
 
     // Does IO, then calls the pure business logic
     let updateCustomer (newCustomer:Domain.Customer) = async {
-            // impure
+        // impure
         let! existingCustomer = CustomerDatabase.readCustomer newCustomer.Id
 
         // pure business logic

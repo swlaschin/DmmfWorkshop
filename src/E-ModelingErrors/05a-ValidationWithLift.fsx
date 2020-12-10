@@ -51,30 +51,35 @@ let goodName =
     let strLast = "Smith"   // less than 10 -- good!
 
     let firstOrError =
-        strFirst 
-        |> String10.create "FirstName" 
+        strFirst
+        |> String10.create "FirstName"
         |> Validation.ofResult
     let lastOrError =
-        strLast 
-        |> String10.create "LastName"  
+        strLast
+        |> String10.create "LastName"
         |> Validation.ofResult
 
-    (Validation.lift2 createName) firstOrError lastOrError
+    let personOrError =
+        (Validation.lift2 createName) firstOrError lastOrError
 
+    personOrError // return
 
 let badName =
     // input from user
     let strFirst = "Jean-Claude"   // more than 10 -- bad!
     let strLast = ""               // empty -- bad!
-    
+
     let firstOrError =
-        strFirst 
-        |> String10.create "FirstName" 
+        strFirst
+        |> String10.create "FirstName"
         |> Validation.ofResult
     let lastOrError =
-        strLast 
-        |> String10.create "LastName"  
+        strLast
+        |> String10.create "LastName"
         |> Validation.ofResult
-    
-    (Validation.lift2 createName) firstOrError lastOrError
+
+    let personOrError =
+        (Validation.lift2 createName) firstOrError lastOrError
+
+    personOrError // return
 

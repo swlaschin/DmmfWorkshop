@@ -29,6 +29,7 @@
     <None Include="05a-ValidationWithLift.fsx" />
     <None Include="05b-Exercise-ValidationWithLift.fsx" />
     <None Include="05c-Exercise-ValidationWithLift%28answers%29.fsx" />
+    <None Include="05d_HowValidationWorks.fsx" />
     <None Include="Result.fsx" />
   </ItemGroup>
 

@@ -89,8 +89,9 @@ let goodName =
         String10.create "lastName"  "Smith"  // less than 10 -- good!
         |> Validation.ofResult
     // Exercise: fix the compiler error by using Validation.lift2
-    createName firstOrError lastOrError
-
+    let nameOrError =
+        createName firstOrError lastOrError
+    nameOrError // return
 
 let badName =
     let firstOrError =
@@ -100,8 +101,9 @@ let badName =
         String10.create "LastName"  ""            // empty -- bad
         |> Validation.ofResult
     // Exercise: fix the compiler error by using Validation.lift2
-    createName firstOrError lastOrError
-
+    let nameOrError =
+        createName firstOrError lastOrError
+    nameOrError // return
 
 // -------------------------------
 // test that the validation works for Person
@@ -130,8 +132,10 @@ let goodPerson =
         |> Validation.ofResult
 
     // Exercise: fix the compiler error by using Validation.lift3
-    createPerson nameOrError ageOrError emailOrError
+    let personOrError = 
+        createPerson nameOrError ageOrError emailOrError
 
+    personOrError // return
 
 
 let badPerson =
@@ -151,8 +155,10 @@ let badPerson =
         |> Validation.ofResult
 
     // Exercise: fix the compiler error by using Validation.lift3
-    createPerson nameOrError ageOrError emailOrError
+    let personOrError = 
+        createPerson nameOrError ageOrError emailOrError
 
+    personOrError // return
 
 // Exercise: create a function that takes all the components and builds a Person or error
 // given all the primitive values
