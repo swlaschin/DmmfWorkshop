@@ -21,6 +21,12 @@ module ConstrainedTypes =
         /// I.e. wrap an int in a OrderLineQty (if possible!).
         /// Used like a "factory method" "constructor" etc
         let create qty =
+            // IMPORTANT! In F# if/then/else is an *expression*
+            // not a statement, so each branch must return something
+            // and all branches must return the same type
+            // The nearest equivalent in C-like languages
+            // is the ternary "if"
+            //    if x ? a : b
             if qty < 1 then
                 None
             else if qty > 100 then

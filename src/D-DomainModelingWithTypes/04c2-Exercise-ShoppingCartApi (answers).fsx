@@ -88,7 +88,7 @@ module AlternativeApi =
         | EmptyCartState
         | ActiveCartState of ActiveCartData
 
-    // "PaidCard" can be renamed to "Order"
+    // "PaidCart" can be renamed to "Order"
     type Order = {
         Contents: CartItem list
         Payment : Payment
@@ -101,7 +101,7 @@ module AlternativeApi =
     type AddToActive = ActiveCartData * CartItem -> UnpaidCart
 
     /// "pay" creates a new Order from ActiveCartData and a Payment
-    type Pay = ActiveCartData  * Payment -> Order
+    type Pay = ActiveCartData * Payment -> Order
 
     /// "removeFromActive" creates a new state from ActiveCartData after removing an CartItem
     type RemoveFromActive = ActiveCartData * CartItem -> UnpaidCart

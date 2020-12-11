@@ -25,7 +25,8 @@ type Request = {
 
 //===========================================
 // Define the error type here.
-// Add to it incrementally as you develop the pipeline.
+// TIP: Add to it incrementally as you work through
+// the pipeline, rather than defining every error up front.
 //===========================================
 
 type ErrorMessage =

@@ -34,7 +34,7 @@ type FirstName = String50  // OK
 *)
 
 // ====================================
-// Question: When to use public vs.private constructors?
+// Question: When to use public vs. private constructors?
 // Answer: It depends on how much yout trust the callers
 // ====================================
 
@@ -48,7 +48,8 @@ If the wrapper was ever used directly, then hopefully this wold be caught in cod
 *)
 
 // ====================================
-// Question: How does constrained types compare with using a validation attribute?
+// Question: How does using a constrained type compare with
+//           using a validation attribute?
 // Answer: It's much better
 // ====================================
 
