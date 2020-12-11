@@ -96,3 +96,6 @@ module LiftImplementation_v4 =
         let (<*>) = apply
         // looks very similar to "f x1 x2 x3"
         f <!> x1 <*> x2 <*> x3
+
+        // for lots of parameters, use this approach
+        // f <!> x1 <*> x2 <*> x3 <*> x4 <*> x5 <*> x6 <*> x7 <*> x8

@@ -168,8 +168,10 @@ let badPerson =
 let createPersonOrError (first:string) (last:string) (age:int) (email:string) : Validation<Person,string> =
 
     // fix this bad implementation
-    // let name = createName first last
-    // createPerson name age email
+    (*
+    let name = createName first last
+    createPerson name age email
+    *)
 
     let nameOrError =
         let firstOrError =
