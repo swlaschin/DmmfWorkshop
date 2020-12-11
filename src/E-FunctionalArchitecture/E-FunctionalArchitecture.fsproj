@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="00-Overview-of-part-C.txt" />
     <Content Include="01-Exercises.txt" />
     <None Include="PersonDomain.fsx" />
     <None Include="01a-Exercise-DtoValidation.fsx" />
