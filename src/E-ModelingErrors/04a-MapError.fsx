@@ -72,7 +72,7 @@ type FoodError =
 let functionA' apple =   // "functionA'" means a modification of "functionA"
 
     // define the converter function to be used with mapError
-    let transformError appleError =  // wraps the AppleError in a FruitError
+    let transformError (appleError:AppleError) :FruitError =  // wraps the AppleError in a FruitError
         AppleErrorCase appleError
 
     apple

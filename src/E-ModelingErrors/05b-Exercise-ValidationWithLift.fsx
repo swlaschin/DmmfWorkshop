@@ -14,7 +14,7 @@
 module Domain =
 
     // String10 must be not empty AND len < 10
-    type String10 =  private String10 of string
+    type String10 = private String10 of string
 
     // Age must be between 0..130
     type Age = private Age of int

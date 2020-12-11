@@ -26,8 +26,8 @@ type Request = {
 
 type ErrorMessage =
   | NameNotBlank   // name not blank
-  | ?? of int  // name not longer than
-  | ??   // email not blank
+  //| ?? of int  // name not longer than
+  //| ??   // email not blank
 
 
 //===========================================
