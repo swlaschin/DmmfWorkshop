@@ -16,6 +16,10 @@
 // Load a file with library functions for Result
 #load "Result.fsx"
 
+// A library of utility functions for railway oriented programming
+// which are not specific to this workflow and could be reused.
+#load "RopUtil.fsx"
+
 // Some data to validate
 type Request = {
     UserId: int
@@ -35,31 +39,6 @@ type ErrorMessage =
   | EmailMustNotBeBlank
   | SmtpServerError of string
 
-//===========================================
-// A library of utility functions for railway oriented programming
-// which are not specific to this workflow and could be reused.
-//===========================================
-
-module RopUtil =
-
-    /// convert a "dead-end" function into a useful function
-    let tee f result =
-      f result
-      result
-
-    /// convert an exception throwing function
-    /// into a useful function
-    let catch exceptionThrowingFunction handler oneTrackInput =
-        try
-            Ok (exceptionThrowingFunction oneTrackInput)
-        with
-        | ex ->
-            Error (handler ex)
-
-    /// like catch but with *twoTrackInput*
-    let catchR exceptionThrowingFunction handler twoTrackInput =
-        let catch' = catch exceptionThrowingFunction handler
-        twoTrackInput |> Result.bind catch'
 
 //===========================================
 // Step 1 of the pipeline: validation

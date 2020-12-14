@@ -15,6 +15,7 @@
     <None Include="02a-Exercise-ChainingValidationsWithBind.fsx" />
     <None Include="02b-Exercise-ChainingValidationsWithBind%28answers%29.fsx" />
     <Content Include="03-Exercises.txt" />
+    <None Include="RopUtil.fsx" />
     <None Include="03a-RopWithStringError.fsx" />
     <None Include="03b-Exercise-RopWithErrorType.fsx" />
     <None Include="03c-Exercise-RopWithErrorType%28answers%29.fsx" />
