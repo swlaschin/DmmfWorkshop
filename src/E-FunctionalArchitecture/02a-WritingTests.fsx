@@ -18,9 +18,12 @@ let tests = testList "my tests" [
         let expected = 4
         Expect.equal expected (2+2) "2+2 = 4"
 
-    testCase "a failing test" <| fun () ->
+    testCase "an implicit failing test" <| fun () ->
         let expected = 3
         Expect.equal expected (2+2) "2+2 = 3"
+
+    testCase "an explicit test" <| fun () ->
+        Expecto.Api.failtest "expected 3"
 
     testCase "a test that throws an exception" <| fun () ->
         failwith "invalid input"
