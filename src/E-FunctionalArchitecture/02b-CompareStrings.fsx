@@ -60,6 +60,8 @@ module PureCore =
 // It's easy to unit test a pure function
 PureCore.compare_two_strings "a" "b"
 PureCore.compare_two_strings "a" "a"
+PureCore.compare_two_strings "b" "a"
+
 
 //========================================
 // implementation of shell/api
