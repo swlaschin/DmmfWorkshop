@@ -2,11 +2,15 @@
 // Exercise 2:
 // =================================
 
-Read through and understand all the examples from the slides
-* 02a-IO-AtEdges.fsx
-* 02b-IO-AtEdgesAsync.fsx
+Read through and understand how to write tests
+* 02a-WritingTests.fsx
 
-Do the exercises here:
-* 02c-Exercise-IO-AtEdges.fsx
+Read through and understand the impure and pure implementations
+* 02b-CompareStrings.fsx
+* 02c-CompareStringsAsync.fsx
+
+Exercise: Read the requirements and then refactor the impure implementataion:
+* 02d-UpdateCustomer-Impure.fsx
+* 02e-Exercise-UpdateCustomer-Pure.fsx
 
 

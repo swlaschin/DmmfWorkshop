@@ -14,14 +14,17 @@
 
 
 (*
-========================================
-Example 1
-========================================
+REQUIREMENTS:
+
 Read two strings from input and compare them.
 Print whether the first is bigger, smaller, or equal to the second
 *)
 
+
+//========================================
 // Async versions of read and write
+//========================================
+
 module IO =
     let readLine() = async {
         return System.Console.ReadLine()
@@ -30,7 +33,11 @@ module IO =
         printfn "%s" str
         }
 
-module Example1_Impure =
+//========================================
+// Impure implementation
+//========================================
+
+module Impure =
 
     let compare_two_strings() = async {
         do! IO.writeLine "Enter the first value"
@@ -51,14 +58,17 @@ module Example1_Impure =
 
 // impure test
 (*
-Example1_Impure.compare_two_strings() |> Async.RunSynchronously
+Impure.compare_two_strings() |> Async.RunSynchronously
 *)
 
 
-// -------------------------
-// Pure version doesn't change when async IO is used
-// -------------------------
-module Example1_Pure_Core =
+//========================================
+// pure implementation
+//========================================
+
+// NOTE: Pure version doesn't change at all when async IO is used!
+
+module PureCore =
 
     type ComparisonResult =
         | Bigger
@@ -74,14 +84,17 @@ module Example1_Pure_Core =
             Equal
 
 // It's easy to unit test a pure function
-Example1_Pure_Core.compare_two_strings "a" "b"
-Example1_Pure_Core.compare_two_strings "a" "a"
+PureCore.compare_two_strings "a" "b"
+PureCore.compare_two_strings "a" "a"
 
+//========================================
+// implementation of shell/api
+//========================================
 
-// The shell layer handles the I/O
-// and then calls the pure code in Example1_Pure_Core
-module Example1_Pure_Shell =
-    open Example1_Pure_Core
+// The shell layer handles the async I/O
+// and then calls the pure code in PureCore
+module Shell =
+    open PureCore
 
     let compare_two_strings() = async {
         // impure section
@@ -91,7 +104,7 @@ module Example1_Pure_Shell =
         let! str2 = IO.readLine()
 
         // pure section
-        let result = Example1_Pure_Core.compare_two_strings str1 str2
+        let result = PureCore.compare_two_strings str1 str2
 
         // impure section
         match result with
@@ -105,6 +118,6 @@ module Example1_Pure_Shell =
 
 // impure test
 (*
-Example1_Pure_Shell.compare_two_strings()  |> Async.RunSynchronously
+Shell.compare_two_strings()  |> Async.RunSynchronously
 *)
 
