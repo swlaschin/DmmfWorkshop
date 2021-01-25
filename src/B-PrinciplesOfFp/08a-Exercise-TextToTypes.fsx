@@ -167,4 +167,5 @@ workflow PlayMove =
 type Move = undefined
 type MoveResult = undefined
 type GameState = undefined
-type PlayMove = Move * GameState -> MoveResult * GameState
+
+type PlayMove = Move * GameState -> ??

@@ -26,7 +26,7 @@ module AliasExample =
     type FirstName = string  // alias
     type LastName = string   // alias
 
-    // better to understand :(
+    // better to understand! 
     type Name_v2 = FirstName * LastName
 
 module AliasExample2 =
