@@ -4,6 +4,36 @@
 // ================================================
 
 // -----------------------------------
+(*
+Quiz:
+
+Which of these are total functions
+and which are partial functions?
+
+// get first element of a list
+firstElement : int list -> int
+
+// get number of elements in a list
+elementCount : int list -> int
+
+// convert a str to an int
+strToInt : string -> int
+
+// format an int into a string
+intToStr : int -> string
+
+// convert a 32-bit int into a 16-bit int
+longToInt : int32 -> int16
+
+// convert a float into an int (assuming truncation of decimals)
+floatToInt: float -> int
+
+*)
+
+// -----------------------------------
+
+
+// -----------------------------------
 // 1. Create a function that converts a string (e.g "Sunday")
 // into an DayOfWeek type
 // -----------------------------------
