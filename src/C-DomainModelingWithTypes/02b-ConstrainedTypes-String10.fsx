@@ -47,117 +47,96 @@ module ConstrainedTypes =
             // the unwrapping (String10 str) is normally done directly in the parameter list though
 
 
-
-    /// Define a wrapper type with a *private* constructor.
-    /// Only code in the same module can use this constructor now.
-    type EmailAddress = private EmailAddress of string
-
-    /// Define a helper module for EmailAddress that
-    /// has access to the private constructor
-    module EmailAddress =
-
-        /// Expose a public "factory" function
-        /// to construct a value, or return an error
-        let create str =
-            if String.IsNullOrEmpty(str) then
-                None
-            else if not (str.Contains("@")) then
-                None
-            else
-                Some (EmailAddress str)
-
-        /// Expose a public function
-        /// to extract the wrapped value
-        let value (EmailAddress str) = str
-
 open ConstrainedTypes
 
 //TODO uncomment to see the compiler error
 // let compileError = String10 "1234567890"
 
 // create using the exposed constructor
-let validString10 = String10.create "1234567890"
-let invalidString10 = String10.create "12345678901"
+let validString10Opt = String10.create "1234567890"
+let invalidString10Opt = String10.create "12345678901"
 
-// create using the exposed constructor
-let validEmail = EmailAddress.create "a@example.com"
-let invalidEmail = EmailAddress.create "example.com"
+let printWrappedValue emailOpt =
+    // If we want to get the inner value out, we have to pattern match
+    // the option
+    match emailOpt with
+    | Some string10 ->
+        let inner = String10.value string10
+        printfn "The String10 is valid and the wrapped value is %s" inner
+    | None ->
+        printfn "The value is None"
 
-// Now we have to match if we want to get the inner value out
-match validEmail with
-| Some email ->
-    let inner = EmailAddress.value email
-    printfn "The inner is %s" inner
-| None -> ()
+printWrappedValue validString10Opt
+printWrappedValue invalidString10Opt
+
+
+
+
 
 // --------------------------------------------
-// using constrained types in a workflow
+// EXAMPLE: Defining a workflow that uses constrained types as parameter
 // --------------------------------------------
-module MyWorkflows =
+module CoreImplementation =
 
     // define a dummy workflow
-    let mainWorkflow (str10:String10) : bool =
+    let mainWorkflow (str10:String10) =
         // values are immutable and not null
         // so no defensive programming is needed.
 
-        // is the str10 null? NOT NEEDED
-        // is the str10.Length <= 10? NOT NEEDED
-        true
+        // Check to see if the str10 null? NOT NEEDED
+        // Uncomment below to see the compiler error
+        // if str10 = null then failwith "null exception"
+
+        // Check to see if the str10.Length <= 10? NOT NEEDED
+        // Uncomment below to see the check, but it will never fail.
+        // if (String10.value str10).Length > 10 then failwith "invalid string"
+
+        () // do nothing
 
 
 // --------------------------------------------
-// Using a workflow with constrained types
+// Example: Calling a workflow which needs constrained types
 // --------------------------------------------
 
-module Example1 =
+module WebServiceExample =
+
+    (* ------- uncomment to see compiler error below
 
     // the main public API that wraps the workflow
-    let myWorkflow input =
+    let myApi_v1 input =
 
         // create a value from the input (eg JSON)
-        let str10option = String10.create input
+        let string10Option = String10.create input
 
         // If you try to call the workflow without checking if it is valid
         // you will get a compile-time error
-        MyWorkflows.mainWorkflow str10option
-
-// test
-Example1.myWorkflow "1234567890"
-
-
-// Instead, you need to check first
-module Example2 =
+        CoreImplementation.mainWorkflow string10Option
+    ------- *)
 
     // the main public API that wraps the workflow
-    let myApi input =
+    let myApi_v2 input =
 
         // ----------------------------------
         // Validation at the edges
         // ----------------------------------
         // create a value from the input (eg JSON)
-        let str10option = String10.create input
+        let string10Option = String10.create input
         // lots of other validations here
 
-        match str10option with
-        | Some str10 ->
-
-            // ----------------------------------
-            // Core code uses only validated data
-            // ----------------------------------
-            // the input is valid, so call the workflow
-            let result = MyWorkflows.mainWorkflow str10
-
-
-            match result with
-            | true -> "200 OK"
-            | false -> "500 ServerError"
+        match string10Option with
         | None ->
             // the input is not valid, so return an error
             "400 BadRequest"
+        | Some string10 ->
+            // otherwise the input IS valid, so call the workflow
+            CoreImplementation.mainWorkflow string10
+            "200 OK"
+
 
 
 // test
-Example2.myApi "1234567890"
+WebServiceExample.myApi_v2 "1234567890"
+WebServiceExample.myApi_v2 "12345678901"
 
 
 // --------------------------------------------
@@ -169,10 +148,10 @@ Example2.myApi "1234567890"
 
 type Contact = {
     // 1. putting the validation in the type
-    Email: EmailAddress
+    FirstName: String10
 
     // 2. putting the validation in a property attribute
-    //[Validation(EmailAddress)]
-    Email2: string
+    //[Validation(MaxLen(10))]
+    FirstName_v2: string
 
     }

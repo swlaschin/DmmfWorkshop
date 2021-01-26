@@ -12,48 +12,10 @@ open System
 let notImplemented() = failwith "not implemented"
 
 //----------------------------------------------------------
-// Exercise: Create a `NonZeroInteger`  type that can only contain non-zero integers
-//----------------------------------------------------------
-
-// This could be stored in an external file and loaded
-// as a script using something like this:
-// #load "ConstrainedTypes.fsx"
-
-module ConstrainedTypes =
-
-    /// Must be <> 0
-    type NonZeroInteger = private NonZeroInteger of int
-
-    module NonZeroInteger =
-
-        // TODO: Implement public constructor
-        let create i =
-            if i = 0 then
-                None
-            else
-                Some (NonZeroInteger i)
-
-        // TODO: Return the value
-        let value (NonZeroInteger i) = i
-
-// --------------------------------
-// test NonZeroInteger
-// --------------------------------
-
-open ConstrainedTypes
-
-// test
-// NonZeroInteger 1 // uncomment for error
-let nonZeroOpt0 = NonZeroInteger.create 0
-let nonZeroOpt1 = NonZeroInteger.create 1
-
-
-
-//----------------------------------------------------------
 //  Exercise: Create a `ZipCode`  type that can only contain 5 digit chars
 //----------------------------------------------------------
 
-module ConstrainedTypes2 =
+module ConstrainedTypes =
 
     /// Must be 5 chars, all digits
     type ZipCode = private ZipCode of string
@@ -81,12 +43,21 @@ module ConstrainedTypes2 =
 // test ZipCode
 // --------------------------------
 
-open ConstrainedTypes2
+open ConstrainedTypes
+
+let printWrappedValue zipCodeOpt =
+    match zipCodeOpt with
+    | Some zipCode ->
+        let inner = ZipCode.value zipCode
+        printfn "The ZipCode is valid and the wrapped value is %s" inner
+    | None ->
+        printfn "The value is None"
 
 let zip1Option = ZipCode.create "12345"
-let zip1 = zip1Option |> Option.get  // dont do this except for testing!
+printWrappedValue zip1Option
 
 let zip2Option = ZipCode.create "abc"
+printWrappedValue zip2Option
 
 let zip3Option = ZipCode.create "123456"
-
+printWrappedValue zip3Option

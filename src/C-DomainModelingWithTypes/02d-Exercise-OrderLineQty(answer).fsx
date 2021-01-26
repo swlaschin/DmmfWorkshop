@@ -63,12 +63,12 @@ open ConstrainedTypes
 
 // Exercise: Write a function that adds one to an OrderLineQty
 let increment (olq:OrderLineQty) =
-    let i1 = OrderLineQty.value olq
-    let i2 = i1 + 1
-    OrderLineQty.create i2
+    let i1 = OrderLineQty.value olq   // i1 is an int
+    let i2 = i1 + 1                   // i2 is an int
+    OrderLineQty.create i2            // return an OrderLineQty here
 
 // This is what the type signature looks like.
-// Note that it MUST return an option!
+// Note that it MUST return an optional OrderLineQty!
 // val increment :
 //   olq:OrderLineQty -> OrderLineQty option
 
@@ -100,30 +100,34 @@ decrement OrderLineQty.maxValue
 // Adding defaults
 // =========================================
 
-// If you want to get rid of the optional value,
-// you can use Option.defaultValue to get
-// a default value in the None case
+(*
+What happens if you use the increment button on the website
+and you go above 100?
 
-// example
-(Some 42) |> Option.defaultValue 0    // 42
-None |> Option.defaultValue 0         // 0
-// Note that these always return an int instead of an option int
+Should you remove the item from the shopping cart?
+
+Probably not. Instead, you want to "max out" at 100
+
+You can do this using Option.defaultValue.
+It will leave a "Some" alone but it will replace a "None" and with another value.
+
+*)
 
 // Example using the increment function above
 // These now return a normal OrderLineQty instead of an optional one.
-decrement OrderLineQty.minValue
-|> Option.defaultValue OrderLineQty.minValue
+increment OrderLineQty.minValue               // this is a "Some"
+|> Option.defaultValue OrderLineQty.maxValue  // so the defaultValue is not used
 
-increment OrderLineQty.maxValue
-|> Option.defaultValue OrderLineQty.maxValue
+increment OrderLineQty.maxValue               // this is a "None"
+|> Option.defaultValue OrderLineQty.maxValue  // so the defaultValue IS used
+
 
 // =========================================
-// Exercise: Implement functions that dont return options
+// Exercise: Implement a different "increment" function
 // =========================================
-
 
 // Exercise: Write a function that adds one to an OrderLineQty
-// If it goes > OrderLineQty.maxValue then return maxValue
+// If it goes over OrderLineQty.maxValue then return maxValue
 let increment_v2 (olq:OrderLineQty) =
     let i1 = OrderLineQty.value olq
     let i2 = i1 + 1
@@ -135,16 +139,5 @@ let increment_v2 (olq:OrderLineQty) =
 // val increment_v2 :
 //   olq:OrderLineQty -> OrderLineQty
 
-// Exercise: Write a function that subtracts one from an OrderLineQty
-// If it goes < OrderLineQty.minValue then return OrderLineQty.minValue
-let decrement_v2 (olq:OrderLineQty) =
-    let i1 = OrderLineQty.value olq
-    let i2 = i1 - 1
-    OrderLineQty.create i2
-    |> Option.defaultValue OrderLineQty.minValue
-
-// This is what the type signature looks like.
-// Note that it does NOT return an option now!
-// val decrement_v2 :
-//   olq:OrderLineQty -> OrderLineQty
-
+// test it to make sure it works and stays at 100
+increment_v2 OrderLineQty.maxValue

@@ -6,7 +6,7 @@
 // =================================
 
 
-module ExamplesFromSlides =
+module ExamplesFromSlides_1 =
 
     // ================================================
     // (from slides) Using options to model missing data
@@ -46,11 +46,16 @@ module ExamplesFromSlides =
     //let areEqual2 = (value2a=value2b)   //TODO uncomment to see an error
 
 
-    // ================================================
-    // (from slides) Constructing optional values
-    // ================================================
+// ================================================
+// (from slides) Constructing optional values
+// ================================================
+module ExamplesFromSlides_2 =
 
-    open System.Text.RegularExpressions
+    //-----------------------------------
+    // EmailAddress 
+    //-----------------------------------
+
+    type EmailAddress = EmailAddress of string
 
     let createEmailAddress (s:string) =
         if s.Contains("@") then
@@ -58,6 +63,10 @@ module ExamplesFromSlides =
         else
             None
     // val createEmailAddress : s:string -> EmailAddress option
+
+    //-----------------------------------
+    // String50 
+    //-----------------------------------
 
     type String50 = String50 of string
 
@@ -68,6 +77,9 @@ module ExamplesFromSlides =
             None
     // val createString50 : s:string -> String50 option
 
+    //-----------------------------------
+    // OrderLineQty 
+    //-----------------------------------
 
     type OrderLineQty = OrderLineQty of int
 
@@ -80,7 +92,7 @@ module ExamplesFromSlides =
 
 
 module TestExamplesFromSlides =
-    open ExamplesFromSlides
+    open ExamplesFromSlides_2
 
     let goodEmail = createEmailAddress "good@example.com"
     let badEmail = createEmailAddress "bad"
