@@ -1,0 +1,11 @@
+﻿// =================================
+// Exercise 6: Modeling with Total functions
+// =================================
+
+
+Read through and understand the TwelveDividedBy example
+* 06a-TotalFunctions.fsx
+
+Do the exercise:
+* 06b-Exercise-TotalFunctions.fsx
+* 06d-Exercise-NonEmptyList.fsx

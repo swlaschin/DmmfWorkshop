@@ -82,13 +82,15 @@ module Connection_After =
 (*
 // Exercise 3c
 
-An Order is either Paid or Unpaid.
-If it is paid, the Amount and PaidDate are set.
+An Order is either New OR Paid or Completed.
+* If it is New, it has an Id and a list of items
+* If it is Paid, the Amount and PaidDate are also set.
+* If it is Completed, the ShippedDate is also set.
 
 Question: What are the illegal states?
 
-Your task: redesign this type into two states.
-Can you guess what the states are from the flags?
+Your task: redesign this type into three states.
+Can you guess what the states are from the enum?
 How does the refactored version help improve the documentation?
 
 *)
@@ -96,12 +98,15 @@ How does the refactored version help improve the documentation?
 // contains the original code
 module Order_Before =
 
+    type OrderStateEnum = New | Paid | Shipped
     type Order =
        {
        OrderId: int
-       IsPaid: bool
+       Items : string list
+       OrderState: OrderStateEnum
        PaidAmount: float option
        PaidDate: System.DateTime option
+       ShippedDate: System.DateTime option
        }
 
 // contains the redesigned code
@@ -113,7 +118,7 @@ module Order_After =
 Questions for discussion:
 
 * When does it make sense to use a type alias rather than a separate type?
-
 * When does it make sense to define a new type rather than use a tuple?
 
+All these questions and more are discussed in the "answer" file!
 *)

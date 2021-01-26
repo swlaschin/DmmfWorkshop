@@ -1,11 +1,28 @@
 ﻿// =================================
-// Exercise 5: Modeling with Total functions
+// Exercise 5: State machines
 // =================================
 
 
-Read through and understand the TwelveDividedBy example
-* 05a-TotalFunctions.fsx
+Now practice putting it all together!
 
-Do the exercise:
-* 05b-Exercise-TotalFunctions.fsx
-* 05d-Exercise-NonEmptyList.fsx
+Do one or more of the following exercises:
+
+Shopping cart API
+* 05c1-Exercise-ShoppingCartApi.fsx
+  related diagram is: 05c0-Exercise-ShoppingCart(diagram).png
+* 05d1-Exercise-ShoppingCartClient.fsx
+
+Delivery API
+* 05e1-Exercise-DeliveryApi.fsx
+  related diagram is: 05e0-Exercise-Delivery(diagram).png
+* 05f1-Exercise-DeliveryApiClient.fsx
+
+
+For your own implementations: Understand the template
+* 05a1-StateMachine(template to work from).fsx
+  related diagram is: 05a0-StateMachine(diagram).png
+
+Read through and understand the email example
+* 05b1-EmailStateTransition(example).fsx
+  related diagram is: 05b0-EmailStateTransition(diagram).png
+
