@@ -38,10 +38,11 @@
     <Content Include="08-Exercises.txt" />
     <None Include="08a-Exercise-TextToTypes.fsx" />
     <None Include="08b-Exercise-TextToTypes(answer).fsx" />
-    <None Include="08c-Aliases-vs-WrapperTypes.fsx" />
+    <None Include="08c-HowToWorkWithTypes.fsx" />
     <None Include="08d-Exercise-ImplementingTypes.fsx" />
-    <None Include="08e-Exercise-ImplementingTypes(answer).fsx" />
+    <None Include="08e-Exercise-ImplementingTypes%28answer%29.fsx" />
     <None Include="08f-ModelingWithChoices.fsx" />
+    <None Include="08g-Aliases-vs-WrapperTypes.fsx" />
     <None Include="99-FP-FrequentQuestions.fsx" />
   </ItemGroup>
 

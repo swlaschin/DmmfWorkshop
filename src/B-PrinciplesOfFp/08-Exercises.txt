@@ -2,13 +2,18 @@
 // Exercise 8: Getting comfortable with F# types
 // =================================
 
-Do each of the following exercises:
+Do the following exercise:
 * 08a-Exercise-TextToTypes.fsx
+
+Work through the code in
+* 08c-HowToWorkWithTypes.fsx
+
+Do the following exercise:
 * 08d-Exercise-ImplementingTypes.fsx
 
-Do work through the code in
-* 08c-Aliases-vs-WrapperTypes.fsx
+Work through the code in
 * 08f-ModelingWithChoices.fsx
+* 08g-Aliases-vs-WrapperTypes.fsx
 
 and see questions from previous session
 * src/A-DDD/99-DomainModeling-FrequentQuestions.fsx
