@@ -24,19 +24,6 @@
     <None Include="03c-CompleteApp-Dto.fsx" />
     <None Include="03d-CompleteApp-Api.fsx" />
     <None Include="03e-CompleteApp-Combined.fsx" />
-    <Content Include="04-Exercises.txt" />
-    <None Include="04a-AnagramGame-Imperative.fsx" />
-    <None Include="04b-AnagramGame-Functional.fsx" />
-    <None Include="04c-AnagramGame-HighLevelInterpreter.fsx" />
-    <None Include="04d-AnagramGame-HighLevelInterpreterCE.fsx" />
-    <None Include="04e-AnagramGame-LowLevelInterpreter.fsx" />
-    <None Include="04f-AnagramGame-LowLevelInterpreterCE.fsx" />
-    <Content Include="05-Exercises.txt" />
-    <None Include="05a-GuessingGame-Imperative.fsx" />
-    <None Include="05b-GuessingGame-Functional.fsx" />
-    <None Include="AnagramDictionary.fsx" />
-    <Content Include="WordListTest.txt" />
-    <Content Include="WordList10000.txt" />
     <None Include="Expecto.fsx" />
     <None Include="Result.fsx" />
   </ItemGroup>
