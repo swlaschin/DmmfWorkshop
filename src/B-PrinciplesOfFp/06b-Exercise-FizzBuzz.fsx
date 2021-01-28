@@ -29,27 +29,47 @@ let simpleFizzBuzz n =
     else
         string n
 
-// test it on the numbers up to 30
-[1..30] |> List.map simpleFizzBuzz
 
-(*
-F# TIPS:
-* There is no "return" - the last value in the function is a return
-* To check for divisibility use the helper function
-  "isDivisibleBy" defined above
-* To create a string from int use the "string" function
-  string 123
-* In F#, if/then/else expressions look like
-    if x then
-        y
+// test it
+simpleFizzBuzz 3
+simpleFizzBuzz 4
+
+// test it on all the numbers up to 30
+[1..30] |> List.map simpleFizzBuzz |> String.concat ","
+
+// =======================================
+// Active patterns version
+// =======================================
+
+// F# also supports "active patterns" where you can pattern match
+// on functions. This workshop is not really about F# in detail,
+// but it's a nice feature to encapsulate logic cleanly
+
+let (|DivisibleBy|_|) factor n =
+    if n |> isDivisibleBy factor then
+        Some DivisibleBy
     else
-        z
-*)
+        None
+
+// Here's what FizzBuzz looks like using active patterns
+let simpleFizzBuzz_v2 n =
+    match n with
+    | DivisibleBy 3 & DivisibleBy 5 ->
+        "FizzBuzz"
+    | DivisibleBy 3 ->
+        "Fizz"
+    | DivisibleBy 5 ->
+        "Buzz"
+    | _ ->
+        string n
+
+
+
+// =======================================
+// Exercise: Rewrite FizzBuzz using a piping model.
+// =======================================
 
 (*
-
-Exercise:
-
 Rewrite this using a piping model.
 
 let fizzBuzz n =
@@ -92,9 +112,23 @@ let myData2 = SomethingElse 42
 // to deconstruct data in the choice
 let result =
     match myData with
-    | Something str -> ...
-    | SomethingElse i -> ...
+    | Something str ->
+    | SomethingElse i > ...
 
+*)
+
+(*
+OTHER F# TIPS:
+* There is no "return" - the last value in the function is a return
+* To check for divisibility use the helper function
+  "isDivisibleBy" defined above
+* To create a string from int use the "string" function
+  string 123
+* In F#, if/then/else expressions look like
+    if x then
+        y
+    else
+        z
 *)
 
 

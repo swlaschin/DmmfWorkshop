@@ -169,3 +169,8 @@ type MoveResult = undefined
 type GameState = undefined
 
 type PlayMove = Move * GameState -> ??
+            // ^pair of inputs      ^output
+
+// could also be written in curried style like this
+type PlayMove_v2 = Move -> GameState -> ??
+                // ^param1 ^param2      ^output

@@ -34,7 +34,8 @@ let logTheInput x =
     x
 
 let logTheOutput x =
-    printfn "Out=%i; " x; x
+    printfn "Out=%i; " x
+    x
 
 // ===========================================
 // Exercise: define the logged version of add1

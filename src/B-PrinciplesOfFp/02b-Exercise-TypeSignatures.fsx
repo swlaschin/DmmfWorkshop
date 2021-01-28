@@ -5,56 +5,58 @@
 // say whether it is a simple value or a function,
 // and if a function, what is the function signature?
 //
-// If in doubt, run them to find out!
+// I have commented them because if you are using VS Code or Rider,
+// you will see the answers already if you uncomment them!
 //
-// If you are using VS Code or Rider, you will see the answers already!
-// In that case, make sure you understand WHY the signatures are what they are.
+// To check your answer, uncomment and run them.
+//
+// In all cases, make sure you understand WHY the signatures
+// are what they are.
 // =============================================
 
-let testA = 2
+// let testA = 2
 
-let testB x = 2 + x
+// let testB x = 2 + x
 
-let testC x = 2.0 + x
+// let testC x = 2.0 + x
 
-let testD = "hello"
+// let testD = "hello"
 
-let testE = printfn "hello"
+// let testE = printfn "hello"
 
-let testF () = 42
+// let testF () = 42
 
-let testG () = printfn "hello"
+// let testG () = printfn "hello"
 
-let testH x = String.length x
+// let testH x = String.length x
 
-let testI x = sprintf "%i" x
+// let testI x = sprintf "%i" x
 
-let testJ x = printfn "%i" x
+// let testJ x = printfn "%i" x
 
-let testK x =
-    printfn "x is %f" x
-    x  // return x
+// let testK x =
+//     printfn "x is %f" x
+//     x  // return x
 
-let testL (f:int -> string) x =
-    f x
+// let testL (f:int -> string) x =
+//     f x
 
-let testM f (x:int) :string =
-    f x
+// let testM f (x:int) :string =
+//     f x
 
-let testN x :string = x 1   // hint: what does :string modify?
+// Trick question! Hint: what does :string modify?
+// let testN x :string = x 1
 
-let testO x = 1
+// let testO x = 1
 
-// val testO : x:'a -> int  // F# signature with a generic type
-// int testO<T>(T x)        // C# signature with a generic type
+// hint: what kind of thing is x?
+// let testP x = x 1
 
-let testP x = x 1          // hint: what kind of thing is x?
+// let testQ x y = x
 
-let testQ x y = x
+// let testR x y z = z
 
-let testR x y z = z
-
-let testS x = x=x
+// let testS x = (x=x)
 
 
 // =============================================
@@ -67,13 +69,15 @@ let testS x = x=x
 // =============================================
 
 // val sigA = int -> int
-// example of a possible answer:
+
+// Here's an example of a possible answer:
 (*
 let sigA x = x + 1
 *)
 
 // val sigB = int -> unit
-// example of a possible answer:
+
+// Here's an example of a possible answer:
 (*
 let sigB x = printfn "%i" x
 *)
@@ -123,12 +127,17 @@ So we need to say what type the parameters are too.
 // Exercise (HARD):
 // Below are four generic signatures.
 // Try to create four functions that are inferred to have these signatures.
+//
+// Avoid using explicit type annotations!
 // =============================================
 
 // val sigW = 'a -> int
+let sigW x = 42
 
 // val sigX = int -> 'a
+let sigX (x:int) =
 
 // val sigY = 'a -> 'a
+let sigY x = x
 
 // val sigZ = 'a -> 'b

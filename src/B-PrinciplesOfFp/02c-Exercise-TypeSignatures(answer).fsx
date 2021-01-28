@@ -151,16 +151,25 @@ So we need to say what type the parameters are too.
 // Exercise (HARD):
 // Below are four generic signatures.
 // Try to create four functions that are inferred to have these signatures.
+//
+// Avoid using explicit type annotations!
 // =============================================
 
 // val sigW = 'a -> int
 let sigW x = 1
 
 // val sigX = int -> 'a
-// not possible to implement
+// not possible to implement without cheating!
+// but if you use exceptions, you can write
+let sigX x =
+    printfn "%i" x
+    failwith "error"   // raise exception!
 
 // val sigY = 'a -> 'a
 let sigY x = x
 
 // val sigZ = 'a -> 'b
-// not possible to implement
+// not possible to implement without cheating!
+// but if you use exceptions, you can write
+let sigZ x =
+    failwith "error"   // raise exception!

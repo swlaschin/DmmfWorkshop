@@ -145,6 +145,10 @@ T returnSameThing<T>(T x) {
 let swap (x,y) = (y,x)
 // val swap : 'a * 'b -> 'b * 'a
 
+// If the values are compared, they must BOTH be the same type
+let compare x y = (x=y)
+// val compare : 'a -> 'a -> bool
+
 
 // The unit type is the empty value, like void.
 // It is written as ()

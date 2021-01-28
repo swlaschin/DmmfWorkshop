@@ -57,6 +57,21 @@ let validateRequest input =
   |> Result.bind name50
   |> Result.bind emailNotBlank
 
+(*
+NOTE: If we wanted to use the ideas from domain modeling,
+we could define a NEW type to represent a ValidatedRequest
+and return that as the output of the validation.
+*)
+(*
+type ValidatedRequest = ValidatedRequest of Request
+
+let validateRequest input  =
+    input
+    |> nameNotBlank
+    |> Result.bind name50
+    |> Result.bind emailNotBlank
+    |> Result.map ValidatedRequest   // mark as Validated
+*)
 
 // -------------------------------
 // test the "validateRequest" step interactively

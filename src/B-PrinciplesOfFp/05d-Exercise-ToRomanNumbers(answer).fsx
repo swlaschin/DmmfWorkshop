@@ -51,6 +51,9 @@ toRomanNumerals 12
 toRomanNumerals 14
 toRomanNumerals 1947
 
+// test it on all the numbers up to 30
+[1..30] |> List.map toRomanNumerals |> String.concat ","
+
 // =============================================
 // The replace function can also be used "inline".
 // To do this, pass the first two parameters explicitly,
@@ -63,6 +66,7 @@ toRomanNumerals 1947
 // * Rewrite the code to use "replace" directly, without helper functions
 //
 // =============================================
+
 
 
 // Inline version
@@ -114,6 +118,8 @@ toRomanNumerals_v3 19
 toRomanNumerals_v3 1947
 toRomanNumerals_v3 1999
 
+// test it on all the numbers up to 30
+[1..30] |> List.map toRomanNumerals_v3 |> String.concat ","
 
 // ======================================
 // What about logging?

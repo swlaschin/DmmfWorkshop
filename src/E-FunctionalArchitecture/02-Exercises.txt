@@ -9,7 +9,7 @@ Read through and understand the impure and pure implementations
 * 02b-CompareStrings.fsx
 * 02c-CompareStringsAsync.fsx
 
-Exercise: Read the requirements and then refactor the impure implementataion:
+Exercise: Read the requirements and then refactor the impure implementation:
 * 02d-UpdateCustomer-Impure.fsx
 * 02e-Exercise-UpdateCustomer-Pure.fsx
 
