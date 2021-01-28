@@ -59,8 +59,8 @@ module Calendar =
     type DayOfWeek = Sun | Mon | Tue | Wed | Thu | Fri | Sat
 
     module ExceptionBasedDesign =
-        let strToDayOfWeek s =
-            match s with
+        let strToDayOfWeek str =
+            match str with
             | "Sunday" | "Sun" -> Sun
             | "Monday" | "Mon" -> Mon
             | "Tuesday" | "Tue" -> Tue
@@ -73,7 +73,7 @@ module Calendar =
     module ExtendedOutputDesign =
         // Exercise: convert the function to be total
         //           by extending the output.
-        let strToDayOfWeek s = notImplemented()
+        let strToDayOfWeek str = notImplemented()
 
 
 // test the function
@@ -94,9 +94,9 @@ module IntUtil =
 
     module ExceptionBasedDesign =
 
-        let strToInt (s:string) =
+        let strToInt (str:string) =
             // this is how to parse an int
-            match System.Int32.TryParse s with
+            match System.Int32.TryParse str with
             // the Int32.TryParse method returns a tuple
             | (true,i) -> i
             | (false,_) -> failwith "input is not an int"
@@ -107,15 +107,16 @@ module IntUtil =
         // Reuse the "match System.Int32.TryParse" code
         // but return something different
         //
-        // Question: Should it have a different name?
-        let strToInt s = notImplemented()
+        // Question: Why is it not called "strToInt"
+        // like the original function?
+        let tryStrToInt s = notImplemented()
 
 // test the function
 IntUtil.ExceptionBasedDesign.strToInt "123"     // good
 IntUtil.ExceptionBasedDesign.strToInt "hello"   // exception :(
 
-IntUtil.ExtendedOutputDesign.strToInt "123"     // good
-IntUtil.ExtendedOutputDesign.strToInt "hello"   // good
+IntUtil.ExtendedOutputDesign.tryStrToInt "123"     // good
+IntUtil.ExtendedOutputDesign.tryStrToInt "hello"   // good
 
 // -----------------------------------
 // 3. Create a function that gets the first item in a list

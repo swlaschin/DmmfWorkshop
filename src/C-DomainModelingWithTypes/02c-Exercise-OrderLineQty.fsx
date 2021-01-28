@@ -80,7 +80,7 @@ let decrement (olq:OrderLineQty) =
 increment OrderLineQty.minValue
 increment OrderLineQty.maxValue
 
-// decrement the smallest and largetst values
+// decrement the smallest and largest values
 decrement OrderLineQty.minValue
 decrement OrderLineQty.maxValue
 
@@ -96,20 +96,30 @@ Should you remove the item from the shopping cart?
 
 Probably not. Instead, you want to "max out" at 100
 
-You can do this using Option.defaultValue.
-It will leave a "Some" alone but it will replace a "None" and with another value.
+You can do this using a "defaultValue" function.
+It will leave a "Some" alone but it will
+replace a "None" and with another value.
 
 *)
+
+let defaultValue aValue anOption =
+    match anOption with
+    | Some x -> x      // if Some, return the wrapped value
+    | None -> aValue   // if None, return the default value
+
+// usage examples
+Some 1 |> defaultValue 42    // 1
+None   |> defaultValue 42    // 42
 
 
 // Example using the increment function above
 // These now return a normal OrderLineQty instead of an optional one.
-increment OrderLineQty.minValue               // this is a "Some"
-|> Option.defaultValue OrderLineQty.maxValue  // so the defaultValue is not used
+increment OrderLineQty.minValue        // this is a "Some"
+|> defaultValue OrderLineQty.maxValue  // so the defaultValue is not used
 
-increment OrderLineQty.maxValue               // this is a "None"
-|> Option.defaultValue OrderLineQty.maxValue  // so the defaultValue IS used
 
+increment OrderLineQty.maxValue        // this is a "None"
+|> defaultValue OrderLineQty.maxValue  // so the defaultValue IS used
 
 
 // =========================================

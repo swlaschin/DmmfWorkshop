@@ -30,66 +30,112 @@ open ShoppingCartApiImplementation.ShoppingCartApi
 // ================================================
 // Now write some client code that uses this API
 // ================================================
-module ShoppingCartClient =
 
-    (*
-    // reminder how to wrap and unwrap if you need to...
-    // to wrap
-    let activeCartData = (ActiveCartData items)
-    // to unwrap
-    let (ActiveCartData items) = activeCartData
-    *)
+(*
+// reminder how to wrap and unwrap if you need to...
+// to wrap
+let activeCartData = (ActiveCartData items)
+// to unwrap
+let (ActiveCartData items) = activeCartData
+*)
 
-    // "clientAddItem" changes the cart state after adding an item
-    // function signature should be
-    //     CartItem -> ShoppingCart-> ShoppingCart
-    let clientAddItem (newItem:CartItem) (cart:ShoppingCart)  :ShoppingCart =
-        match cart with
-        | EmptyCartState ->
-            printfn "Adding item %s to empty cart" newItem
-            ShoppingCartApi.initCart newItem
-        | ActiveCartState activeCartData ->
-            printfn "Adding item %s to active cart" newItem
-            ShoppingCartApi.addToActive (newItem,activeCartData)
-        | PaidCartState paidCardData ->
-            printfn "Can't modify paid cart"
-            cart // return original cart
+// ---------------------------------------------
+// implement clientAddItem
+// ---------------------------------------------
 
-    // "clientPayForCart " changes the cart state after paying
-    // function signature should be
-    //     Payment -> ShoppingCart-> ShoppingCart
-    let clientPayForCart (payment:Payment) (cart:ShoppingCart)  :ShoppingCart =
-        match cart with
-        | EmptyCartState ->
-            printfn "Can't pay for empty cart"
-            cart // return original cart
-        | ActiveCartState activeCartData ->
-            printfn "Paying %g for active cart" payment
-            ShoppingCartApi.pay (payment,activeCartData)
-        | PaidCartState paidCardData ->
-            printfn "Cart already paid for"
-            cart // return original cart
+// "clientAddItem" changes the cart state after adding an item
+// function signature should be
+//     CartItem -> ShoppingCart-> ShoppingCart
+let clientAddItem (newItem:CartItem) (cart:ShoppingCart)  :ShoppingCart =
+    match cart with
+    | EmptyCartState ->
+        printfn "Adding item %s to empty cart" newItem
+        ShoppingCartApi.initCart newItem
+    | ActiveCartState activeCartData ->
+        printfn "Adding item %s to active cart" newItem
+        ShoppingCartApi.addToActive (newItem,activeCartData)
+    | PaidCartState paidCardData ->
+        printfn "Can't modify paid cart"
+        cart // return original cart
 
-    // "clientRemoveItem " changes the cart state after removing an item
-    // function signature should be
-    //     CartItem -> ShoppingCart-> ShoppingCart
-    let clientRemoveItem (itemToRemove:CartItem) (cart:ShoppingCart)  :ShoppingCart =
-        match cart with
-        | EmptyCartState ->
-            printfn "Can't remove item from empty cart"
-            cart
-        | ActiveCartState data ->
-            printfn "Removing item %s from active cart" itemToRemove
-            ShoppingCartApi.removeFromActive (itemToRemove,data)
-        | PaidCartState paidCardData ->
-            printfn "Can't remove item from paid cart"
-            cart // return original cart
+// ---------------------------------------------
+// test clientAddItem
+//
+// run these snippets interactively to make sure your code works
+// ---------------------------------------------
+
+module Test1 =
+    // define some items
+    let item1 = "Book"
+    let item2 = "Dvd"
+    let item3 = "Headphones"
+
+    // create some different carts
+    let emptyCart = EmptyCartState
+    let activeCart1 = clientAddItem item1 emptyCart
+
+// ---------------------------------------------
+// implement clientPayForCart
+// ---------------------------------------------
+
+// "clientPayForCart " changes the cart state after paying
+// function signature should be
+//     Payment -> ShoppingCart-> ShoppingCart
+let clientPayForCart (payment:Payment) (cart:ShoppingCart)  :ShoppingCart =
+    match cart with
+    | EmptyCartState ->
+        printfn "Can't pay for empty cart"
+        cart // return original cart
+    | ActiveCartState activeCartData ->
+        printfn "Paying %g for active cart" payment
+        ShoppingCartApi.pay (payment,activeCartData)
+    | PaidCartState paidCardData ->
+        printfn "Cart already paid for"
+        cart // return original cart
+
+// ---------------------------------------------
+// test clientPayForCart
+//
+// run these snippets interactively to make sure your code works
+// ---------------------------------------------
+
+module Test2 =
+    // define some items
+    let item1 = "Book"
+    let item2 = "Dvd"
+    let item3 = "Headphones"
+
+    // create some different carts
+    let emptyCart = EmptyCartState
+    let activeCart1 = clientAddItem item1 emptyCart
+    let activeCart2 = clientAddItem item2 activeCart1
+    let paidCart = clientPayForCart 20.00 activeCart2
+
+// ---------------------------------------------
+// implement clientRemoveItem
+// ---------------------------------------------
+
+// "clientRemoveItem " changes the cart state after removing an item
+// function signature should be
+//     CartItem -> ShoppingCart-> ShoppingCart
+let clientRemoveItem (itemToRemove:CartItem) (cart:ShoppingCart)  :ShoppingCart =
+    match cart with
+    | EmptyCartState ->
+        printfn "Can't remove item from empty cart"
+        cart
+    | ActiveCartState data ->
+        printfn "Removing item %s from active cart" itemToRemove
+        ShoppingCartApi.removeFromActive (itemToRemove,data)
+    | PaidCartState paidCardData ->
+        printfn "Can't remove item from paid cart"
+        cart // return original cart
 
 // ================================================
-// Now write some test code
+// Now write code that test all the client functions
+//
+// run these snippets interactively to make sure your code works
 // ================================================
 
-open ShoppingCartClient
 
 // define some items
 let item1 = "Book"
@@ -110,9 +156,10 @@ clientPayForCart 20.00 paidCart
 emptyCart |> clientRemoveItem item1
 paidCart |> clientRemoveItem item1
 
-// structural equality!
+// Note that we have structural equality after removing items
 let activeCart3 = activeCart2 |> clientRemoveItem item2
 printfn "Is activeCart1 == activeCart3? %b" (activeCart1 = activeCart3)
+
 let activeCart4 = activeCart3 |> clientRemoveItem item1
 printfn "Is emptyCart == activeCart4? %b" (emptyCart = activeCart4)
 

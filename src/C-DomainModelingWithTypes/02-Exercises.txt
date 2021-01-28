@@ -6,7 +6,7 @@ Optional:
 * review the previous exercises
 * review code in the slides: 02a-ExamplesFromSlides.fsx
 
-Do work through this file
+Do work through these files
 * 02b-ConstrainedTypes-EmailAddress.fsx
 * 02b-ConstrainedTypes-String10.fsx
 
@@ -15,3 +15,5 @@ Do each of the following exercises:
 * 02e-Exercise-ConstrainedTypes-ZipCode.fsx
 * 02h-Exercise-ConstrainedTypes-NonZeroInteger.fsx
 
+Questions?
+* 02g-ConstrainedTypes_FrequentQuestions.fsx

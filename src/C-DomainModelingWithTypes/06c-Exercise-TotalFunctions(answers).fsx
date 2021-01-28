@@ -12,6 +12,8 @@ and which are partial functions?
 
 // get first element of a list
 firstElement : int list -> int  // PARTIAL. List could be empty
+// a better design is to "try" to get the first element
+tryFirstElement : int list -> int option  // TOTAL
 
 // get number of elements in a list
 elementCount : int list -> int  // TOTAL. Works for all lists
@@ -55,8 +57,8 @@ module Calendar =
     type DayOfWeek = Sun | Mon | Tue | Wed | Thu | Fri | Sat
 
     module ExceptionBasedDesign =
-        let strToDayOfWeek s =
-            match s with
+        let strToDayOfWeek str =
+            match str with
             | "Sunday" | "Sun" -> Sun
             | "Monday" | "Mon" -> Mon
             | "Tuesday" | "Tue" -> Tue
@@ -69,8 +71,8 @@ module Calendar =
     module ExtendedOutputDesign =
         // Exercise: convert the function to be total
         //           by extending the output.
-        let strToDayOfWeek s =
-            match s with
+        let strToDayOfWeek str =
+            match str with
             | "Sunday" | "Sun" -> Some Sun
             | "Monday" | "Mon" -> Some Mon
             | "Tuesday" | "Tue" -> Some Tue
@@ -98,11 +100,12 @@ module IntUtil =
 
     module ExceptionBasedDesign =
 
-        let strToInt (s:string) =
-            match System.Int32.TryParse s with
+        let strToInt (str:string) =
+            match System.Int32.TryParse str with
             // the Int32.TryParse method returns a tuple
             | (true,i) -> i
             | (false,_) -> failwith "input is not an int"
+
 
     module ExtendedOutputDesign =
         // Exercise: Convert this function to be total
@@ -110,12 +113,27 @@ module IntUtil =
         // Reuse the "match System.Int32.TryParse" code
         // but return something different
         //
-        // Question: Should it have a different name?
-        let tryStrToInt (s:string) =
-            match System.Int32.TryParse s with
+        // Question: Why is it not called "strToInt"
+        // like the original function?
+        let tryStrToInt (str:string) =
+            match System.Int32.TryParse str with
             // the Int32.TryParse method returns a tuple
             | (true,i) -> Some i
             | (false,_) -> None
+
+        let tryStrToInt_v2 (str:string) =
+            try
+                // the Int32.Parse function is not total
+                // and throws 3 different exceptions.
+                // Read the docs to figure out which ones :(
+                Some (System.Int32.Parse str)
+            with
+            | :? System.FormatException
+            | :? System.OverflowException
+            | :? System.NullReferenceException ->
+                None
+
+
 
 // test the function
 IntUtil.ExceptionBasedDesign.strToInt "123"     // good

@@ -108,18 +108,30 @@ Should you remove the item from the shopping cart?
 
 Probably not. Instead, you want to "max out" at 100
 
-You can do this using Option.defaultValue.
-It will leave a "Some" alone but it will replace a "None" and with another value.
+You can do this using a "defaultValue" function.
+It will leave a "Some" alone but it will
+replace a "None" and with another value.
 
 *)
 
+let defaultValue aValue anOption =
+    match anOption with
+    | Some x -> x      // if Some, return the wrapped value
+    | None -> aValue   // if None, return the default value
+
+// usage examples
+Some 1 |> Option.defaultValue 42    // 1
+None   |> Option.defaultValue 42    // 42
+
+
 // Example using the increment function above
 // These now return a normal OrderLineQty instead of an optional one.
-increment OrderLineQty.minValue               // this is a "Some"
-|> Option.defaultValue OrderLineQty.maxValue  // so the defaultValue is not used
+increment OrderLineQty.minValue        // this is a "Some"
+|> defaultValue OrderLineQty.maxValue  // so the defaultValue is not used
 
-increment OrderLineQty.maxValue               // this is a "None"
-|> Option.defaultValue OrderLineQty.maxValue  // so the defaultValue IS used
+
+increment OrderLineQty.maxValue        // this is a "None"
+|> defaultValue OrderLineQty.maxValue  // so the defaultValue IS used
 
 
 // =========================================
@@ -132,7 +144,7 @@ let increment_v2 (olq:OrderLineQty) =
     let i1 = OrderLineQty.value olq
     let i2 = i1 + 1
     OrderLineQty.create i2
-    |> Option.defaultValue OrderLineQty.maxValue
+    |> defaultValue OrderLineQty.maxValue
 
 // This is what the type signature looks like.
 // Note that it does NOT return an option now!

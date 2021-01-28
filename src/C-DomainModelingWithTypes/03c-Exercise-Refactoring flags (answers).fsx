@@ -94,10 +94,12 @@ An internet connection is either connected or disconnected.
 The original design uses a flag to tell the two cases apart
 
 Illegal states are possible!
-* The IsConnected can be true but ConnectionStartedUtc is not assigned.
+* The IsConnected can be true but ConnectionHandle is not assigned.
 * The IsConnected can be false but ConnectionHandle is assigned.
 
 Your task: Redesign this type into two states: Connected and Disconnected
+In your redesign, make sure that the illegal states cannot happen. :)
+
 Also, replace "int" and "string" with words from the domain
 
 *)
@@ -228,6 +230,7 @@ module Order_After_v2 =
         }
 
     type OrderStatus =
+        | New                       // no extra info needed now
         | Paid of PaidOrderInfo
         | Completed of CompletedOrderInfo
 
