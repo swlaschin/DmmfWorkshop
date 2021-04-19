@@ -22,7 +22,7 @@ module EmailServiceImplementation =
 
     /// Implement the core workflow defined in the domain
     /// Note that this is completely pure. There is no I/O
-    let sendAMessage : SendAMessage =
+    let prepareToSendAMessage : SendAMessage =
         fun request ->
             let fromAddress = EmailAddress.value request.FromAddress
             let toAddress = EmailAddress.value request.ToAddress

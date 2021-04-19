@@ -132,9 +132,9 @@ let goodPerson =
         |> Validation.ofResult
 
     // Exercise: fix the compiler error by using Validation.lift3
-    let personOrError = 
+    let personOrError =
         (Validation.lift3 createPerson) nameOrError ageOrError emailOrError
-    
+
     personOrError // return
 
 
@@ -158,7 +158,7 @@ let badPerson =
         |> Validation.ofResult
 
     // Exercise: fix the compiler error by using Validation.lift3
-    let personOrError = 
+    let personOrError =
         (Validation.lift3 createPerson) nameOrError ageOrError emailOrError
 
     personOrError // return
@@ -189,7 +189,12 @@ let createPersonOrError (first:string) (last:string) (age:int) (email:string) : 
         Email.create email
         |> Validation.ofResult
 
-    let personOrError = 
+    let personOrError =
         (Validation.lift3 createPerson) nameOrError ageOrError emailOrError
 
     personOrError // return
+
+
+// test your new function!
+createPersonOrError "Albert" "Smith" 42 "a@example.com"  // good
+createPersonOrError "Jean-Claude" "" -1 "example.com"    // errors

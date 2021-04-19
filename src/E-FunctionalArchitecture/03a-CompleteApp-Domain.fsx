@@ -63,7 +63,7 @@ module EmailServiceDomain =
     // ------------------------
 
     /// Send an email message, and get a response or an error
-    type SendAMessage = Request -> Result<Response,WorkflowError>
+    type PrepareToSendAMessage = Request -> Result<Response,WorkflowError>
 
     // -------------------------------------
     // Support modules for constrained types in the domain

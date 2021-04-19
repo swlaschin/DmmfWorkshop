@@ -169,3 +169,7 @@ let createPersonOrError (first:string) (last:string) (age:int) (email:string) : 
     let name = createName first last
     createPerson name age email
     *)
+
+// test your new function!
+createPersonOrError "Albert" "Smith" 42 "a@example.com"  // good
+createPersonOrError "Jean-Claude" "" -1 "example.com"    // errors
