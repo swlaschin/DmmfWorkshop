@@ -132,12 +132,9 @@ So we need to say what type the parameters are too.
 // =============================================
 
 // val sigW = 'a -> int
-let sigW x = 42
 
 // val sigX = int -> 'a
-let sigX (x:int) =
 
 // val sigY = 'a -> 'a
-let sigY x = x
 
 // val sigZ = 'a -> 'b
