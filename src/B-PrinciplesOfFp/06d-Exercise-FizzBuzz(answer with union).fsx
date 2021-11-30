@@ -114,6 +114,42 @@ let fizzBuzz (n:int) :string =
 [1..30] |> List.map fizzBuzz
 
 
+// ============================================
+// Working in parallel!
+// ============================================
 
+// by breaking down the logic into small composable functions,
+// we can mix and match them in new ways.
 
+// For example, we can run that same handle function in "parallel"
+// and then we can eliminate the need for the "15" handler
 
+/// Combine two fizzbuzz results
+let combineData fizzBuzzData1 fizzBuzzData2 =
+
+    match fizzBuzzData1,fizzBuzzData2  with
+    // if it is already handled
+    | Handled str1, Handled str2 ->
+        Handled (str1 + str2)
+    | Handled str1, Unhandled _ ->
+        Handled str1
+    | Unhandled _ , Handled str2 ->
+        Handled str2
+    // if it is not handled
+    | Unhandled number1, Unhandled _ ->
+        Unhandled number1
+
+// The main fizzBuzz function using parallel handling
+let fizzBuzzParallel (n:int) :string =
+
+    let handlePair (i,label) = Unhandled n |> handle i label
+
+    let pairsToHandle = [
+        (3,"Fizz")
+        (5,"Buzz")
+        ]
+
+    pairsToHandle
+    |> List.map handlePair  // this gives us a list of FizzBuzzData
+    |> List.reduce combineData  // combine each element of the list into a single value
+    |> finalStep
