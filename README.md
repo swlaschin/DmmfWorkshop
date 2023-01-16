@@ -68,14 +68,28 @@ Day 2:
 We will be using F# as our development language. No experience with F# needed.
 Please install the F# compiler and an F#-friendly editor such as Visual Studio Code using the instructions at fsharp.org or http://ionide.io
 
-### F# Setup with VS Code
-* Install VS Code
-* Install VS Code extensions: “Ionide-fsharp”, “Ionide-paket”
-* Follow instructions on [Ionide-fsharp page](http://ionide.io/#20150804gettingstarted)
+## How to install F#
 
-### F# Setup with Visual Studio
-* Install workload adding F# support.
+* [Instructions for Visual Studio and VS Code](https://docs.microsoft.com/en-us/dotnet/fsharp/get-started/install-fsharp). 
+  If you use VS Code, be sure to install the "Ionide" plugin.
+* [Instructions for JetBrains Rider](https://www.jetbrains.com/help/rider/F_Sharp.html)
 
+## To prepate this code for the workshop
+
+* Clone this repo locally. 
+  For example, by using
+
+```  
+mkdir DmmfWorkshop
+git clone https://github.com/swlaschin/DmmfWorkshop
+```  
+
+* Open the code in your editor
+  * In VisualStudio/Rider, open the solution file `DmmfWorkshop.sln`
+  * In VS Code, open the `/src` folder
+* Check that F# is working
+  * Open `src/00-HelloWorld.fsx` and follow instructions to check that F# is working
+  
 
 ## Directory Structure
 
