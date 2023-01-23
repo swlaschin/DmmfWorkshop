@@ -8,7 +8,6 @@ Read through and understand the TicTacToe example:
 
 Convert your domain into code using this file:
 * 02b-DomainModel-YourOwnDomain.fsx
-  (It has a help section with all the F# you need to know for this exercise)
 * Compare your code with other people in your group
 * For common questions, see 99-DomainModeling-FrequentQuestions.fsx
 

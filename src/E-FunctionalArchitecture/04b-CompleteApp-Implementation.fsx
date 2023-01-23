@@ -9,8 +9,8 @@
 open System
 
 // Load the domain
-#load "03a-CompleteApp-Domain.fsx"
-open ``03a-CompleteApp-Domain``
+#load "04a-CompleteApp-Domain.fsx"
+open ``04a-CompleteApp-Domain``
 
 
 //===============================================

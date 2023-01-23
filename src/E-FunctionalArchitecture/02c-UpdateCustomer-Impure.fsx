@@ -30,14 +30,14 @@ open IoExample.Domain
 let updateCustomer (newCustomer:Domain.Customer) = async {
 
     let! existingCustomer = CustomerDatabase.readCustomer newCustomer.Id
-        // use let! when there is a return value in the Async
+        // NOTE: let! is same as await with a return value
 
     // check for changes
     if (existingCustomer.Name <> newCustomer.Name) ||
         (existingCustomer.EmailAddress <> newCustomer.EmailAddress) then
         // store updated customer
         do! CustomerDatabase.updateCustomer newCustomer
-            // use do! when there is no return value in the Async
+            // NOTE: do! same as await when there is no return value in the Async
 
     // send verification email if email changed
     if (existingCustomer.EmailAddress <> newCustomer.EmailAddress) then
@@ -48,3 +48,4 @@ let updateCustomer (newCustomer:Domain.Customer) = async {
         do! EmailServer.sendMessage emailMessage
     }
 
+// how would you test this?

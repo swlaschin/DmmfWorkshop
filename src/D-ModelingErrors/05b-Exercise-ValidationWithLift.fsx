@@ -1,10 +1,35 @@
 // ================================================
 // Exercise:
-// Combine validation functions using lift
+// Combine validation functions using map
 // ================================================
 
-// Load a file with library functions for Result
-#load "Result.fsx"
+type Validation<'Success,'Failure> =
+    Result<'Success,'Failure list>
+
+module Validation =
+
+    let ofResult r =
+        match r with
+        | Ok x -> Ok x
+        | Error e -> Error [e]
+
+    let map2 f x1V x2V =
+        match (x1V,x2V) with
+        | Ok x1, Ok x2 -> Ok (f x1 x2)
+        | Error e1, Ok _ -> Error e1
+        | Ok _, Error e2 -> Error e2
+        | Error e1, Error e2  -> Error (List.concat [e1;e2])
+
+    let map3 f x1V x2V x3V =
+        match (x1V,x2V,x3V) with
+        | Ok x1, Ok x2, Ok x3 -> Ok (f x1 x2 x3)
+        | Error e1, Ok _, Ok _ -> Error e1
+        | Ok _, Error e2, Ok _ -> Error e2
+        | Ok _, Ok _, Error e3 -> Error e3
+        | Error e1, Error e2, Ok _ -> Error (List.concat [e1;e2])
+        | Ok _, Error e2, Error e3-> Error (List.concat [e2;e3])
+        | Error e1, Ok _, Error e3-> Error (List.concat [e1;e3])
+        | Error e1, Error e2, Error e3  -> Error (List.concat [e1;e2;e3])
 
 // =============================================
 // The domain
@@ -22,13 +47,13 @@ module Domain =
     // Email must be not empty and contain an @ symbol
     type Email = private Email of string
 
-    type PersonalName = {
+    type Name = {
         First: String10
         Last: String10
         }
 
     type Person = {
-        Name: PersonalName
+        Name: Name
         Age: Age
         Email: Email
         }
@@ -71,39 +96,31 @@ module Domain =
 
 
 // -------------------------------
-// test that the validation works for PersonalName
+// test that the validation works for Name
 // -------------------------------
 
 open Domain
 
-/// Create a constructor for PersonalName
-let createName (first:String10) (last:String10) :PersonalName =
+/// Create a constructor for Name
+let createName (first:String10) (last:String10) :Name =
     {First=first; Last=last}
 
-
-let goodName =
+let createNameOrError strFirst strLast =
     let firstOrError =
-        String10.create "firstName" "Albert" // less than 10 -- good!
+        strFirst
+        |> String10.create "FirstName"
         |> Validation.ofResult
     let lastOrError =
-        String10.create "lastName"  "Smith"  // less than 10 -- good!
+        strLast
+        |> String10.create "LastName"
         |> Validation.ofResult
-    // Exercise: fix the compiler error by using Validation.lift2
+
+    // Exercise: fix the compiler error by using Validation.map2
     let nameOrError =
         createName firstOrError lastOrError
+
     nameOrError // return
 
-let badName =
-    let firstOrError =
-        String10.create "FirstName" "Jean-Claude" // more than 10 -- bad!
-        |> Validation.ofResult
-    let lastOrError =
-        String10.create "LastName"  ""            // empty -- bad
-        |> Validation.ofResult
-    // Exercise: fix the compiler error by using Validation.lift2
-    let nameOrError =
-        createName firstOrError lastOrError
-    nameOrError // return
 
 // -------------------------------
 // test that the validation works for Person
@@ -113,59 +130,27 @@ let badName =
 let createPerson name age email :Person =
     {Name=name; Age=age; Email=email}
 
-let goodPerson =
-    let nameOrError =
-        let firstOrError =
-            String10.create "firstName" "123456789"
-            |> Validation.ofResult
-        let lastOrError =
-            String10.create "lastName"  "123456789"
-            |> Validation.ofResult
-        // Exercise: fix the compiler error by using Validation.lift2
-        createName firstOrError lastOrError
-
-    let ageOrError =
-        Age.create 42
-        |> Validation.ofResult
-    let emailOrError =
-        Email.create "test@example.com"
-        |> Validation.ofResult
-
-    // Exercise: fix the compiler error by using Validation.lift3
-    let personOrError =
-        createPerson nameOrError ageOrError emailOrError
-
-    personOrError // return
-
-
-let badPerson =
-    let nameOrError =
-        // Exercise: fix all the compiler errors
-        let firstOrError =
-            String10.create "firstName" "12345678901"
-        let lastOrError =
-            String10.create "lastName"  "12345678901"
-        createName firstOrError lastOrError
-
-    let ageOrError =
-        Age.create 999
-        |> Validation.ofResult
-    let emailOrError =
-        Email.create "example.com"
-        |> Validation.ofResult
-
-    // Exercise: fix the compiler error by using Validation.lift3
-    let personOrError =
-        createPerson nameOrError ageOrError emailOrError
-
-    personOrError // return
 
 // Exercise: create a function that takes all the components and builds a Person or error
 // given all the primitive values
 let createPersonOrError (first:string) (last:string) (age:int) (email:string) : Validation<Person,string> =
 
     // fix this bad implementation
-    (*
-    let name = createName first last
-    createPerson name age email
-    *)
+    let nameOrError =
+        createName first last
+    let ageOrError =
+        Age.create age
+        |> Validation.ofResult
+    let emailOrError =
+        Email.create email
+        |> Validation.ofResult
+
+    let personOrError =
+        nameOrError ageOrError emailOrError
+
+    personOrError // return
+
+
+// test your new function!
+createPersonOrError "Albert" "Smith" 42 "a@example.com"  // good
+createPersonOrError "Jean-Claude" "" -1 "example.com"    // errors

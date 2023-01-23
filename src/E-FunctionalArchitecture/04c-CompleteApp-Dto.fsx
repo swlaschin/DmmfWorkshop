@@ -13,9 +13,9 @@ open System
 #load "Result.fsx"
 
 // Load the implementation and domain
-#load "03b-CompleteApp-Implementation.fsx"
-open ``03a-CompleteApp-Domain``
-open ``03b-CompleteApp-Implementation``
+#load "04b-CompleteApp-Implementation.fsx"
+open ``04a-CompleteApp-Domain``
+open ``04b-CompleteApp-Implementation``
 
 
 //===============================================
@@ -61,9 +61,9 @@ module Dto =
                 |> EmailBody.create      // a Result with a single error
                 |> Validation.ofResult   // convert to list of errors
 
-            // use the "lift4" function (because there are four parameters)
+            // use the "map4" function (because there are four parameters)
             let requestOrError =
-                (Validation.lift4 createRequest) userIdOrError fromAddressOrError toAddressOrError emailBodyOrError
+                (Validation.map4 createRequest) userIdOrError fromAddressOrError toAddressOrError emailBodyOrError
 
             requestOrError
 

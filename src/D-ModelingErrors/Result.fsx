@@ -88,34 +88,34 @@ module Result =
     // Lifting
 
     /// Lift a two parameter function to use Result parameters
-    let lift2 f x1 x2 =
+    let map2 f x1 x2 =
         let (<!>) = map
         let (<*>) = apply
         f <!> x1 <*> x2
 
     /// Lift a three parameter function to use Result parameters
-    let lift3 f x1 x2 x3 =
+    let map3 f x1 x2 x3 =
         let (<!>) = map
         let (<*>) = apply
         f <!> x1 <*> x2 <*> x3
 
     /// Lift a four parameter function to use Result parameters
-    let lift4 f x1 x2 x3 x4 =
+    let map4 f x1 x2 x3 x4 =
         let (<!>) = map
         let (<*>) = apply
         f <!> x1 <*> x2 <*> x3 <*> x4
 
     /// Lift a five parameter function to use Result parameters
-    let lift5 f x1 x2 x3 x4 x5 =
+    let map5 f x1 x2 x3 x4 x5 =
         let (<!>) = map
         let (<*>) = apply
         f <!> x1 <*> x2 <*> x3 <*> x4 <*> x5
 
     /// Apply a monadic function with two parameters
-    let bind2 f x1 x2 = lift2 f x1 x2 |> bind id
+    let bind2 f x1 x2 = map2 f x1 x2 |> bind id
 
     /// Apply a monadic function with three parameters
-    let bind3 f x1 x2 x3 = lift3 f x1 x2 x3 |> bind id
+    let bind3 f x1 x2 x3 = map3 f x1 x2 x3 |> bind id
 
     //-----------------------------------
     // Predicates
@@ -255,25 +255,25 @@ module Validation =
     // Lifting
 
     /// Lift a two parameter function to use Validation parameters
-    let lift2 f x1 x2 =
+    let map2 f x1 x2 =
         let (<!>) = map
         let (<*>) = apply
         f <!> x1 <*> x2
 
     /// Lift a three parameter function to use Validation parameters
-    let lift3 f x1 x2 x3 =
+    let map3 f x1 x2 x3 =
         let (<!>) = map
         let (<*>) = apply
         f <!> x1 <*> x2 <*> x3
 
     /// Lift a four parameter function to use Validation parameters
-    let lift4 f x1 x2 x3 x4 =
+    let map4 f x1 x2 x3 x4 =
         let (<!>) = map
         let (<*>) = apply
         f <!> x1 <*> x2 <*> x3 <*> x4
 
     /// Lift a five parameter function to use Validation parameters
-    let lift5 f x1 x2 x3 x4 x5 =
+    let map5 f x1 x2 x3 x4 x5 =
         let (<!>) = map
         let (<*>) = apply
         f <!> x1 <*> x2 <*> x3 <*> x4 <*> x5
@@ -437,7 +437,7 @@ module AsyncResult =
         x |> Async.map Result.Ok
 
     //-----------------------------------
-    // Utilities lifted from Async
+    // Utilities copied from Async
 
     let sleep (ms:int) =
         Async.Sleep ms |> ofAsync

@@ -9,6 +9,8 @@
 // IMPORTANT:  types must be defined BEFORE they are referenced
 // (e.g. earlier in the file )
 //
+// Recommend that you look at "08c-HowToWorkWithTypes.fsx" as well
+//
 // =============================================
 
 // Uncomment these to see all the undefined types

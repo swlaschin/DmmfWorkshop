@@ -11,6 +11,7 @@
     <Content Include="01a-DomainModel-TicTacToe.txt" />
     <Content Include="01b-DomainModel-YourOwnDomain.txt" />
     <Content Include="02-Exercise.txt" />
+    <None Include="02a-DomainModel-HowToDefineTypes.fsx" />
     <None Include="02a-DomainModel-TicTacToe.fsx" />
     <None Include="02b-DomainModel-YourOwnDomain.fsx" />
     <None Include="02c-DomainModel-YourOwnDomain2.fsx" />

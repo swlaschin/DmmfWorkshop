@@ -2,7 +2,7 @@
 // Domain for 00b-Exercise-IO-AtEdges.fsx
 // =================================
 
-
+/// The core domain
 module Domain =
 
     type CustomerId = CustomerId of int
@@ -15,7 +15,7 @@ module Domain =
         EmailAddress : EmailAddress
         }
 
-// A dummy database
+// The database API
 module CustomerDatabase =
     open Domain
 
@@ -26,15 +26,19 @@ module CustomerDatabase =
         EmailAddress = EmailAddress "alice@example.com"
         }
 
+    /// Read a customer from the database asynchronously
     let readCustomer (customerId:CustomerId) :Async<Customer> = async {
+        // dummy implementation
         return dummyCustomer
         }
 
+    /// Update a customer in the database asynchronously
     let updateCustomer (updatedCustomer:Customer) : Async<unit> = async {
+        // dummy implementation
         printfn "Updating Customer in database"
-        // ignore
         }
 
+// The email server API
 module EmailServer =
     open Domain
 
@@ -43,7 +47,7 @@ module EmailServer =
         EmailBody : string
         }
 
-    // send a message
+    /// Send an email message asynchronously
     let sendMessage (message:EmailMessage) : Async<unit> = async {
         printfn "Sending message to %A" message.EmailAddress
         printfn "... %s" message.EmailBody

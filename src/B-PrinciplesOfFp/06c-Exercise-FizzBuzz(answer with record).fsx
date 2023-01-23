@@ -115,5 +115,45 @@ let fizzBuzz (n:int) :string =
 
 
 
+// =============================================
+// Bonus: Parallel FizzBuzz
+// =============================================
+
+let isHandled result =
+    result.resultString <> ""
+
+let combineHandlers handler1 handler2  =
+    fun input ->
+        let result1 = handler1 input
+        let result2 = handler2 input
+        match isHandled result1, isHandled result2 with
+        | true, true ->
+            let newResultString = result1.resultString + result2.resultString
+            {resultString = newResultString; number=input.number}
+        | true, false -> result1
+        | false, true -> result2
+        | false, false -> result1 // or result2. Both are unhandled
+
+
+// The handlers run "in parallel"
+// We don't need to have special case for 15, etc
+let fizzBuzzParallel (n:int) :string =
+    let initialData = {resultString=""; number=n}
+
+    let parallelHandler =
+        [
+        handle 3 "Fizz"
+        handle 5 "Buzz"
+        handle 7 "Zap"
+        ]
+        |> List.reduce combineHandlers
+
+    initialData
+    |> parallelHandler
+    |> finalStep
+
+
+// test
+[1..35] |> List.map fizzBuzzParallel
 
 

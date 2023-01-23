@@ -20,22 +20,22 @@ module Validation =
         xR |> Result.mapError List.singleton
 
 //-----------------------------------
-// Lifting
+// Mapping
 //-----------------------------------
 
 // implementations using explicit pattern matching
-module LiftImplementation_v1 =
+module MapImplementation_v1 =
 
-    /// Lift a two parameter function to use Validation parameters
-    let lift2 f (x1V:Validation<_,_>) (x2V:Validation<_,_>) =
+    /// Map a two parameter function to use Validation parameters
+    let map2 f (x1V:Validation<_,_>) (x2V:Validation<_,_>) =
         match (x1V,x2V) with
         | Ok x1, Ok x2 -> Ok (f x1 x2)
         | Ok x1, Error e2 -> Error e2
         | Error e1, Ok x2 -> Error e1
         | Error e1, Error e2 -> Error (e1 @ e2) // concat two lists
 
-    /// Lift a three parameter function to use Validation parameters
-    let lift3 f (x1V:Validation<_,_>) (x2V:Validation<_,_>) (x3V:Validation<_,_>) =
+    /// Map a three parameter function to use Validation parameters
+    let map3 f (x1V:Validation<_,_>) (x2V:Validation<_,_>) (x3V:Validation<_,_>) =
         match (x1V,x2V,x3V) with
         | Ok x1, Ok x2, Ok x3  -> Ok (f x1 x2 x3)
         | Ok x1, Error e2, Ok x3 -> Error e2
@@ -47,7 +47,7 @@ module LiftImplementation_v1 =
         | Error e1, Error e2, Error e3 -> Error (e1 @ e2 @ e3)
 
 // implementations using Apply
-module LiftImplementation_v2 =
+module MapImplementation_v2 =
 
     /// Apply a Validation<fn> to a Validation<x> applicatively
     let apply (fV:Validation<_,_>) (xV:Validation<_,_>) :Validation<_,_> =
@@ -57,41 +57,41 @@ module LiftImplementation_v2 =
         | Ok _, Error errs2 -> Error errs2
         | Error errs1, Error errs2 -> Error (errs1 @ errs2)
 
-    let lift2 f (x1V:Validation<_,_>) (x2V:Validation<_,_>) =
+    let map2 f (x1V:Validation<_,_>) (x2V:Validation<_,_>) =
         apply (apply (Ok f) x1V) x2V
 
-    let lift3 f (x1V:Validation<_,_>) (x2V:Validation<_,_>) (x3V:Validation<_,_>) =
+    let map3 f (x1V:Validation<_,_>) (x2V:Validation<_,_>) (x3V:Validation<_,_>) =
         apply (apply (apply (Ok f) x1V) x2V) x3V
 
-    let lift3_v2 f (x1V:Validation<_,_>) (x2V:Validation<_,_>) (x3V:Validation<_,_>) =
-        apply (lift2 f x1V x2V) x3V
+    let map3_v2 f (x1V:Validation<_,_>) (x2V:Validation<_,_>) (x3V:Validation<_,_>) =
+        apply (map2 f x1V x2V) x3V
 
 // implementations using the Apply infix operator <*>
-module LiftImplementation_v3 =
+module MapImplementation_v3 =
 
-    let apply = LiftImplementation_v2.apply
+    let apply = MapImplementation_v2.apply
 
-    let lift2 f (x1V:Validation<_,_>) (x2V:Validation<_,_>) =
+    let map2 f (x1V:Validation<_,_>) (x2V:Validation<_,_>) =
         let ( <*> ) = apply
         (Ok f) <*> x1V <*> x2V
 
-    let lift3 f (x1V:Validation<_,_>) (x2V:Validation<_,_>) (x3V:Validation<_,_>) =
+    let map3 f (x1V:Validation<_,_>) (x2V:Validation<_,_>) (x3V:Validation<_,_>) =
         let ( <*> ) = apply
         (Ok f) <*> x1V <*> x2V <*> x3V
 
 // implementations using <*> and map as well
-module LiftImplementation_v4 =
+module MapImplementation_v4 =
 
-    let apply = LiftImplementation_v2.apply
+    let apply = MapImplementation_v2.apply
     let map = Result.map
 
-    let lift2 f x1 x2 =
+    let map2 f x1 x2 =
         let (<!>) = map
         let (<*>) = apply
         // looks very similar to "f x1 x2"
         f <!> x1 <*> x2
 
-    let lift3 f x1 x2 x3 =
+    let map3 f x1 x2 x3 =
         let (<!>) = map
         let (<*>) = apply
         // looks very similar to "f x1 x2 x3"

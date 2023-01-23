@@ -2,15 +2,18 @@
 // Exercise 2:
 // =================================
 
-Read through and understand how to write tests
-* 02a-WritingTests.fsx
 
 Read through and understand the impure and pure implementations
-* 02b-CompareStrings.fsx
-* 02c-CompareStringsAsync.fsx
+* 02a-CompareStrings.fsx
+* 02b-CompareStringsAsync.fsx
 
 Exercise: Read the requirements and then refactor the impure implementation:
-* 02d-UpdateCustomer-Impure.fsx
-* 02e-Exercise-UpdateCustomer-Pure.fsx
+* 02c-UpdateCustomer-Impure.fsx
+* 02d-Exercise-UpdateCustomer-Pure.fsx
 
+OPTIONAL Read through and understand how to write tests
+and see how the code is tested
+* 03a-WritingTests.fsx
+* 03b-CompareStrings_Tested.fsx
+* 03c-UpdateCustomer_Tested.fsx
 

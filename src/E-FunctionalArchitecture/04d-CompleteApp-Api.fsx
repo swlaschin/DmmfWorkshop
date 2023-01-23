@@ -9,10 +9,10 @@
 open System
 
 // Load the Domain, implementation and DTO
-#load "03c-CompleteApp-Dto.fsx"
-open ``03a-CompleteApp-Domain``
-open ``03b-CompleteApp-Implementation``
-open ``03c-CompleteApp-Dto``
+#load "04c-CompleteApp-Dto.fsx"
+open ``04a-CompleteApp-Domain``
+open ``04b-CompleteApp-Implementation``
+open ``04c-CompleteApp-Dto``
 
 
 
@@ -22,15 +22,15 @@ open ``03c-CompleteApp-Dto``
 
 
 // use the .NET Standard JSON library
-#r "../../lib/Newtonsoft.Json.dll"
-let serializeJson = Newtonsoft.Json.JsonConvert.SerializeObject
-let deserializeJson<'a> str = Newtonsoft.Json.JsonConvert.DeserializeObject<'a> str
+// #r "../../lib/Newtonsoft.Json.dll"
+// let serializeJson = Newtonsoft.Json.JsonConvert.SerializeObject
+// let deserializeJson<'a> str = Newtonsoft.Json.JsonConvert.DeserializeObject<'a> str
 
 // uncomment to use the .NET Core JSON library
-// #r "System.Text.Json"
-// open System.Text.Json
-// let serializeJson = JsonSerializer.Serialize
-// let deserializeJson<'a> (str:string) = JsonSerializer.Deserialize<'a>(str)
+#r "System.Text.Json"
+open System.Text.Json
+let serializeJson = JsonSerializer.Serialize
+let deserializeJson<'a> (str:string) = JsonSerializer.Deserialize<'a>(str)
 
 /// Combine JSON and validation in one step
 let jsonToRequest json =
@@ -44,11 +44,11 @@ let jsonToRequest json =
 (*
 
 // some good JSON
-let goodJson  = """{"UserId":1,"FromAddress":"abc@gmail.com","ToAddress":"xyz@gmail.com","Body":"Hello",}"""
+let goodJson  = """{"UserId":1,"FromAddress":"abc@gmail.com","ToAddress":"xyz@gmail.com","Body":"Hello"}"""
 
 // some invalid JSON
-let badJson  = """{"UserId":0,"FromAddress":"","ToAddress":"gmail.com","Body":"",}"""
-let invalidEmailJson  = """{"UserId":2,"FromAddress":"abc@example.com","ToAddress":"xyz@example.com","Body":"Hello",}"""
+let badJson  = """{"UserId":0,"FromAddress":"","ToAddress":"gmail.com","Body":""}"""
+let invalidEmailJson  = """{"UserId":2,"FromAddress":"abc@example.com","ToAddress":"xyz@example.com","Body":"Hello"}"""
 
 // TEST: try the good and bad JSON
 let goodDomainObj = goodJson |> jsonToRequest

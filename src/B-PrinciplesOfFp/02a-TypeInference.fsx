@@ -164,3 +164,16 @@ val ignoreTwoInputs : x:'a -> y:'b -> unit
 val ignoreThreeInputs : x:'a -> y:'b -> z:'c -> unit
 *)
 
+// ====================================
+// Exceptions are generic
+// ====================================
+
+let myBad() =
+    failwith "bad input"
+
+let myBad2 x =
+    let y = x + 1
+    failwith "bad input"
+
+let myBad3 x =
+    failwith "bad input"

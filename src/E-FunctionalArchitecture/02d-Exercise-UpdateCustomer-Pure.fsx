@@ -50,50 +50,6 @@ module PureCore =
 
 
 
-//========================================
-// test the pure code
-//========================================
-
-// the test framework
-#load "Expecto.fsx"
-open Expecto
-
-module MyTests =
-    open PureCore
-
-    let existingCustomer =
-        {Id=CustomerId 1; EmailAddress=EmailAddress "x@example.com"; Name="Alice"}
-
-    let test1 = testCase "No change" <| fun () ->
-        let newCustomer = existingCustomer // no change
-        let result = PureCore.updateCustomer newCustomer existingCustomer
-        match result with
-        | no change -> ()
-        | _ -> Expecto.Api.failtest "Expected No Change"
-
-    let test2 = testCase "Changed name only" <| fun () ->
-        let newCustomer =
-            {Id=CustomerId 1; EmailAddress=EmailAddress "x@example.com"; Name="Bob"}
-        let result = PureCore.updateCustomer newCustomer existingCustomer
-        match result with
-        | ??? _ -> ()
-        | _ -> Expecto.Api.failtest "Expected customer updated"
-
-    let test3 = testCase "Changed name and email" <| fun () ->
-        let newCustomer =
-            {Id=CustomerId 1; EmailAddress=EmailAddress "z@example.com"; Name="Bob"}
-        let result = PureCore.updateCustomer newCustomer existingCustomer
-        match result with
-        | ?? _ -> ()
-        | _ -> Expecto.Api.failtest "Expected customer updated and email sent"
-
-    let allTests = testList "updateCustomer" [test1; test2; test3]
-
-// run the tests!
-Expecto.Api.runTest MyTests.test1
-Expecto.Api.runTest MyTests.test2
-Expecto.Api.runTest MyTests.test3
-Expecto.Api.runTest MyTests.allTests
 
 //========================================
 // Impure "Shell"/API layer

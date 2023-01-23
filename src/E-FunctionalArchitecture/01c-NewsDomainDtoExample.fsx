@@ -200,7 +200,7 @@ module NewsFeedDtos =
                 |> CategoryDto.toDomain
 
             // combine them
-            (Validation.lift2 ctor) nameOrError categoryOrError
+            (Validation.map2 ctor) nameOrError categoryOrError
 
     module NewsItemDto =
 
@@ -232,7 +232,7 @@ module NewsFeedDtos =
                 |> Validation.sequence
 
             // combine them
-            (Validation.lift4 ctor) docIdOrError reporterIdOrError textOrError topicsOrError
+            (Validation.map4 ctor) docIdOrError reporterIdOrError textOrError topicsOrError
 
     module CurationPositionDto =
         let toDomain (dto:CurationPositionDto) :Validation<NewsFeedDomain.CurationPosition,DtoError> =
@@ -254,7 +254,7 @@ module NewsFeedDtos =
             let isBreakingOrError =
                 dto.IsBreaking |> Ok
             // combine them
-            (Validation.lift2 ctor) positionOrError isBreakingOrError
+            (Validation.map2 ctor) positionOrError isBreakingOrError
 
 
     module NewsFeedItemDto =
@@ -272,7 +272,7 @@ module NewsFeedDtos =
                 dto.CurationInfo
                 |> CurationInfoDto.toDomain
             // combine them
-            (Validation.lift2 ctor) alertableItemOrError curationInfoOrError
+            (Validation.map2 ctor) alertableItemOrError curationInfoOrError
 
 // ==============================================
 // Example of this domain and validation in action

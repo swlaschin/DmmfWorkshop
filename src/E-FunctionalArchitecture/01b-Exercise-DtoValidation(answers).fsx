@@ -88,9 +88,9 @@ let fromDto (personDto:PersonDto) :Validation<Person,string> =
         |> Validation.ofResult
 
     let nameOrError =
-        (Validation.lift2 createName) firstOrError lastOrError
+        (Validation.map2 createName) firstOrError lastOrError
     let personOrError =
-        (Validation.lift3 createPerson) nameOrError ageOrError emailOrError
+        (Validation.map3 createPerson) nameOrError ageOrError emailOrError
 
     personOrError // return
 
@@ -127,3 +127,31 @@ let roundTrip dto =
 // check the round trip logic
 goodDto |> roundTrip
 badDto |> roundTrip
+
+
+// -------------------------------
+// full JSON example
+// -------------------------------
+
+#r "System.Text.Json"
+open System.Text.Json
+let serializeJson = JsonSerializer.Serialize
+let deserializeJson<'a> (str:string) = JsonSerializer.Deserialize<'a>(str)
+
+
+let toJsonDto (person:Person) :string =
+    person
+    |> toDto
+    |> serializeJson
+
+let fromJsonDto (json:string) =
+    json
+    |> deserializeJson
+    |> fromDto
+
+// test with some JSON
+let goodJson  = """{"first":"Alice","last":"Adams","age":20,"email":"abc@gmail.com"}"""
+let badJson  = """{"first":"12345678901","last":"","age":-1,"email":"gmail.com"}"""
+
+goodJson |> fromJsonDto
+badJson |> fromJsonDto
