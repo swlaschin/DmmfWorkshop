@@ -38,34 +38,6 @@ simpleFizzBuzz 4
 [1..30] |> List.map simpleFizzBuzz |> String.concat ","
 
 // =======================================
-// Active patterns version
-// =======================================
-
-// F# also supports "active patterns" where you can pattern match
-// on functions. This workshop is not really about F# in detail,
-// but it's a nice feature to encapsulate logic cleanly
-
-let (|DivisibleBy|_|) factor n =
-    if n |> isDivisibleBy factor then
-        Some DivisibleBy
-    else
-        None
-
-// Here's what FizzBuzz looks like using active patterns
-let simpleFizzBuzz_v2 n =
-    match n with
-    | DivisibleBy 3 & DivisibleBy 5 ->
-        "FizzBuzz"
-    | DivisibleBy 3 ->
-        "Fizz"
-    | DivisibleBy 5 ->
-        "Buzz"
-    | _ ->
-        string n
-
-
-
-// =======================================
 // Exercise: Rewrite FizzBuzz using a piping model.
 // =======================================
 

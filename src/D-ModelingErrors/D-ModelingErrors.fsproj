@@ -18,7 +18,6 @@
     <None Include="03a-RopWithStringError.fsx" />
     <None Include="03b-Exercise-RopWithErrorType.fsx" />
     <None Include="03c-Exercise-RopWithErrorType%28answers%29.fsx" />
-    <None Include="RopUtil.fsx" />
     <None Include="03d-RopWithTicTacToe.fsx" />
     <None Include="03e-Exercise-RopWithCoffeeMaker.fsx" />
     <None Include="03f-Exercise-RopWithCoffeeMaker%28answers%29.fsx" />
@@ -27,11 +26,13 @@
     <None Include="04b-Exercise-MapError.fsx" />
     <None Include="04c-Exercise-MapError%28answers%29.fsx" />
     <Content Include="05-Exercises.txt" />
-    <None Include="05a-ValidationWithLift.fsx" />
-    <None Include="05b-Exercise-ValidationWithLift.fsx" />
-    <None Include="05c-Exercise-ValidationWithLift%28answers%29.fsx" />
+    <None Include="05a-Validation.fsx" />
+    <None Include="05b-Exercise-Validation.fsx" />
+    <None Include="05c-Exercise-Validation%28answers%29.fsx" />
     <None Include="05d_HowValidationWorks.fsx" />
+    <None Include="RopUtil.fsx" />
     <None Include="Result.fsx" />
+    <None Include="Validation.fsx" />
   </ItemGroup>
 
 

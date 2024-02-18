@@ -114,7 +114,21 @@ module CompoundErrors =
         | Validation of ValidationError
         | Db of DbError
 
+
     // An alternative is to "collapse" the subsystem errors to something simpler
-    type WorkflowError_v2 =
-        | Validation of ValidationError
-        | SystemError of string // convert detailed error to a simpler one
+    //type WorkflowError_v2 =
+    //    | Validation of ValidationError
+    //    | SystemError of string // convert detailed error to a simpler one
+
+    // how to handle nested error types
+    let handleError err =
+        match err with
+        | Validation vError ->
+            match vError with
+            | NameMustNotBeBlank -> ()
+            | EmailMustNotBeBlank -> ()
+        | Db dbError -> 
+            match dbError with
+            | UserNotFound -> ()
+            | DuplicateKey -> ()
+            | AuthenticationError -> ()

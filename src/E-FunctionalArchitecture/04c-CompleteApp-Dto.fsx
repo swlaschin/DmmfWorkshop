@@ -9,8 +9,9 @@
 open System
 
 
-// Load a file with library functions for Result
+// Load files with library functions for Result and Validation
 #load "Result.fsx"
+#load "Validation.fsx"
 
 // Load the implementation and domain
 #load "04b-CompleteApp-Implementation.fsx"

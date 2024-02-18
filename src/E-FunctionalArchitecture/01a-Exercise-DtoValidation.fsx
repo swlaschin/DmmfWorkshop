@@ -18,8 +18,9 @@ Exercise:
 
 open System
 
-// Load a file with library functions for Result
+// Load files with library functions for Result and Validation
 #load "Result.fsx"
+#load "Validation.fsx"
 
 // Load a file with definition of the domain
 #load "PersonDomain.fsx"
@@ -72,7 +73,10 @@ let fromDto (personDto:PersonDto) :Validation<Person,string> =
     let ageOrError = ??
     let emailOrError = ??
 
+    // use map2 here
     let nameOrError = ??
+    // use map3 here
+    // see D folder / Exercise 05c
     let personOrError = ??
 
     personOrError // return

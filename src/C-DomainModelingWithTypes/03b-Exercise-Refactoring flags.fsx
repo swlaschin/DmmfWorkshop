@@ -6,7 +6,7 @@
 Much code has implicit states that you can recognize by
 fields called "IsSomething", or nullable date
 
-This is a sign that states transitions are present
+This is a sign that state transitions are present
 but not being modelled properly.
 *)
 

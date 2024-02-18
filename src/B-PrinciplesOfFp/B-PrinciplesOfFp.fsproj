@@ -23,6 +23,7 @@
     <None Include="02c-Exercise-TypeSignatures(answer).fsx" />
     <Content Include="04-Exercises.txt" />
     <None Include="04a-Composition-and-piping.fsx" />
+    <None Include="04b-Composition-and-side-effects.fsx" />
     <Content Include="05-Exercises.txt" />
     <None Include="05a-Exercise-ThinkOfANumber.fsx" />
     <None Include="05b-Exercise-ThinkOfANumber(answer).fsx" />

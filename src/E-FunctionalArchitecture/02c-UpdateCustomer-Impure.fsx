@@ -29,6 +29,7 @@ open IoExample.Domain
 
 let updateCustomer (newCustomer:Domain.Customer) = async {
 
+    // await
     let! existingCustomer = CustomerDatabase.readCustomer newCustomer.Id
         // NOTE: let! is same as await with a return value
 

@@ -22,15 +22,15 @@ open ``04c-CompleteApp-Dto``
 
 
 // use the .NET Standard JSON library
-// #r "../../lib/Newtonsoft.Json.dll"
-// let serializeJson = Newtonsoft.Json.JsonConvert.SerializeObject
-// let deserializeJson<'a> str = Newtonsoft.Json.JsonConvert.DeserializeObject<'a> str
+#r "../../lib/Newtonsoft.Json.dll"
+let serializeJson = Newtonsoft.Json.JsonConvert.SerializeObject
+let deserializeJson<'a> str = Newtonsoft.Json.JsonConvert.DeserializeObject<'a> str
 
 // uncomment to use the .NET Core JSON library
-#r "System.Text.Json"
-open System.Text.Json
-let serializeJson = JsonSerializer.Serialize
-let deserializeJson<'a> (str:string) = JsonSerializer.Deserialize<'a>(str)
+// #r "System.Text.Json"
+// open System.Text.Json
+// let serializeJson = JsonSerializer.Serialize
+// let deserializeJson<'a> (str:string) = JsonSerializer.Deserialize<'a>(str)
 
 /// Combine JSON and validation in one step
 let jsonToRequest json =

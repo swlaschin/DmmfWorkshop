@@ -18,8 +18,9 @@ Exercise:
 
 open System
 
-// Load a file with library functions for Result
+// Load files with library functions for Result and Validation
 #load "Result.fsx"
+#load "Validation.fsx"
 
 // Load a file with definition of the domain
 #load "PersonDomain.fsx"
@@ -133,10 +134,16 @@ badDto |> roundTrip
 // full JSON example
 // -------------------------------
 
-#r "System.Text.Json"
-open System.Text.Json
-let serializeJson = JsonSerializer.Serialize
-let deserializeJson<'a> (str:string) = JsonSerializer.Deserialize<'a>(str)
+// use the .NET Standard JSON library
+#r "../../lib/Newtonsoft.Json.dll"
+let serializeJson = Newtonsoft.Json.JsonConvert.SerializeObject
+let deserializeJson<'a> str = Newtonsoft.Json.JsonConvert.DeserializeObject<'a> str
+
+// uncomment to use the .NET Core JSON library
+//#r "System.Text.Json"
+//open System.Text.Json
+//let serializeJson = JsonSerializer.Serialize
+//let deserializeJson<'a> (str:string) = JsonSerializer.Deserialize<'a>(str)
 
 
 let toJsonDto (person:Person) :string =

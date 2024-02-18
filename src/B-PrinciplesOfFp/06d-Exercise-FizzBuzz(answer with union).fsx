@@ -114,11 +114,17 @@ let fizzBuzz (n:int) :string =
 [1..30] |> List.map fizzBuzz
 
 
-
 // =============================================
 // Bonus: Parallel FizzBuzz
 // =============================================
 
+// by breaking down the logic into small composable functions,
+// we can mix and match them in new ways.
+
+// For example, we can run that same handle function in "parallel"
+// and then we can eliminate the need for the "15" handler
+
+/// Combine two fizzbuzz results
 let combineHandlers handler1 handler2  =
     fun input ->
         let result1 = handler1 input

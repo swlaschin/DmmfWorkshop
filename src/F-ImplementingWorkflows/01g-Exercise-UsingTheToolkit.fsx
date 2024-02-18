@@ -93,7 +93,7 @@ let createValidCustomer : CreateValidCustomer =
             |> Validation.ofResult
 
         // Exercise: create the customer by using the "createCustomer" function
-        // Tip: use the "lift3" function on createCustomer (because there are three parameters)
+        // Tip: use the "map3" function on createCustomer (because there are three parameters)
         let customerOrError =
             createCustomer nameOrError emailOrError bdateOrError
 

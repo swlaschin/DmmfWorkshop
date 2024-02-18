@@ -3,7 +3,9 @@ Demonstrates DTO validation for a complex domain
 like a news feed
 *)
 
+// Load files with library functions for Result and Validation
 #load "Result.fsx"
+#load "Validation.fsx"
 
 /// A domain for showing news in a newsfeed
 module rec NewsFeedDomain =
