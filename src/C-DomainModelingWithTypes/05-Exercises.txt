@@ -7,14 +7,14 @@ Now practice putting it all together!
 
 Do one or more of the following exercises:
 
-Shopping cart API
+API design
 * 05c1-Exercise-ShoppingCartApi.fsx
   related diagram is: 05c0-Exercise-ShoppingCart(diagram).png
-* 05d1-Exercise-ShoppingCartClient.fsx
-
-Delivery API
 * 05e1-Exercise-DeliveryApi.fsx
   related diagram is: 05e0-Exercise-Delivery(diagram).png
+
+Client implementations using the API
+* 05d1-Exercise-ShoppingCartClient.fsx
 * 05f1-Exercise-DeliveryApiClient.fsx
 
 

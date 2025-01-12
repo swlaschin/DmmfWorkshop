@@ -87,6 +87,7 @@ module AlternativeApi =
     type UnpaidCart =
         | EmptyCartState
         | ActiveCartState of ActiveCartData
+        // no paid state
 
     // "PaidCart" can be renamed to "Order"
     type Order = {

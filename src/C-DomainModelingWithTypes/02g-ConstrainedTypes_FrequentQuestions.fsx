@@ -35,7 +35,7 @@ type FirstName = String50  // OK
 
 // ====================================
 // Question: When to use public vs. private constructors?
-// Answer: It depends on how much yout trust the callers
+// Answer: It depends on how much you trust the callers
 // ====================================
 
 (*

@@ -163,25 +163,29 @@ module Order_Before =
 // contains the redesigned code (but see an alternative design below)
 module Order_After_v1 =
 
+    type Item = string // can make more complicated later
     type OrderId = OrderId of int
     type Amount = float
     type Date = System.DateTime
 
+    // In this design, each state is represented by a type
+    // Each state has a copy of all the data -- there is no referencing data from other states
+
     type NewOrder = {
         OrderId : OrderId
-        Items : string list
+        Items : Item list
         }
 
     type PaidOrder = {
         OrderId : OrderId
-        Items : string list
+        Items : Item list
         PaidAmount : Amount
         PaidDate : Date
         }
 
     type CompletedOrder = {
         OrderId : OrderId
-        Items : string list
+        Items : Item list
         PaidAmount : Amount
         PaidDate : Date
         ShippedDate : Date
@@ -192,17 +196,55 @@ module Order_After_v1 =
         | Paid of PaidOrder
         | Completed of CompletedOrder
 
+
+// A second alternative
+module Order_After_v2 =
+
+    type Item = string // can make more complicated later
+    type OrderId = OrderId of int
+    type Amount = float
+    type Date = System.DateTime
+
+    // In this design, each state is represented by a type
+    // But each state contains data from the previous state
+
+    type OrderContent = {
+        OrderId : OrderId
+        Items : Item list
+        }
+
+    type PaidOrder = {
+        OrderContent : OrderContent
+        PaidAmount : Amount
+        PaidDate : Date
+        }
+
+    type CompletedOrder = {
+        PaidOrder : PaidOrder
+        ShippedDate : Date
+        }
+
+    type Order =
+        | New of OrderContent
+        | Paid of PaidOrder
+        | Completed of CompletedOrder
+
+(*
+What are the pros and cons of each design?
+*)
+
 // ====================================
 (*
 Question:
 
-All states have a OrderId and Items? Can that be refactored out?
+All states have a OrderId and Items? Can that be refactored out and put in a "superclass"?
 
 Answer:
 
-Yes, absolutely. The alternative design below does that.
+Yes, absolutely. The third alternative design below does that.
 
-The good news is that both designs are equivalent and so either can be used.
+
+The good news is that all three designs are equivalent and so any can be used.
 Which is better? It depends on the domain language? Do people say
     A PaidOrder OR CompletedOrder
 or do they say
@@ -211,9 +253,10 @@ or do they say
 
 // ====================================
 
-// alternative design
-module Order_After_v2 =
+// third alternative design
+module Order_After_v3 =
 
+    type Item = string // can make more complicated later
     type OrderId = OrderId of int
     type Amount = float
     type Date = System.DateTime
@@ -236,7 +279,7 @@ module Order_After_v2 =
 
     type Order = {
         Id: OrderId
-        Items : string list
+        Items : Item list
         Status: OrderStatus
         }
 
