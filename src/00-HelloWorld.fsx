@@ -16,6 +16,12 @@ printfn "Hello World"
 //      shortcut: Alt+Enter
 //   2. then check that "F# interactive" terminal appears and "Hello World" is output
 //
+// Using JetBrains Rider:
+//   1. choose "Tools | F# Interactive | Send Selection to F# Interactive" from the main menu.
+//      shortcut: Alt+Enter
+//   2. then check that "F# interactive" terminal appears and "Hello World" is output
+
+
 // ================================
 
 // expected output...
@@ -41,6 +47,9 @@ val it : unit = ()
 // Using VS Code:
 //   1. Kill the F# terminal
 //   2. then re-select and re-execute all your code
+//
+// Using JetBrains Rider:
+//   1. You can clear the current session at any time by clicking "Reset F# Interactive" on the toolbar for the F# Interactive window .
 
 
 
